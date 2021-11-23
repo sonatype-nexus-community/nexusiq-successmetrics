@@ -35,10 +35,10 @@ out/
 
 success-metrics
 *.csv
-./*.json
+#./*.json
 bin/*
 datafiles
-*.json
+#*.json
 output/
 
 .DS_Store
