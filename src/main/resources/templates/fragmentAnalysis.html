@@ -1,0 +1,127 @@
+<div th:fragment="analysisFrag">
+
+<table class="table table-striped table-hover" style="width:100%">
+<colgroup>
+       <col span="1" style="width: 40%;"/>
+       <col span="1" style="width: 12%;"/>
+       <col span="1" style="width: 12%;"/>
+       <col span="1" style="width: 12%;"/>
+       <col span="1" style="width: 12%;"/>
+       <col span="1" style="width: 12%;"/>
+    </colgroup>
+        <thead class="thead-dark">
+            <tr valign="top">
+                <th scope="col" th:text="'Measure'"></th>
+                <th scope="col">Before <span style="color:grey;font-size:9px" th:text="${midPeriodDate1RangeStr}"/></th>
+                <th scope="col">After <span style="color:grey;font-size:9px" th:text="${midPeriodDate2RangeStr}"/></th>
+                <th scope="col" th:text="Delta"></th>
+                <th scope="col" th:text="'Change (%)'"></th>
+                <th scope="col" th:text="xTimes"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="font-weight:bold">
+                <td th:text="'Total Onboarded Apps (# of apps)'"></td>
+                <td th:text="${totalOnboardedBefore}"></td>
+                <td th:text="${totalOnboardedAfter}"></td>
+                <td th:text="${totalOnboardedAfter}-${totalOnboardedBefore}"></td>
+                <td th:text="${totalOnboarded}"></td>
+                <td th:text="${totalOnboardedIncrease}"></td>
+            </tr>
+
+            <tr style="font-weight:bold">
+                <td th:text="'Onboarding Rate (apps/period)'"></td>
+                <td th:text="${onboardingRateBefore}"></td>
+                <td th:text="${onboardingRateAfter}"></td>
+                <td th:text="${onboardingRateAfter}-${onboardingRateBefore}"></td>
+                <td th:text="${onboardingRate}"></td>
+                <td th:text="${onboardingRateIncrease}"></td>
+            </tr>
+            
+             <tr style="font-weight:bold">
+                <td th:text="'Total Scans'"></td>
+                <td th:text="${totalScansBefore}"></td>
+                <td th:text="${totalScansAfter}"></td>
+                <td th:text="${totalScansAfter}-${totalScansBefore}"></td>
+                <td th:text="${totalScans}"></td>
+                <td th:text="${totalScansIncrease}"></td> 
+            </tr>
+
+            <tr style="font-weight:bold">
+                <td th:text="'Scanning Coverage %(apps scanned at least once/period)'"></td>
+                <td th:text="${scanningCoverageBefore}"></td>
+                <td th:text="${scanningCoverageAfter}"></td>
+                <td th:text="${scanningCoverageAfter}-${scanningCoverageBefore}"></td>
+                <td th:text="${scanningCoverage}"></td>
+                <td th:text="${scanningCoverageIncrease}"></td>
+            </tr>
+
+            <tr style="font-weight:bold">
+                <td th:text="'Scanning Rate (total scans per period)'"></td>
+                <td th:text="${scanningRateBefore}"></td>
+                <td th:text="${scanningRateAfter}"></td>
+                <td th:text="${scanningRateAfter}-${scanningRateBefore}"></td>
+                <td th:text="${scanningRate}"></td>
+                <td th:text="${scanningRateIncrease}"></td>
+            </tr>
+
+            <tr style="font-weight:bold">
+                <td th:text="'Average Scans per App (scanning rate/apps)'"></td>
+                <td th:text="${avgScansBefore}"></td>
+                <td th:text="${avgScansAfter}"></td>
+                <td th:text="${avgScansAfter}-${avgScansBefore}"></td>
+                <td th:text="${avgScans}"></td>
+                <td th:text="${avgScansIncrease}"></td>
+            </tr>
+
+            <tr style="font-weight:bold">
+                <td th:text="'Discovery Rate Criticals (# of discovered Critical violations/period & app)'"></td>
+                <td th:text="${discoveryRateCriticalsBefore}"></td>
+                <td th:text="${discoveryRateCriticalsAfter}"></td>
+                <td th:text="${discoveryRateCriticalsAfter}-${discoveryRateCriticalsBefore}"></td>
+                <td th:text="${discoveryRateCriticals}"></td>
+                <td th:text="${discoveryRateCriticalsIncrease}"></td>
+            </tr> 
+
+            <tr style="font-weight:bold">
+                <td th:text="'Fixing Rate Criticals (# of fixed Critical violations/period & app)'"></td>
+                <td th:text="${fixingRateCriticalsBefore}"></td>
+                <td th:text="${fixingRateCriticalsAfter}"></td>
+                <td th:text="${fixingRateCriticalsAfter}-${fixingRateCriticalsBefore}"></td>
+                <td th:text="${fixingRateCriticals}"></td>
+                <td th:text="${fixingRateCriticalsIncrease}"></td>
+            </tr>
+
+            <tr style="font-weight:bold">
+                <td th:text="'Backlog Reduction Rate Criticals %(# of fixed / # of discovered)'"></td>
+                <td th:text="${backlogReductionCriticalsRateBefore}"></td>
+                <td th:text="${backlogReductionCriticalsRateAfter}"></td>
+                <td th:text="${backlogReductionCriticalsRateAfter}-${backlogReductionCriticalsRateBefore}"></td>
+                <td th:text="${backlogReductionCriticalsRate}"></td>
+                <td th:text="${backlogReductionCriticalsRateIncrease}"></td>
+            </tr>
+
+            <tr style="font-weight:bold">
+                <td th:text="'Risk Ratio (# of Critical violations / # of apps)'"></td>
+                <td th:text="${riskRatioBefore}"></td>
+                <td th:text="${riskRatioAfter}"></td>
+                <td th:text="${riskRatioAfter}-${riskRatioBefore}"></td>
+                <td th:text="${riskRatio}"></td>
+                <td th:text="${riskRatioIncrease}"></td>
+            </tr>
+
+            <tr style="font-weight:bold">
+                <td th:text="'MTTR Criticals (average # of days to fix Critical violations)'"></td>
+                <td th:text="${mttrCriticalsBefore}"></td>
+                <td th:text="${mttrCriticalsAfter}"></td>
+                <td th:text="${mttrCriticalsAfter}-${mttrCriticalsBefore}"></td>
+                <td th:text="${mttrCriticals}"></td>
+                <td th:text="${mttrCriticalsIncrease}"></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+
+</div>

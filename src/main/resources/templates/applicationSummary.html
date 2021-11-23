@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<div th:insert="header :: headerFrag"></div>
+
+</head>
+
+<body>
+	
+	<div th:if="!${showData}">
+		<div class="jumbotron">
+		<h3>Error: application <span style="color:black;font-size:16px" th:text="${applicationname}"/> does not exist</h3>
+		<p><em>Usage: url = [host]/appsummary?appname=[application_name]</em></p>
+	    </div>
+	</div>
+
+	<div th:if="${showData}">
+	
+		<div class="jumbotron">
+		<h3>Application Summary Report</h3>
+		<h3><span style="color:black;font-size:16px" th:text="${applicationname}"/> </h3>
+	    </div>
+	    
+	    <div>
+	    <div class="container">
+	    <div class="row">
+	    <div class="col-xl mx-auto bg-white rounded">
+	    <div class="table-responsive table-wrapper-scroll-y">
+	    
+	    <div th:insert="fragmentSummary :: summaryFrag"></div>
+	
+	    <br/><br/>
+	    
+	    </div>
+	    </div></div></div></div>
+		<div style="page-break-before: always;"/> 	
+	
+	    <!--  applications -->
+	    <div th:insert="fragmentApplications :: applicationsFrag"></div>
+	
+	    <div style="page-break-before: always;"/> 	
+	
+	    <!--  security -->
+	    <div th:insert="fragmentSecurityViolations :: securityViolationsFrag"></div>
+	
+	    <div style="page-break-before: always;"/> 	
+	
+	    <!--  license -->
+	    <div th:insert="fragmentLicenseViolations :: LicenseViolationsFrag"></div>
+    
+    </div>
+    
+</body>

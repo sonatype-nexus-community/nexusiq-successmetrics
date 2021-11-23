@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<div th:insert="header :: headerFrag"></div>
+
+</head>
+
+<body>
+	<div class="jumbotron">
+	<h3>Analysis</h3>
+    </div>
+
+    <div>
+    <div class="container">
+    <div class="row">
+    <div class="col-xl mx-auto bg-white rounded">
+    <div class="table-responsive table-wrapper-scroll-y">
+
+    <div th:if="${doAnalysis}">
+    <div th:insert="fragmentAnalysis :: analysisFrag"></div>
+	</div>
+	
+    </div>
+  
+</body>

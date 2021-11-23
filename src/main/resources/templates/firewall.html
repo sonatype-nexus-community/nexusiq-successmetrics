@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head>
+<div th:insert="header :: headerFrag"></div>
+</head>
+   
+   <body>
+   	
+        <div class="jumbotron">
+        <h4>Firewall Report</h4>
+        </div>
+        
+        <div class="container">
+        <div class="row">
+        <div class="col-xl mx-auto w-auto bg-white rounded">
+        
+        <h5>Quarantined Components Summary Report</h5>
+
+        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead class="tablecolumncolor">
+            <tr>
+                <th class="th-sm">Repository Count</th>
+                <th class="th-sm">Quarantine Enabled RepositoryCount</th>
+                <th class="th-sm">Quarantine Enabled</th>
+                <th class="th-sm">Total Component Count</th>
+                <th class="th-sm">Quarantined Component Count</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${quarantinedComponentsSummary[0]}"></td>
+                <td th:text="${quarantinedComponentsSummary[1]}"></td>
+                <td th:text="${quarantinedComponentsSummary[2]}"></td>
+                <td th:text="${quarantinedComponentsSummary[3]}"></td>
+                <td th:text="${quarantinedComponentsSummary[4]}"></td>
+            </tr>
+            </tbody>
+        </table>
+            
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        <br><br>
+        
+        <div class="container">
+        <div class="row">
+        <div class="col-xl mx-auto w-auto bg-white rounded">
+        
+        <h5>Autoreleased Quarantined Components Summary Report</h5>
+
+        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead class="tablecolumncolor">
+            <tr>
+                <th class="th-sm">AutoRelease Quarantine Count (MTD)</th>
+                <th class="th-sm">AutoRelease Quarantine Count (YTD)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${autoReleasedFromQuarantinedComponentsSummary[0]}"></td>
+                <td th:text="${autoReleasedFromQuarantinedComponentsSummary[1]}"></td>
+            </tr>
+            </tbody>
+        </table>
+            
+        </div>
+        </div>
+        </div>
+        </div>
+        		
+        <br><br>
+        
+        <div class="container" th:if="${quarantinedComponentsData}">
+        <div class="row">
+        <div class="col-xl mx-auto w-auto bg-white rounded">
+        <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+        
+        <h5>Quarantined Components Report</h5>
+
+        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead class="tablecolumncolor">
+            <tr>
+                <th class="th-sm">Repository</th>
+                <th class="th-sm">Quarantine Date</th>
+                <th class="th-sm">Date Cleared</th>
+                <th class="th-sm">Package Name</th>
+                <th class="th-sm">Format</th>
+                <th class="th-sm">Quarantined</th>
+                <th class="th-sm">Policy Name</th>
+                <th class="th-sm">Threat Level</th>
+                <th class="th-sm">CVE</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dp : ${quarantinedComponents}">
+                <td th:text="${dp.pointA}"></td>
+                <td th:text="${dp.pointB}"></td>
+                <td th:text="${dp.pointC}"></td>
+                <td th:text="${dp.pointD}"></td>
+                <td th:text="${dp.pointE}"></td>
+                <td th:text="${dp.pointF}"></td>
+                <td th:text="${dp.pointG}"></td>
+                <td th:text="${dp.pointH}"></td>
+                <td th:text="${dp.pointI}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+            
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        <br><br>
+        
+        <div class="container" th:if="${autoReleasedFromQuarantinedComponentsData}">
+        <div class="row">
+        <div class="col-xl mx-auto w-auto bg-white rounded">
+        <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+        
+        <h5>Autoreleased from Quarantined Components Report</h5>
+
+        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead class="tablecolumncolor">
+            <tr>
+                <th class="th-sm">Repository</th>
+                <th class="th-sm">Quarantine Date</th>
+                <th class="th-sm">Date Cleared</th>
+                <th class="th-sm">Package Name</th>
+                <th class="th-sm">Format</th>
+                <th class="th-sm">Quarantined</th>
+                <th class="th-sm">Policy Name</th>
+                <th class="th-sm">Threat Level</th>
+                <th class="th-sm">CVE</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dp : ${autoReleasedFromQuarantinedComponents}">
+                <td th:text="${dp.pointA}"></td>
+                <td th:text="${dp.pointB}"></td>
+                <td th:text="${dp.pointC}"></td>
+                <td th:text="${dp.pointD}"></td>
+                <td th:text="${dp.pointE}"></td>
+                <td th:text="${dp.pointF}"></td>
+                <td th:text="${dp.pointG}"></td>
+                <td th:text="${dp.pointH}"></td>
+                <td th:text="${dp.pointI}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+            
+        </div>
+        </div>
+        </div>
+        </div>
+
+        
+    </body>
+</html>

@@ -1,0 +1,145 @@
+
+name: Build and Release nexusiq-successmetrics
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  IMAGE_NAME: nexusiq-successmetrics
+  RELEASE_BRANCH: main
+
+jobs:
+
+    build_application:
+        name: build success metrics application
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        - name: Set up JDK 8
+          uses: actions/setup-java@v2
+          with:
+            java-version: '8'
+            distribution: 'adopt'
+        
+        - name: Cache Gradle packages
+          uses: actions/cache@v2
+          with:
+            path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+            restore-keys: |
+              ${{ runner.os }}-gradle-
+      
+        - name: Grant execute permission for gradlew
+          run: chmod +x gradlew
+          
+        - name: Build with Gradle
+          run: ./gradlew clean build
+          
+        - name: Upload the artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: successmetrics.jar
+            path: build/libs
+
+    build_reports2:
+        name: build reports2 executable
+        strategy:
+          matrix:
+            os: [ubuntu-latest, macos-latest, windows-latest]
+
+        runs-on: ${{ matrix.os }}
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - uses: actions/setup-python@v2
+          with:
+            python-version: '3.9.8' 
+
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install pyinstaller
+            pip install requests
+
+        - name: Build with pyinstaller
+          run: |
+            cd releasefiles/reports2
+            pyinstaller --noupx --onefile --clean --name reports2-${{ runner.os }} reports2.py
+            chmod +x dist/*
+
+        - name: Upload the artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: reports2-${{ runner.os }}
+            path: releasefiles/reports2/dist
+
+    create_release:
+        needs: [build_application, build_reports2]
+        name: create release bundle
+        runs-on: ubuntu-latest
+        
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: Download all artifacts
+          uses: actions/download-artifact@v2
+
+        - name: Copy reports2 executables
+          run: cp reports2-*/* releasefiles/reports2
+
+        - name: Build release with Gradle
+          run: ./gradlew release
+
+        - name: Create release
+          uses: softprops/action-gh-release@v1
+          if: startsWith(github.ref, 'refs/tags/')
+          with:
+            files: successmetrics-*.zip
+
+    build_docker_image:
+        needs: build_application
+        name: build docker image
+        runs-on: ubuntu-latest
+        steps:
+        
+        - uses: actions/checkout@v2
+        
+        - name: Download the application file
+          uses: actions/download-artifact@v2
+          with:
+            name: successmetrics.jar
+
+        - name: Build image
+          run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+
+        - name: Log in to registry
+          run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+        - name: Push image
+          run: |
+              IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+
+              # Change all uppercase to lowercase
+              IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+              # Strip git ref prefix from version
+              VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+              # Strip "v" prefix from tag name
+              [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+              # Use Docker `latest` tag convention
+              [ "$VERSION" == "$RELEASE_BRANCH" ] && VERSION=latest
+
+              echo IMAGE_ID=$IMAGE_ID
+              echo VERSION=$VERSION
+
+              docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+              docker push $IMAGE_ID:$VERSION
+
+    

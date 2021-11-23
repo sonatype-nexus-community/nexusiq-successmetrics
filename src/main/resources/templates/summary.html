@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<div th:insert="header :: headerFrag"></div>
+
+</head>
+
+<body>
+	<div class="jumbotron">
+	<h3>Summary Report</h3>
+    </div>
+
+    <div>
+    <div class="container">
+    <div class="row">
+    <div class="col-xl mx-auto bg-white rounded">
+    <div class="table-responsive table-wrapper-scroll-y">
+    
+    <div th:if="${smloaded}">
+	    
+	    <div th:insert="fragmentSummary :: summaryFrag"></div>
+	
+	    <br/><br/>
+	    
+	    </div>
+	    </div></div></div></div>
+		<div style="page-break-before: always;"/> 	
+	
+	    <!--  applications -->
+	    <div th:insert="fragmentApplications :: applicationsFrag"></div>
+	
+	    <div style="page-break-before: always;"/> 	
+	
+	    <!--  security -->
+	    <div th:insert="fragmentSecurityViolations :: securityViolationsFrag"></div>
+	
+	    <div style="page-break-before: always;"/> 	
+	
+	    <!--  license -->
+	    <div th:insert="fragmentLicenseViolations :: LicenseViolationsFrag"></div>
+    
+    </div>
+    
+</body>

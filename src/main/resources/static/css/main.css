@@ -1,0 +1,76 @@
+
+.chart-container {
+    margin-left: 15%;
+}
+
+/* table {
+    font-size: 14px;
+    margin-left: 15%;
+    margin-right: 15%;
+    height: '75%';
+    width: '75%';
+    border: 1px solid black;
+}   */
+
+td, th {
+    border: 1px solid black;
+    width: 10px;
+    font-size: 16px;
+}
+
+span {
+	color: blue;
+	font-weight: bold;
+    font-size: 16px;
+}
+
+.custom-scrollbar {
+	position: relative;
+	height: 500px;
+	overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+	display: block;
+} 
+
+.applicationTable {
+    cellspacing: 0;
+    width: 100%;
+
+}
+
+h5 {
+    margin-left: 300px;
+}
+
+@media print {
+
+  .apexcharts-legend-marker:before {
+    content: "\25A0";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    line-height: 12px;
+    font-size: 24px;
+    background-color: bisque !important;
+  }
+
+}
+
+/* .pdfreport {
+	color: blue;
+	font-weight: bold;
+    font-size: 12px;
+}
+
+.pdfspan {
+    font-size: 12px;
+}
+ */
+ 
+.tablecolumncolor {
+	background-color: grey;
+	color: white;
+}

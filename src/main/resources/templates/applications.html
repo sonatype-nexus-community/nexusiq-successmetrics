@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<div th:insert="header :: headerFrag"></div>
+</head>
+
+<body>
+	<div class="jumbotron">
+	<h3>Applications Report</h3>
+    </div>
+
+    <!--  applications -->
+    <div th:insert="fragmentApplications :: applicationsFrag"></div>
+    <div th:insert="fragmentApplicationsTables :: applicationsTablesFrag"></div>
+
+    <!-- <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td> Most critical application <span th:text="${mostCriticalApplicationName}"/> has <span th:text="${mostCriticalApplicationCount}"/> critical violations</td></tr>
+            <tr><td> Least critical application <span th:text="${leastCriticalApplicationName}"/> has <span th:text="${leastCriticalApplicationCount}"/> critical violations</td></tr>
+        </tbody>
+    </table> -->
+    
+</body>

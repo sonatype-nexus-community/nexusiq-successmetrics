@@ -1,0 +1,105 @@
+import java.text.SimpleDateFormat
+import org.apache.tools.ant.filters.ReplaceTokens 
+
+plugins {
+	id 'org.springframework.boot' version '2.5.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'org.sonatype.gradle.plugins.scan' version '1.2.0'
+	id "com.palantir.docker" version "0.22.1"
+ }
+
+group = 'org.sonatype.cs'
+version = '86'
+sourceCompatibility = '8'
+
+def applicationname = 'nexusiq-successmetrics'
+def packagedir = "successmetrics-${version}"
+def releasedir = "${packagedir}/${packagedir}"
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation ('org.springframework.boot:spring-boot-starter-data-jpa:2.5.3')
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+        
+  	implementation 'org.webjars:jquery:3.5.1'
+	implementation 'org.webjars:bootstrap:4.5.0'
+	implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
+	implementation 'org.xhtmlrenderer:flying-saucer-pdf-openpdf:9.1.20'
+	implementation 'org.apache.commons:commons-csv:1.5'
+	compileOnly 'com.opencsv:opencsv:5.2'
+	implementation 'org.apache.httpcomponents:httpclient:4.5.9'
+    implementation 'commons-codec:commons-codec:1.10'
+    implementation 'commons-io:commons-io:2.11.0'
+	implementation 'org.json:json:20210307'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+}
+
+nexusIQScan {
+  username = 'admin'
+  password = 'admin123'
+  serverUrl = 'http://localhost:8070'
+  applicationId = 'successmetrics'
+  stage = 'build'  
+  allConfigurations = true 
+}
+
+clean.doFirst {
+	delete "${packagedir}"
+	delete "${packagedir}.zip"
+}
+
+build.doFirst {
+	mkdir "${packagedir}"
+	mkdir "${releasedir}"
+}
+
+task copydependencies(type: Copy) {
+  from configurations.default
+  into 'build/dependencies'
+}
+
+task packagejar (type: Copy) {
+  from 'build/libs'
+	include "successmetrics-${version}.jar"
+  into "${releasedir}"
+}
+
+task packagefiles (type: Copy) {
+	from 'releasefiles'
+	include '*.json'
+	include 'create*'
+	include 'reports2/'
+	include 'config/'
+	include 'runapp*'
+	into "${releasedir}"
+	filter(ReplaceTokens, tokens: [APPVER: project.version])
+}
+
+task release(type: Zip) {
+	from "${packagedir}"
+	archiveName "${packagedir}.zip"
+	destinationDir(file(projectDir))
+}
+
+docker {
+     name "${applicationname}:${project.version}"
+     files "${projectDir}/build/libs/successmetrics-*.jar"
+}
+
+packagejar.dependsOn bootJar
+packagefiles.dependsOn packagejar
+release.dependsOn packagefiles
+

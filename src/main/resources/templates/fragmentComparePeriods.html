@@ -1,0 +1,253 @@
+<div th:fragment="comparePeriodsFrag">
+
+    <table class="table table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>             
+                <th scope="col">Period 1 <span style="color:grey;font-size:11px" th:text="${midPeriodDate1RangeStr}"/></th>
+                <th scope="col">Period 2 <span style="color:grey;font-size:11px" th:text="${midPeriodDate2RangeStr}"/></th>
+                <!-- 
+                <th scope="col">Period 1</th>
+                <th scope="col">Period 2</th>
+                -->
+             </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td>Onboarded <span th:text="${p1.applicationsOnboarded}"/> applications at an average of <span th:text="${p1.applicationsOnboardedAvg}"/> per <span th:text="${timePeriodFrequency}"/></td>
+            <td>Onboarded <span th:text="${p2.applicationsOnboarded}"/> applications at an average of <span th:text="${p2.applicationsOnboardedAvg}"/> per <span th:text="${timePeriodFrequency}"/> <span style="color:black;font-style:italic;font-weight:light;font-size:11px" th:text="'(cumulative)'"/></td> 
+             </tr>
+            <tr>
+            <td>Scanned applications at an average of <span th:text="${p1.numberOfApplicationsScannedAvg}"/> per <span th:text="${timePeriodFrequency}"/></td>
+            <td>Scanned applications at an average of <span th:text="${p2.numberOfApplicationsScannedAvg}"/> per <span th:text="${timePeriodFrequency}"/></td>
+             </tr>
+            <tr>
+            <td>Performed a total of <span th:text="${p1.numberOfScans}"/> scans at an average of <span th:text="${p1.numberOfScansAvg}"/> per <span th:text="${timePeriodFrequency}"/></td>
+            <td>Performed a total of <span th:text="${p2.numberOfScans}"/> scans at an average of <span th:text="${p2.numberOfScansAvg}"/> per <span th:text="${timePeriodFrequency}"/></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br/>
+
+    <table class="table table-striped table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" th:text="'Period 1'"></th>
+                <th scope="col" th:text="Total"></th>
+                <th scope="col" th:text="Critical"></th>
+                <th scope="col" th:text="Severe"></th>
+                <th scope="col" th:text="Moderate"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="font-weight:bold">
+                <td  th:text="'Discovered Security Violations'"></td>
+                <td th:text="${p1.discoveredSecurityViolationsTotal.pointA}+${p1.discoveredSecurityViolationsTotal.pointB}+${p1.discoveredSecurityViolationsTotal.pointC}"></td>
+                <td th:text="${p1.discoveredSecurityViolationsTotal.pointA}"></td>
+                <td th:text="${p1.discoveredSecurityViolationsTotal.pointB}"></td>
+                <td th:text="${p1.discoveredSecurityViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Open Security Violations'"></td>
+                <td th:text="${p1.openSecurityViolationsTotal.pointA}+${p1.openSecurityViolationsTotal.pointB}+${p1.openSecurityViolationsTotal.pointC}"></td>
+                <td th:text="${p1.openSecurityViolationsTotal.pointA}"></td>
+                <td th:text="${p1.openSecurityViolationsTotal.pointB}"></td>
+                <td th:text="${p1.openSecurityViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Fixed Security Violations'"></td>
+                <td th:text="${p1.fixedSecurityViolationsTotal.pointA}+${p1.fixedSecurityViolationsTotal.pointB}+${p1.fixedSecurityViolationsTotal.pointC}"></td>
+                <td th:text="${p1.fixedSecurityViolationsTotal.pointA}"></td>
+                <td th:text="${p1.fixedSecurityViolationsTotal.pointB}"></td>
+                <td th:text="${p1.fixedSecurityViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Waived Security Violations'"></td>
+                <td th:text="${p1.waivedSecurityViolationsTotal.pointA}+${p1.waivedSecurityViolationsTotal.pointB}+${p1.waivedSecurityViolationsTotal.pointC}"></td>
+                <td th:text="${p1.waivedSecurityViolationsTotal.pointA}"></td>
+                <td th:text="${p1.waivedSecurityViolationsTotal.pointB}"></td>
+                <td th:text="${p1.waivedSecurityViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+            </tr>
+            <tr style="font-weight:bold">
+                <td th:text="'Discovered License Violations'"></td>
+                <td th:text="${p1.discoveredLicenseViolationsTotal.pointA}+${p1.discoveredLicenseViolationsTotal.pointB}+${p1.discoveredLicenseViolationsTotal.pointC}"></td>
+                <td th:text="${p1.discoveredLicenseViolationsTotal.pointA}"></td>
+                <td th:text="${p1.discoveredLicenseViolationsTotal.pointB}"></td>
+                <td th:text="${p1.discoveredLicenseViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Open License Violations'"></td>
+                <td th:text="${p1.openLicenseViolationsTotal.pointA}+${p1.openLicenseViolationsTotal.pointB}+${p1.openLicenseViolationsTotal.pointC}"></td>
+                <td th:text="${p1.openLicenseViolationsTotal.pointA}"></td>
+                <td th:text="${p1.openLicenseViolationsTotal.pointB}"></td>
+                <td th:text="${p1.openLicenseViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Fixed License Violations'"></td>
+                <td th:text="${p1.fixedLicenseViolationsTotal.pointA}+${p1.fixedLicenseViolationsTotal.pointB}+${p1.fixedLicenseViolationsTotal.pointC}"></td>
+                <td th:text="${p1.fixedLicenseViolationsTotal.pointA}"></td>
+                <td th:text="${p1.fixedLicenseViolationsTotal.pointB}"></td>
+                <td th:text="${p1.fixedLicenseViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Waived License Violations'"></td>
+                <td th:text="${p1.waivedLicenseViolationsTotal.pointA}+${p1.waivedLicenseViolationsTotal.pointB}+${p1.waivedLicenseViolationsTotal.pointC}"></td>
+                <td th:text="${p1.waivedLicenseViolationsTotal.pointA}"></td>
+                <td th:text="${p1.waivedLicenseViolationsTotal.pointB}"></td>
+                <td th:text="${p1.waivedLicenseViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+            </tr>
+            <tr style="font-weight:bold">
+            	<td th:text="'Total'"></td>
+                <td th:text="${p1.discoveredSecurityViolationsTotal.pointA}+${p1.discoveredSecurityViolationsTotal.pointB}+${p1.discoveredSecurityViolationsTotal.pointC}+
+                			 ${p1.discoveredLicenseViolationsTotal.pointA}+${p1.discoveredLicenseViolationsTotal.pointB}+${p1.discoveredLicenseViolationsTotal.pointC}">
+                </td>
+                <td th:text="${p1.discoveredSecurityViolationsTotal.pointA}+${p1.discoveredLicenseViolationsTotal.pointA}"></td>
+                <td th:text="${p1.discoveredSecurityViolationsTotal.pointB}+${p1.discoveredLicenseViolationsTotal.pointB}"></td>
+                <td th:text="${p1.discoveredSecurityViolationsTotal.pointC}+${p1.discoveredLicenseViolationsTotal.pointC}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br/>
+    
+    <table class="table table-striped table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" th:text="'Period 2'"></th>
+                <th scope="col" th:text="Total"></th>
+                <th scope="col" th:text="Critical"></th>
+                <th scope="col" th:text="Severe"></th>
+                <th scope="col" th:text="Moderate"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="font-weight:bold">
+                <td  th:text="'Discovered Security Violations'"></td>
+                <td th:text="${p2.discoveredSecurityViolationsTotal.pointA}+${p2.discoveredSecurityViolationsTotal.pointB}+${p2.discoveredSecurityViolationsTotal.pointC}"></td>
+                <td th:text="${p2.discoveredSecurityViolationsTotal.pointA}"></td>
+                <td th:text="${p2.discoveredSecurityViolationsTotal.pointB}"></td>
+                <td th:text="${p2.discoveredSecurityViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Open Security Violations'"></td>
+                <td th:text="${p2.openSecurityViolationsTotal.pointA}+${p2.openSecurityViolationsTotal.pointB}+${p2.openSecurityViolationsTotal.pointC}"></td>
+                <td th:text="${p2.openSecurityViolationsTotal.pointA}"></td>
+                <td th:text="${p2.openSecurityViolationsTotal.pointB}"></td>
+                <td th:text="${p2.openSecurityViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Fixed Security Violations'"></td>
+                <td th:text="${p2.fixedSecurityViolationsTotal.pointA}+${p2.fixedSecurityViolationsTotal.pointB}+${p2.fixedSecurityViolationsTotal.pointC}"></td>
+                <td th:text="${p2.fixedSecurityViolationsTotal.pointA}"></td>
+                <td th:text="${p2.fixedSecurityViolationsTotal.pointB}"></td>
+                <td th:text="${p2.fixedSecurityViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Waived Security Violations'"></td>
+                <td th:text="${p2.waivedSecurityViolationsTotal.pointA}+${p2.waivedSecurityViolationsTotal.pointB}+${p2.waivedSecurityViolationsTotal.pointC}"></td>
+                <td th:text="${p2.waivedSecurityViolationsTotal.pointA}"></td>
+                <td th:text="${p2.waivedSecurityViolationsTotal.pointB}"></td>
+                <td th:text="${p2.waivedSecurityViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+            </tr>
+            <tr style="font-weight:bold">
+                <td th:text="'Discovered License Violations'"></td>
+                <td th:text="${p2.discoveredLicenseViolationsTotal.pointA}+${p2.discoveredLicenseViolationsTotal.pointB}+${p2.discoveredLicenseViolationsTotal.pointC}"></td>
+                <td th:text="${p2.discoveredLicenseViolationsTotal.pointA}"></td>
+                <td th:text="${p2.discoveredLicenseViolationsTotal.pointB}"></td>
+                <td th:text="${p2.discoveredLicenseViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Open License Violations'"></td>
+                <td th:text="${p2.openLicenseViolationsTotal.pointA}+${p2.openLicenseViolationsTotal.pointB}+${p2.openLicenseViolationsTotal.pointC}"></td>
+                <td th:text="${p2.openLicenseViolationsTotal.pointA}"></td>
+                <td th:text="${p2.openLicenseViolationsTotal.pointB}"></td>
+                <td th:text="${p2.openLicenseViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Fixed License Violations'"></td>
+                <td th:text="${p2.fixedLicenseViolationsTotal.pointA}+${p2.fixedLicenseViolationsTotal.pointB}+${p2.fixedLicenseViolationsTotal.pointC}"></td>
+                <td th:text="${p2.fixedLicenseViolationsTotal.pointA}"></td>
+                <td th:text="${p2.fixedLicenseViolationsTotal.pointB}"></td>
+                <td th:text="${p2.fixedLicenseViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Waived License Violations'"></td>
+                <td th:text="${p2.waivedLicenseViolationsTotal.pointA}+${p2.waivedLicenseViolationsTotal.pointB}+${p2.waivedLicenseViolationsTotal.pointC}"></td>
+                <td th:text="${p2.waivedLicenseViolationsTotal.pointA}"></td>
+                <td th:text="${p2.waivedLicenseViolationsTotal.pointB}"></td>
+                <td th:text="${p2.waivedLicenseViolationsTotal.pointC}"></td>
+            </tr>
+            <tr>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+            </tr>
+            <tr style="font-weight:bold">
+            	<td th:text="'Total'"></td>
+                <td th:text="${p2.discoveredSecurityViolationsTotal.pointA}+${p2.discoveredSecurityViolationsTotal.pointB}+${p2.discoveredSecurityViolationsTotal.pointC}+
+                			 ${p2.discoveredLicenseViolationsTotal.pointA}+${p2.discoveredLicenseViolationsTotal.pointB}+${p2.discoveredLicenseViolationsTotal.pointC}">
+                </td>
+                <td th:text="${p2.discoveredSecurityViolationsTotal.pointA}+${p2.discoveredLicenseViolationsTotal.pointA}"></td>
+                <td th:text="${p2.discoveredSecurityViolationsTotal.pointB}+${p2.discoveredLicenseViolationsTotal.pointB}"></td>
+                <td th:text="${p2.discoveredSecurityViolationsTotal.pointC}+${p2.discoveredLicenseViolationsTotal.pointC}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br/>
+    
+    <table class="table table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Period 1</th>
+                <th scope="col">Period 2</th>
+             </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+            <td> Your fix rate is <span th:text="${fixRate}"/>%</td>
+             </tr> -->
+            <tr>
+            <td> It took an average of <span th:text="${p1.mttrAvg[0]}"/> days to fix critical violations</td>
+            <td> It took an average of <span th:text="${p2.mttrAvg[0]}"/> days to fix critical violations</td>
+             </tr>
+            <tr>
+            <td> It took an average of <span th:text="${p1.mttrAvg[1]}"/> days to fix severe violations</td>
+            <td> It took an average of <span th:text="${p2.mttrAvg[1]}"/> days to fix severe violations</td>
+             </tr>
+            <tr>
+            <td> It took an average of <span th:text="${p1.mttrAvg[2]}"/> days to fix moderate violations</td>
+            <td> It took an average of <span th:text="${p2.mttrAvg[2]}"/> days to fix moderate violations</td>            
+             </tr>
+            <tr>
+            <td style="background-color: aliceblue;"></td>
+            <td style="background-color: aliceblue;"></td>
+            </tr>
+            <!-- <tr>
+            <td> On average, each application has <span th:text="${openCriticalViolationsAvg}"/> open critical violations</td>
+             </tr> -->
+            <tr>
+            <td> Most critical application has <span th:text="${p1.mostCriticalApplicationCount}"/> critical violations</td>
+            <td> Most critical application has <span th:text="${p2.mostCriticalApplicationCount}"/> critical violations</td>
+             </tr>
+            <tr>
+            <td> Least critical application has <span th:text="${p1.leastCriticalApplicationCount}"/> critical violations</td>
+            <td> Least critical application has <span th:text="${p2.leastCriticalApplicationCount}"/> critical violations</td>
+             </tr>
+
+        </tbody>
+    </table>
+
+
+</div>

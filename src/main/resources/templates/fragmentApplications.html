@@ -1,0 +1,227 @@
+<div th:fragment="applicationsFrag">
+    <div class="chart-container">
+	<div th:if="${globalsummary}">
+        <div th:unless="${applicationReport}">
+
+        <div id="applicationsOnboardedChart"></div>
+        <script th:inline="javascript">
+            var points = /*[[${applicationsOnboardedChart}]]*/'noValue';
+	     	var pdata = [];
+	     	var labels = [];
+	     	
+	     	points.forEach(entry => {
+	            var label = entry.label;
+	            var point = entry.pointA;
+	            labels.push(label);
+	            pdata.push(point);
+	        }); 
+
+            var options = {
+                chart: barchart,
+                grid: grid,
+                dataLabels: barchartlabels,
+                fill: fillbar,
+                series: [{
+                    name: 'applications',
+                    data: pdata
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Number of applications onboarded',
+                    align: 'left'
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#applicationsOnboardedChart"), options);
+
+            chart.render();
+        </script>
+    
+        <div style="page-break-before: always;"/> 	
+
+        <div id="numberOfApplicationsScannedChart"></div>
+        <script th:inline="javascript">
+            var points = /*[[${numberOfApplicationsScannedChart}]]*/'noValue';
+            var pdata = [];
+            var labels = [];
+            
+            points.forEach(entry => {
+                var label = entry.label;
+                var point = entry.pointA;
+                labels.push(label);
+                pdata.push(point);
+            }); 
+
+            var options = {
+                chart: barchart,
+                grid: grid,
+                dataLabels: barchartlabels,
+                fill: fillbar,
+                series: [{
+                    name: 'applications',
+                    data: pdata
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Number of applications scanned per period',
+                    align: 'left'
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#numberOfApplicationsScannedChart"), options);
+
+            chart.render();
+        </script>
+		</div>
+        </div>
+
+        <div id="numberOfScansChart"></div>
+        <script th:inline="javascript">
+            var points = /*[[${numberOfScansChart}]]*/'noValue';
+            var pdata = [];
+            var labels = [];
+            
+            points.forEach(entry => {
+                var label = entry.label;
+                var point = entry.pointA;
+                labels.push(label);
+                pdata.push(point);
+            }); 
+
+            var options = {
+                chart: barchart,
+                grid: grid,
+                dataLabels: barchartlabels,
+                fill: fillbar,
+                series: [{
+                    name: 'applications',
+                    data: pdata
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Number of scans per period',
+                    align: 'left'
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#numberOfScansChart"), options);
+
+            chart.render();
+        </script>
+
+        <div style="page-break-before: always;"/> 	
+        
+        <div id="riskRatioChart"></div>
+        <script th:inline="javascript">
+            var points = /*[[${riskRatioChart}]]*/'noValue';
+	     	var pdata = [];
+	     	var labels = [];
+	     	
+	     	points.forEach(entry => {
+	            var label = entry.label;
+	            var point = entry.pointA;
+	            labels.push(label);
+	            pdata.push(point);
+	        }); 
+
+            var options = {
+                chart: barchart,
+                grid: grid,
+                dataLabels: barchartlabels,
+                fill: fillbar,
+                series: [{
+                    name: 'risk ratio',
+                    data: pdata
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Risk Ratio (Critical Violations/Applications)',
+                    align: 'left'
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#riskRatioChart"), options);
+
+            chart.render();
+        </script>
+
+        <div id="mttrChart"></div>
+        <script th:inline="javascript">
+            var points = /*[[${mttrChart}]]*/'noValue';
+	     	var dataA = [];
+	     	var dataB = [];
+	     	var dataC = [];
+
+	     	var labels = [];
+	     	
+	     	points.forEach(entry => {
+                labels.push(entry.label);
+                
+                if (entry.pointA > 0) {
+                    dataA.push(Math.ceil(entry.pointA));
+                }
+                else {
+                    dataA.push(null);
+                }
+
+                if (entry.pointB > 0) {
+                    dataB.push(Math.ceil(entry.pointB));
+                }
+                else {
+                    dataB.push(null);
+                }
+
+                if (entry.pointC > 0) {
+                    dataC.push(Math.ceil(entry.pointC));
+                }
+                else {
+                    dataC.push(null);
+                }
+	        }); 
+
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#F90707', '#F99A07', '#F9DC07'],
+                fill: fillStacked,
+                series: [{
+                    name: 'Critical',
+                    data: dataA
+                },
+                {
+                    name: 'Severe',
+                    data: dataB
+                },
+                {
+                    name: 'Moderate',
+                    data: dataC
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'MTTR (days)',
+                    align: 'left'
+                },
+            }
+
+            var chart = new ApexCharts(document.querySelector("#mttrChart"), options);
+
+            chart.render();
+        </script>
+    
+    	
+        
+     </div>   
+
+</div>

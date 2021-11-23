@@ -1,0 +1,147 @@
+
+ <div th:fragment="headerPdfFrag">
+ 
+  <meta charset="utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+
+  <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+  <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+  <script src="/js/apexcharts.min.js"></script>
+  <link rel="stylesheet" href="/css/apexcharts.css"/>
+
+  <link href="/css/main.css" rel="stylesheet"/>
+  
+  <div class="text-center">
+      <img class="displayed" th:src="@{images/sonatype.png}"/>   
+      <title th:text="'Success Metrics'"></title>
+      <h3>Success Metrics</h3>
+      <p th:text="${#dates.createNow()}"></p>
+  </div>
+
+  <script>
+      var height = '700px'
+      var width = '950px'
+
+      var grid = {
+          row: {
+              colors: ['#f3f3f3', 'transparent'],
+              opacity: 0.5
+          }
+      }
+
+      var barchartlabels = {
+          enabled: true,
+          enabledOnSeries: undefined,
+          formatter: function (val, opts) {
+              return val
+          },
+          textAnchor: 'middle',
+          distributed: false,
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+              fontSize: '10px',
+              fontFamily: 'Helvetica, Arial, sans-serif',
+              fontWeight: 'bold',
+              colors: ['#fff']
+          },
+          background: {
+              enabled: false,
+              foreColor: '#fff',
+              padding: 4,
+              borderRadius: 2,
+              borderWidth: 2,
+              borderColor: '#fff',
+              opacity: 0.9,
+              
+          },
+          
+      }
+
+      var barchart = {
+          type: 'bar',
+          height: height,
+          width: width,
+          zoom: {
+              enabled: false
+          }
+      }
+
+      var linechart = {
+          type: 'line',
+          height: height,
+          width: width,
+          zoom: {
+              enabled: false
+          }
+      }
+
+      var stackedbarchart = {
+          type: 'bar',
+          height: height,
+          width: width,
+          stacked: true,
+          toolbar: {
+              show: true
+          },
+          zoom: {
+              enabled: true
+          }
+      }
+
+      var legend = {
+          position: 'top',
+          horizontalAlign: 'left',
+          offsetX: 120
+      }
+
+      var fillbar = {
+          colors: '#0118FD'
+      }
+
+      var fillStacked = {
+          colors: ['#F90707', '#F99A07', '#F9DC07']
+      }
+
+      var fillViolationsSummary = {
+          colors: ['#FA0707', '#F99A07', '#08B005', '#0080FF'],
+      }
+
+      var donutPlotOptions = {
+    expandOnClick: true,
+    donut: {
+      size: '45%',
+        labels: {
+          show: true,
+          name: {
+            show: true
+          },
+          value: {
+            show: true
+          },
+          total: {
+            show: true,
+            showAlways: true,
+            label: 'Total',
+            fontSize: '10px',
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            fontWeight: 400,
+            color: '#373d3f',
+            formatter: function (w) {
+                return w.globals.seriesTotals.reduce((a, b) => {
+                return a + b
+              }, 0)
+            }
+          }
+        }
+      }
+    }
+
+  </script>
+
+</div>
+
+
+
