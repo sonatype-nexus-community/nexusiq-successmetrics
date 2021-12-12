@@ -31,7 +31,7 @@ import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
+import java.nio.file.Paths;
 @Service
 public class LoaderService {
 
@@ -93,7 +93,8 @@ public class LoaderService {
 	public boolean loadMetricsFile(String fileName, String header, String stmt) throws IOException {
 		boolean status = false;
 		
-		String filePath = dataDir + "/" + fileName;
+		String filePath = Paths.get(System.getProperty("user.dir")).resolve(Paths.get(dataDir).resolve(fileName)).toString();
+
 		log.info("Loading file: " + filePath);
 
 		if (isHeaderValid(filePath, header)){

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<div><div>
+ 
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+  
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  
+    <script src="/js/apexcharts.min.js"></script>
+    <link rel="stylesheet" href="/css/apexcharts.css"/>
+
+    <link href="/css/main.css" rel="stylesheet"/>
+    
+    <div class="text-center">
+        <img class="displayed" src="images/sonatype.png"/>   
+        <title>Success Metrics</title>
+        <h3>Success Metrics</h3>
+        <h4></h4>
+    </div>
+
+    <script>
+        var height = '700px'
+        var width = '950px'
+
+        var grid = {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            }
+        }
+
+        var barchartlabels = {
+            enabled: true,
+            enabledOnSeries: undefined,
+            formatter: function (val, opts) {
+                return val
+            },
+            textAnchor: 'middle',
+            distributed: false,
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+                fontSize: '10px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontWeight: 'bold',
+                colors: ['#fff']
+            },
+            background: {
+                enabled: false,
+                foreColor: '#fff',
+                padding: 4,
+                borderRadius: 2,
+                borderWidth: 2,
+                borderColor: '#fff',
+                opacity: 0.9,
+                
+            },
+            
+        }
+
+        var barchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var linechart = {
+            type: 'line',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var stackedbarchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            stacked: true,
+            toolbar: {
+                show: true
+            },
+            zoom: {
+                enabled: true
+            }
+        }
+
+        var legend = {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 120
+        }
+
+        var fillbar = {
+            colors: '#0118FD'
+        }
+
+        var fillStacked = {
+            colors: ['#F90707', '#F99A07', '#F9DC07']
+        }
+
+        var fillViolationsSummary = {
+            colors: ['#FA0707', '#F99A07', '#08B005', '#0080FF'],
+        }
+
+        var donutPlotOptions = {
+			expandOnClick: true,
+			donut: {
+				size: '45%',
+					labels: {
+						show: true,
+						name: {
+							show: true
+						},
+						value: {
+							show: true
+						},
+						total: {
+							show: true,
+							showAlways: true,
+							label: 'Total',
+							fontSize: '10px',
+							fontFamily: 'Helvetica, Arial, sans-serif',
+							fontWeight: 400,
+							color: '#373d3f',
+							formatter: function (w) {
+							    return w.globals.seriesTotals.reduce((a, b) => {
+									return a + b
+								}, 0)
+							}
+						}
+					}
+				}
+			}
+
+    </script>
+  
+</div></div>
+</head>
+
+<body>
+	<div class="jumbotron">
+	<h3>License Violations Report</h3>
+    </div>
+
+    <!--  license -->
+    <div><div>
+
+    <div class="chart-container">
+
+        <div id="LicenseViolationsChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":3,"pointB":3,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":0,"pointB":3,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":1306,"pointB":3,"pointC":1306,"pointD":0},{"label":"2021-04-01","pointA":0,"pointB":3,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":0,"pointB":3,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":240,"pointB":243,"pointC":0,"pointD":0}];
+	     	var dataA = [];
+	     	var dataB = [];
+	     	var dataC = [];
+	     	var dataD = [];
+
+	     	var labels = [];
+	     	
+	     	points.forEach(entry => {
+	            var label = entry.label;
+	            var pointA = entry.pointA;
+	            var pointB = entry.pointB;
+                var pointC = entry.pointC;
+                var pointD = entry.pointD;
+
+
+	            labels.push(label);
+	            dataA.push(pointA);
+	            dataB.push(pointB);
+                dataC.push(pointC);
+                dataD.push(pointD);
+
+
+            }); 
+            
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#FA0707', '#F99A07','#08B005',  '#0080FF'], 
+
+                fill: fillViolationsSummary,
+
+                series: [{
+                    name: 'Discovered',
+                    data: dataA
+                },
+                {
+                    name: 'Open',
+                    data: dataB
+                },
+                {
+                    name: 'Fixed',
+                    data: dataC
+                },
+                {
+                    name: 'Waived',
+                    data: dataD
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'License Violations',
+                    align: 'left'
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#LicenseViolationsChart"), options);
+            chart.render();
+        </script>
+
+
+        <div style="page-break-before: always;"/> 	
+
+        <div id="discoveredLicenseViolationsChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":3,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":1306,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":235,"pointB":5,"pointC":0,"pointD":0}];
+            var dataA = [];
+            var dataB = [];
+            var dataC = [];
+
+            var labels = [];
+            
+            points.forEach(entry => {
+                labels.push(entry.label);
+                dataA.push(entry.pointA);
+                dataB.push(entry.pointB);
+                dataC.push(entry.pointC);
+            }); 
+
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#F90707', '#F99A07', '#F9DC07'],
+                fill: fillStacked,
+                series: [{
+                    name: 'Critical',
+                    data: dataA
+                },
+                {
+                    name: 'Severe',
+                    data: dataB
+                },
+                {
+                    name: 'Moderate',
+                    data: dataC
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Discovered License Violations',
+                    align: 'left'
+                },
+            }
+
+            var chart = new ApexCharts(document.querySelector("#discoveredLicenseViolationsChart"), options);
+            chart.render();
+        </script>
+
+        <div id="openLicenseViolationsChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":3,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":3,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":3,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":3,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":3,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":238,"pointB":5,"pointC":0,"pointD":0}];
+            var dataA = [];
+            var dataB = [];
+            var dataC = [];
+
+            var labels = [];
+            
+            points.forEach(entry => {
+                labels.push(entry.label);
+                dataA.push(entry.pointA);
+                dataB.push(entry.pointB);
+                dataC.push(entry.pointC);
+            }); 
+
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#F90707', '#F99A07', '#F9DC07'],
+                fill: fillStacked,
+                series: [{
+                    name: 'Critical',
+                    data: dataA
+                },
+                {
+                    name: 'Severe',
+                    data: dataB
+                },
+                {
+                    name: 'Moderate',
+                    data: dataC
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Open License Violations',
+                    align: 'left'
+                },
+            }
+
+            var chart = new ApexCharts(document.querySelector("#openLicenseViolationsChart"), options);
+            chart.render();
+        </script>
+
+        <div style="page-break-before: always;"/> 	
+
+        <div id="fixedLicenseViolationsChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":1306,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":0,"pointB":0,"pointC":0,"pointD":0}];
+            var dataA = [];
+            var dataB = [];
+            var dataC = [];
+
+            var labels = [];
+            
+            points.forEach(entry => {
+                labels.push(entry.label);
+                dataA.push(entry.pointA);
+                dataB.push(entry.pointB);
+                dataC.push(entry.pointC);
+            }); 
+
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#F90707', '#F99A07', '#F9DC07'],
+                fill: fillStacked,
+                series: [{
+                    name: 'Critical',
+                    data: dataA
+                },
+                {
+                    name: 'Severe',
+                    data: dataB
+                },
+                {
+                    name: 'Moderate',
+                    data: dataC
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Fixed License Violations',
+                    align: 'left'
+                },
+            }
+
+            var chart = new ApexCharts(document.querySelector("#fixedLicenseViolationsChart"), options);
+            chart.render();
+        </script>
+
+        <div id="waivedLicenseViolationsChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":0,"pointB":0,"pointC":0,"pointD":0}];
+            var dataA = [];
+            var dataB = [];
+            var dataC = [];
+
+            var labels = [];
+            
+            points.forEach(entry => {
+                labels.push(entry.label);
+                dataA.push(entry.pointA);
+                dataB.push(entry.pointB);
+                dataC.push(entry.pointC);
+            }); 
+
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#F90707', '#F99A07', '#F9DC07'],
+                fill: fillStacked,
+                series: [{
+                    name: 'Critical',
+                    data: dataA
+                },
+                {
+                    name: 'Severe',
+                    data: dataB
+                },
+                {
+                    name: 'Moderate',
+                    data: dataC
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Waived License Violations',
+                    align: 'left'
+                },
+            }
+
+            var chart = new ApexCharts(document.querySelector("#waivedLicenseViolationsChart"), options);
+            chart.render();
+        </script>
+
+    </div>
+</div></div>
+    
+</body>
