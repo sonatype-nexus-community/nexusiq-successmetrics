@@ -32,11 +32,6 @@ dependencies {
     implementation ('org.springframework.boot:spring-boot-starter-data-jpa:2.5.3')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'com.h2database:h2'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'io.projectreactor:reactor-test'
-	testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
-	testImplementation("com.approvaltests:approvaltests:12.4.1")
-	
   	implementation 'org.webjars:jquery:3.5.1'
 	implementation 'org.webjars:bootstrap:4.5.0'
 	implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
@@ -48,6 +43,11 @@ dependencies {
     implementation 'commons-io:commons-io:2.11.0'
 	implementation 'org.json:json:20210307'
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+	testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
+	testImplementation("com.approvaltests:approvaltests:12.4.1")
 }   
 
 nexusIQScan {

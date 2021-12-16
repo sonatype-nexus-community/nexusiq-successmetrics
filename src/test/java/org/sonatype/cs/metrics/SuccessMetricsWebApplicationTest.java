@@ -17,10 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.approvaltests.Approvals;
 
 // https://spring.io/guides/gs/testing-web/
-// https://www.baeldung.com/spring-tests-override-properties
-
 @SpringBootTest(properties = { "data.dir=src/test/resources" }, webEnvironment = WebEnvironment.RANDOM_PORT)
-public class SuccessMetricsApplicationTest {
+public class SuccessMetricsWebApplicationTest {
 
 	@Autowired
 	private SuccessMetricsApplication controller;
