@@ -2,7 +2,6 @@ package org.sonatype.cs.metrics;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.Ignore;
 import java.lang.String;
 import java.lang.System;
 import java.util.Arrays;
@@ -72,7 +71,6 @@ public class SuccessMetricsWebApplicationTest {
 				.contains("License Violations Report"));
 	}
 
-	@Ignore
 	@Test
 	public void defaultPageContentTest() throws Exception {
 		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/summary", String.class);
