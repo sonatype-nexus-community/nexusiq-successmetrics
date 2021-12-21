@@ -73,7 +73,7 @@ public class SuccessMetricsWebApplicationTest {
 
 	@Test
 	public void defaultPageContentTest() throws Exception {
-		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/summary", String.class);
+		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/", String.class);
 		pageContents = removeLine(pageContents, 23);
 		Approvals.verify(pageContents);
 	}
