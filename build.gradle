@@ -8,6 +8,7 @@ plugins {
 	id 'org.sonatype.gradle.plugins.scan' version '1.2.0'
 	id "com.palantir.docker" version "0.22.1"
 	id "jacoco"
+    id "io.freefair.lombok" version "6.3.0"
  }
 
 group = 'org.sonatype.cs'
