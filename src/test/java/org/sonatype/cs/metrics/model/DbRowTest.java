@@ -50,6 +50,6 @@ public class DbRowTest {
 
     @Test
     void testToString() {
-        assertEquals("DbRow [label=row1, pointA=1, pointB=2, pointC=3, pointD=4]", dbRow.toString());
+        assertEquals("DbRow(label=row1, pointA=1, pointB=2, pointC=3, pointD=4)", dbRow.toString());
     }
 }

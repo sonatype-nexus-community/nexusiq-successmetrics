@@ -50,7 +50,6 @@ public class MttrTest {
 
     @Test
     void testToString() {
-        // TODO Should this in fact return Mttr rather than DbRowFloat?
-        assertEquals("DbRowFloat [label=row1, pointA=1.0, pointB=2.0, pointC=3.0, pointD=4.0]", mttr.toString());
+        assertEquals("Mttr(label=row1, pointA=1.0, pointB=2.0, pointC=3.0, pointD=4.0)", mttr.toString());
     }
 }

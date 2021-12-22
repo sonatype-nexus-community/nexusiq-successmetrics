@@ -24,7 +24,8 @@ public class DbRowStrTest {
 
     @Test
     void testGetPointC() {
-        assertEquals("C", dbRowStr.getPointC());    }
+        assertEquals("C", dbRowStr.getPointC());
+    }
 
     @Test
     void testGetPointD() {
@@ -156,7 +157,9 @@ public class DbRowStrTest {
 
     @Test
     void testToString() {
-        // TODO Although this test passes, it should read out to point M not stop at F in the base code
-        assertEquals("DbRowStr [pointA=A, pointB=B, pointC=C, pointD=D, pointE=E, pointF=F]", dbRowStr.toString()); ;
+        assertEquals(
+                "DbRowStr(pointA=A, pointB=B, pointC=C, pointD=D, pointE=E, pointF=F, pointG=G, pointH=H, pointI=I, pointJ=J, pointK=K, pointL=L, pointM=M)",
+                dbRowStr.toString());
+        ;
     }
 }
