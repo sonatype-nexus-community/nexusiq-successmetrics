@@ -1,9 +1,10 @@
 package org.sonatype.cs.metrics.model;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Data;
 
-public @Data @AllArgsConstructor class DbRowStr {
+public @Data @AllArgsConstructor @NoArgsConstructor class DbRowStr {
     private String pointA;
     private String pointB;
     private String pointC;
