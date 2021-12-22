@@ -7,6 +7,7 @@ plugins {
 	id 'java'
 	id 'org.sonatype.gradle.plugins.scan' version '1.2.0'
 	id "com.palantir.docker" version "0.22.1"
+	id "jacoco"
  }
 
 group = 'org.sonatype.cs'
@@ -30,22 +31,24 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation ('org.springframework.boot:spring-boot-starter-data-jpa:2.5.3')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.h2database:h2'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'io.projectreactor:reactor-test'
-        
+    implementation 'com.h2database:h2'
   	implementation 'org.webjars:jquery:3.5.1'
 	implementation 'org.webjars:bootstrap:4.5.0'
 	implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
 	implementation 'org.xhtmlrenderer:flying-saucer-pdf-openpdf:9.1.20'
 	implementation 'org.apache.commons:commons-csv:1.5'
-	compileOnly 'com.opencsv:opencsv:5.2'
+	implementation 'com.opencsv:opencsv:5.2'
 	implementation 'org.apache.httpcomponents:httpclient:4.5.9'
     implementation 'commons-codec:commons-codec:1.10'
     implementation 'commons-io:commons-io:2.11.0'
 	implementation 'org.json:json:20210307'
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-}
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+	testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
+	testImplementation("com.approvaltests:approvaltests:12.4.1")
+}   
 
 nexusIQScan {
   username = 'admin'
@@ -54,6 +57,21 @@ nexusIQScan {
   applicationId = 'successmetrics'
   stage = 'build'  
   allConfigurations = true 
+}
+
+test {
+	useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+jacocoTestReport {
+	reports{
+		xml.enabled true
+	}
+    dependsOn test // tests are required to run before generating the report
 }
 
 clean.doFirst {

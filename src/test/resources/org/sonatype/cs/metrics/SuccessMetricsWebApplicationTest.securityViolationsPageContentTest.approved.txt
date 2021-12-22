@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<div><div>
+ 
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+  
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  
+    <script src="/js/apexcharts.min.js"></script>
+    <link rel="stylesheet" href="/css/apexcharts.css"/>
+
+    <link href="/css/main.css" rel="stylesheet"/>
+    
+    <div class="text-center">
+        <img class="displayed" src="images/sonatype.png"/>   
+        <title>Success Metrics</title>
+        <h3>Success Metrics</h3>
+        <h4></h4>
+    </div>
+
+    <script>
+        var height = '700px'
+        var width = '950px'
+
+        var grid = {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            }
+        }
+
+        var barchartlabels = {
+            enabled: true,
+            enabledOnSeries: undefined,
+            formatter: function (val, opts) {
+                return val
+            },
+            textAnchor: 'middle',
+            distributed: false,
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+                fontSize: '10px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontWeight: 'bold',
+                colors: ['#fff']
+            },
+            background: {
+                enabled: false,
+                foreColor: '#fff',
+                padding: 4,
+                borderRadius: 2,
+                borderWidth: 2,
+                borderColor: '#fff',
+                opacity: 0.9,
+                
+            },
+            
+        }
+
+        var barchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var linechart = {
+            type: 'line',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var stackedbarchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            stacked: true,
+            toolbar: {
+                show: true
+            },
+            zoom: {
+                enabled: true
+            }
+        }
+
+        var legend = {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 120
+        }
+
+        var fillbar = {
+            colors: '#0118FD'
+        }
+
+        var fillStacked = {
+            colors: ['#F90707', '#F99A07', '#F9DC07']
+        }
+
+        var fillViolationsSummary = {
+            colors: ['#FA0707', '#F99A07', '#08B005', '#0080FF'],
+        }
+
+        var donutPlotOptions = {
+			expandOnClick: true,
+			donut: {
+				size: '45%',
+					labels: {
+						show: true,
+						name: {
+							show: true
+						},
+						value: {
+							show: true
+						},
+						total: {
+							show: true,
+							showAlways: true,
+							label: 'Total',
+							fontSize: '10px',
+							fontFamily: 'Helvetica, Arial, sans-serif',
+							fontWeight: 400,
+							color: '#373d3f',
+							formatter: function (w) {
+							    return w.globals.seriesTotals.reduce((a, b) => {
+									return a + b
+								}, 0)
+							}
+						}
+					}
+				}
+			}
+
+    </script>
+  
+</div></div>
+
+</head>
+
+<body>
+	<div class="jumbotron">
+	<h3>Security Violations Report</h3>
+    </div>
+
+    <!--  security -->
+    <div><div>
+
+    <div class="chart-container">
+
+        <div id="securityViolationsChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":1573,"pointB":1130,"pointC":443,"pointD":0},{"label":"2021-02-01","pointA":540,"pointB":1621,"pointC":43,"pointD":6},{"label":"2021-03-01","pointA":1081,"pointB":2436,"pointC":266,"pointD":0},{"label":"2021-04-01","pointA":1335,"pointB":3721,"pointC":47,"pointD":3},{"label":"2021-05-01","pointA":1122,"pointB":4513,"pointC":329,"pointD":1},{"label":"2021-06-01","pointA":588,"pointB":5063,"pointC":38,"pointD":0}];
+	     	var dataA = [];
+	     	var dataB = [];
+	     	var dataC = [];
+	     	var dataD = [];
+
+	     	var labels = [];
+	     	
+	     	points.forEach(entry => {
+	            var label = entry.label;
+	            var pointA = entry.pointA;
+	            var pointB = entry.pointB;
+	            var pointC = entry.pointC;
+	            var pointD = entry.pointD;
+
+	            labels.push(label);
+	            dataA.push(pointA);
+	            dataB.push(pointB);
+	            dataC.push(pointC);
+	            dataD.push(pointD);
+	            
+	            console.log(entry);
+
+            }); 
+            
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#FA0707', '#F99A07','#08B005',  '#0080FF'], 
+                fill: fillViolationsSummary,
+
+                series: [{
+                    name: 'Discovered',
+                    data: dataA
+                },
+                {
+                    name: 'Open',
+                    data: dataB
+                },
+                {
+                    name: 'Fixed',
+                    data: dataC
+                },
+                {
+                    name: 'Waived',
+                    data: dataD
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Security Violations',
+                    align: 'left'
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#securityViolationsChart"), options);
+
+            chart.render();
+        </script>
+
+        <div style="page-break-before: always;"/> 	
+
+        <div id="discoveredSecurityViolationsChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":742,"pointB":772,"pointC":59,"pointD":0},{"label":"2021-02-01","pointA":268,"pointB":258,"pointC":14,"pointD":0},{"label":"2021-03-01","pointA":545,"pointB":501,"pointC":35,"pointD":0},{"label":"2021-04-01","pointA":662,"pointB":638,"pointC":35,"pointD":0},{"label":"2021-05-01","pointA":598,"pointB":517,"pointC":7,"pointD":0},{"label":"2021-06-01","pointA":249,"pointB":311,"pointC":28,"pointD":0}];
+            var dataA = [];
+            var dataB = [];
+            var dataC = [];
+
+            var labels = [];
+            
+            points.forEach(entry => {
+                labels.push(entry.label);
+                dataA.push(entry.pointA);
+                dataB.push(entry.pointB);
+                dataC.push(entry.pointC);
+            }); 
+
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#F90707', '#F99A07', '#F9DC07'],
+                fill: fillStacked,
+                series: [{
+                    name: 'Critical',
+                    data: dataA
+                },
+                {
+                    name: 'Severe',
+                    data: dataB
+                },
+                {
+                    name: 'Moderate',
+                    data: dataC
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Discovered Security Violations',
+                    align: 'left'
+                },
+            }
+
+            var chart = new ApexCharts(document.querySelector("#discoveredSecurityViolationsChart"), options);
+            chart.render();
+        </script>
+
+        <div id="openSecurityViolationsChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":508,"pointB":573,"pointC":49,"pointD":0},{"label":"2021-02-01","pointA":743,"pointB":815,"pointC":63,"pointD":0},{"label":"2021-03-01","pointA":1154,"pointB":1194,"pointC":88,"pointD":0},{"label":"2021-04-01","pointA":1772,"pointB":1826,"pointC":123,"pointD":0},{"label":"2021-05-01","pointA":2199,"pointB":2184,"pointC":130,"pointD":0},{"label":"2021-06-01","pointA":2438,"pointB":2467,"pointC":158,"pointD":0}];
+            var dataA = [];
+            var dataB = [];
+            var dataC = [];
+
+            var labels = [];
+            
+            points.forEach(entry => {
+                labels.push(entry.label);
+                dataA.push(entry.pointA);
+                dataB.push(entry.pointB);
+                dataC.push(entry.pointC);
+            }); 
+
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#F90707', '#F99A07', '#F9DC07'],
+                fill: fillStacked,
+                series: [{
+                    name: 'Critical',
+                    data: dataA
+                },
+                {
+                    name: 'Severe',
+                    data: dataB
+                },
+                {
+                    name: 'Moderate',
+                    data: dataC
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Open Security Violations',
+                    align: 'left'
+                },
+            }
+
+            var chart = new ApexCharts(document.querySelector("#openSecurityViolationsChart"), options);
+            chart.render();
+        </script>
+
+
+        <div style="page-break-before: always;"/> 	
+
+        <div id="fixedSecurityViolationsChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":234,"pointB":199,"pointC":10,"pointD":0},{"label":"2021-02-01","pointA":27,"pointB":16,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":134,"pointB":122,"pointC":10,"pointD":0},{"label":"2021-04-01","pointA":41,"pointB":6,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":170,"pointB":159,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":10,"pointB":28,"pointC":0,"pointD":0}];
+            var dataA = [];
+            var dataB = [];
+            var dataC = [];
+
+            var labels = [];
+            
+            points.forEach(entry => {
+                labels.push(entry.label);
+                dataA.push(entry.pointA);
+                dataB.push(entry.pointB);
+                dataC.push(entry.pointC);
+            }); 
+
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#F90707', '#F99A07', '#F9DC07'],
+                fill: fillStacked,
+                series: [{
+                    name: 'Critical',
+                    data: dataA
+                },
+                {
+                    name: 'Severe',
+                    data: dataB
+                },
+                {
+                    name: 'Moderate',
+                    data: dataC
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Fixed Security Violations',
+                    align: 'left'
+                },
+            }
+
+            var chart = new ApexCharts(document.querySelector("#fixedSecurityViolationsChart"), options);
+            chart.render();
+        </script>
+
+        <div id="waivedSecurityViolationsChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":6,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":0,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":3,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":1,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":0,"pointB":0,"pointC":0,"pointD":0}];
+            var dataA = [];
+            var dataB = [];
+            var dataC = [];
+
+            var labels = [];
+            
+            points.forEach(entry => {
+                labels.push(entry.label);
+                dataA.push(entry.pointA);
+                dataB.push(entry.pointB);
+                dataC.push(entry.pointC);
+            }); 
+
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#F90707', '#F99A07', '#F9DC07'],
+                fill: fillStacked,
+                series: [{
+                    name: 'Critical',
+                    data: dataA
+                },
+                {
+                    name: 'Severe',
+                    data: dataB
+                },
+                {
+                    name: 'Moderate',
+                    data: dataC
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Waived Security Violations',
+                    align: 'left'
+                },
+            }
+
+            var chart = new ApexCharts(document.querySelector("#waivedSecurityViolationsChart"), options);
+            chart.render();
+        </script>
+
+    </div>
+</div></div>
+    
+</body>
