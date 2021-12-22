@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.sonatype.cs.metrics.controller.InsightsAnalysisController;
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +15,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PeriodsDataService {
-	private static final Logger log = LoggerFactory.getLogger(PeriodsDataService.class);
-
 	@Autowired
 	private DbService dbService;
 	
-	private static int oneDayMs = 86400000;
-    private static long oneWeekMs = 604800000;
     private static long oneMonthMs = 2629800000L;
 
-	
 	public Map<String, Object> getPeriodData(String tableName) throws ParseException {
 		Map<String, Object> model = new HashMap<>();
 		model.put("doAnalysis", false);
@@ -82,15 +74,12 @@ public class PeriodsDataService {
 	
 	private String getTimePeriodFrequency(int tmSize, String firstTimePeriod, String secondTimePeriod) throws ParseException {
 
-		long oneWeek = 604800000;
-		
 		String timePeriodLabel = "Week";
 		
 		if (tmSize > 1) {
 		
 			long fp = this.convertDateStr(firstTimePeriod);
 			long sp = this.convertDateStr(secondTimePeriod);
-			
 			long diff = sp - fp;
 
 			if (diff < oneMonthMs) {
@@ -98,7 +87,6 @@ public class PeriodsDataService {
 			}
 			else {
 				timePeriodLabel = "month";
-
 			}
 		}
 		else {

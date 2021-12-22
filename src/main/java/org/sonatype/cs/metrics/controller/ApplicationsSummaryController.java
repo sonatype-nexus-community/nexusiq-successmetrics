@@ -34,7 +34,6 @@ public class ApplicationsSummaryController {
 
     @GetMapping({ "/appsummary" })
     public String application(Model model, @RequestParam(value = "appname", defaultValue = "none") String applicationName) throws ParseException {
-    	boolean showData = false;
 
         log.info("In ApplicationSummaryController with " + applicationName);
         

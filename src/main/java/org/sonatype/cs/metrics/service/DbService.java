@@ -5,7 +5,6 @@ import java.util.List;
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.model.DbRowStr;
 import org.sonatype.cs.metrics.model.Mttr;
-import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

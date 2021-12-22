@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import com.opencsv.bean.CsvBindByName;
 
 @Entity
+@SuppressWarnings("unused")
 public class Metric {
 
     @Id

@@ -1,14 +1,10 @@
 package org.sonatype.cs.metrics;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.service.InsightsAnalysisService;
 import org.sonatype.cs.metrics.service.LoaderService;
 import org.sonatype.cs.metrics.service.SummaryPdfService;
-import org.sonatype.cs.metrics.util.DataLoaderParams;
-import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner;
@@ -22,7 +18,6 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 	private static final Logger log = LoggerFactory.getLogger(SuccessMetricsApplication.class);
 	
 	public static boolean successMetricsFileLoaded = false;
-//	
 	@Value("${spring.main.web-application-type}")
 	private String runMode;
 
@@ -31,9 +26,6 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 
 	@Value("${pdf.htmltemplate}")
 	private String pdfTemplate;
-
-	@Value("${data.successmetrics}")
-	private String successmetricsDatafile;
 	
 	@Value("${iq.sm.csvfile}")
 	private boolean iqSmCsvfile;
