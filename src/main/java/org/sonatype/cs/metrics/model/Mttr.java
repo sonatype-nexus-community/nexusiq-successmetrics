@@ -10,4 +10,10 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Mttr {
     private float pointB;
     private float pointC;
     private float pointD;
+
+    @Override
+    public String toString() {
+        return "DbRowFloat [label=" + label + ", pointA=" + pointA + ", pointB=" + pointB + ", pointC=" + pointC
+                + ", pointD=" + pointD + "]";
+    }
 }

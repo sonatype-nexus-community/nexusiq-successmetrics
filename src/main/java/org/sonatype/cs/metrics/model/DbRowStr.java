@@ -18,4 +18,10 @@ public @Data @AllArgsConstructor @NoArgsConstructor class DbRowStr {
     private String pointK;
     private String pointL;
     private String pointM;
+
+    @Override
+    public String toString() {
+        return "DbRowStr [pointA=" + pointA + ", pointB=" + pointB + ", pointC=" + pointC + ", pointD=" + pointD
+                + ", pointE=" + pointE + ", pointF=" + pointF + "]";
+    }
 }

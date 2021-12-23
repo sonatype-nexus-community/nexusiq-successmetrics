@@ -10,4 +10,10 @@ public @Data @AllArgsConstructor @NoArgsConstructor class DbRow {
     private int pointB;
     private int pointC;
     private int pointD;
+
+    @Override
+    public String toString() {
+        return "DbRow [label=" + label + ", pointA=" + pointA + ", pointB=" + pointB + ", pointC=" + pointC
+                + ", pointD=" + pointD + "]";
+    }
 }
