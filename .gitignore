@@ -51,6 +51,7 @@ tmp/
 .pydevproject
 !src/test/resources/successmetrics.csv
 !src/test/resources/**/*.approved.txt
+!src/test/resources/reports2/*
 !src/test/java/org/sonatype/cs/**/*.java
 
 ###

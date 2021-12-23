@@ -170,11 +170,20 @@
 
 		
 			
-	    
+	    <div>
+	    <a href="violationsage">Policy Violations Report</a>
+	    <br><br>
+	    </div>
 	        
-	    
+	    <div>
+	    <a href="evaluations">Application Evaluations Report</a>
+	    <br><br>
+		</div>
 
-		
+		<div>
+		<a href="waivers">Component Waivers Report</a>
+		<br><br>
+		</div>
 		
 	    
          

@@ -1,0 +1,6167 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+<div><div>
+ 
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+  
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  
+    <script src="/js/apexcharts.min.js"></script>
+    <link rel="stylesheet" href="/css/apexcharts.css"/>
+
+    <link href="/css/main.css" rel="stylesheet"/>
+    
+    <div class="text-center">
+        <img class="displayed" src="images/sonatype.png"/>   
+        <title>Success Metrics</title>
+        <h3>Success Metrics</h3>
+        <h4></h4>
+    </div>
+
+    <script>
+        var height = '700px'
+        var width = '950px'
+
+        var grid = {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            }
+        }
+
+        var barchartlabels = {
+            enabled: true,
+            enabledOnSeries: undefined,
+            formatter: function (val, opts) {
+                return val
+            },
+            textAnchor: 'middle',
+            distributed: false,
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+                fontSize: '10px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontWeight: 'bold',
+                colors: ['#fff']
+            },
+            background: {
+                enabled: false,
+                foreColor: '#fff',
+                padding: 4,
+                borderRadius: 2,
+                borderWidth: 2,
+                borderColor: '#fff',
+                opacity: 0.9,
+                
+            },
+            
+        }
+
+        var barchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var linechart = {
+            type: 'line',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var stackedbarchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            stacked: true,
+            toolbar: {
+                show: true
+            },
+            zoom: {
+                enabled: true
+            }
+        }
+
+        var legend = {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 120
+        }
+
+        var fillbar = {
+            colors: '#0118FD'
+        }
+
+        var fillStacked = {
+            colors: ['#F90707', '#F99A07', '#F9DC07']
+        }
+
+        var fillViolationsSummary = {
+            colors: ['#FA0707', '#F99A07', '#08B005', '#0080FF'],
+        }
+
+        var donutPlotOptions = {
+			expandOnClick: true,
+			donut: {
+				size: '45%',
+					labels: {
+						show: true,
+						name: {
+							show: true
+						},
+						value: {
+							show: true
+						},
+						total: {
+							show: true,
+							showAlways: true,
+							label: 'Total',
+							fontSize: '10px',
+							fontFamily: 'Helvetica, Arial, sans-serif',
+							fontWeight: 400,
+							color: '#373d3f',
+							formatter: function (w) {
+							    return w.globals.seriesTotals.reduce((a, b) => {
+									return a + b
+								}, 0)
+							}
+						}
+					}
+				}
+			}
+
+    </script>
+  
+</div></div>
+</head>
+   
+   <body>
+   	
+      <div class="jumbotron">
+      <h4>Policy Violations Age</h4>
+      </div>
+            
+      <div class="chart-container" style="margin-left: 100px; width:40vw">
+    
+    	<div id="securityAgeChart" width="400" height="400"></div>
+      	<script>
+	      	var age90 = 741;
+	    	var age60 = 0;
+	    	var age30 = 0;
+	    	var age7 = 0;
+	    	
+	     	var pdata = [age7, age30, age60, age90];
+	     	var labels = ['0-7 days old', '8-30 days old', '31-60 days old', '>60 days old'];
+		 
+			var options = {
+				series: pdata,
+				labels: labels,
+				chart: {
+					type: 'donut',
+				 },
+				 plotOptions: {
+					pie: donutPlotOptions
+				},
+				responsive: [{
+					breakpoint: 480,
+					options: {
+						chart: {
+							width: 300
+						},
+						legend: {
+							position: 'bottom'
+						}
+					}
+				}]
+			};
+
+			var chart = new ApexCharts(document.querySelector("#securityAgeChart"), options);
+			chart.render();
+		</script>
+      
+      </div>
+     
+      
+<br><br><br><br>
+
+<br><br>
+
+
+<br><br>
+
+
+<br><br>
+
+<div> 
+<h5>Security Policy Violations over 60 Days</h5>
+<div class="container">
+<div class="row">
+<div class="col-xl mx-auto w-auto bg-white rounded">
+<div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+	
+	<table class="table table-striped table-bordered table-sm">
+	<thead class="thead-dark">
+    <tr>
+		<th>Policy Name</th>
+		<th>Reason</th>
+		<th>Application Name</th>
+		<th>Component Name</th>
+		<th>Open Time</th>
+		<th>Stage</th>
+	</tr>
+    </thead>
+    <tbody>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-25287</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-25288</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-34552</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-20 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_i686</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-macosx_10_10_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win_amd64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win32</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-7212</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/urllib3@1.25.2?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-macosx_10_10_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-7212</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/urllib3@1.25.2?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_i686</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_i686</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_i686</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_i686</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux2014_aarch64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-manylinux2010_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-manylinux2010_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-manylinux2010_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-manylinux2010_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-manylinux2010_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-manylinux2010_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-macosx_10_10_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win_amd64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win_amd64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux1_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35654</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-25291</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-25293</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28676</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win_amd64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win_amd64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-win32</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=pp36-pypy36_pp73-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win32</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win32</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-macosx_10_10_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-macosx_10_10_x86_64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux2014_aarch64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-macosx_10_10_intel</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-macosx_10_10_intel</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-macosx_10_10_intel</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-macosx_10_10_intel</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-macosx_10_10_intel</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-macosx_10_10_intel</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux2014_aarch64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp38-cp38-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win32</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp35-cp35m-win32</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35653</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23437</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux2014_aarch64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27921</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27922</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27923</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-28677</td>
+      	<td>chesscom__cmorenoserrano</td>
+      	<td>pkg:pypi/pillow@7.2.0?extension=whl&amp;qualifier=cp37-cp37m-manylinux2014_aarch64</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-20060</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/urllib3@1.22?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-7525</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.6.1?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp34-cp34m-win32</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-20060</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win-amd64-py2.7</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win-amd64-py2.6</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-16764</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django-make-app@0.1.3?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp27-cp27m-win32</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-17495</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:a-name/org.webjars%20swagger-ui@3.18.1</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp35-cp35m-win32</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win32-py3.2</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win32-py3.1</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py2-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-20060</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py2-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp35-cp35m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp27-cp27m-win32</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-12791</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-5200</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-7893</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-15751</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-17361</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-11651</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-25592</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-25281</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-25282</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-25283</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-3197</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2020-1057</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-20060</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/botocore@1.10.70?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-16764</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django-make-app@0.1.3?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp36-cp36m-macosx_10_9_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-16616</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyanyapi@0.6.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2018-0010</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyanyapi@0.6.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2020-0149</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/codecov@2.0.15?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp35-cp35m-macosx_10_6_intel</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp27-cp27m-win_amd64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp34-cp34m-manylinux1_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-20060</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21344</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21345</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21346</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21347</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21350</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp27-cp27m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=zip</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win32-py3.4</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2014-0474</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2016-9013</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-19844</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp36-cp36m-win_amd64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-20060</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/botocore@1.10.70?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win-amd64-py3.2</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp35-cp35m-win32</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp27-cp27mu-manylinux1_i686</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2015-0002</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/commons-collections/commons-collections@3.2.1?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2014-0474</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2016-9013</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-19844</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp36-cp36m-win32</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-20060</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp36-cp36m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-16618</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/owlmixin@1.2.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp34-cp34m-macosx_10_6_intel</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2020-0988</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:a-name/datatables@1.10.9</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-20060</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp27-cp27m-manylinux1_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win-amd64-py3.4</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_i686</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp27-cp27m-macosx_10_9_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-20060</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/urllib3@1.22?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2013-7459</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pycrypto@2.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-16763</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/confire@0.2.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp37-cp37m-macosx_10_9_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-16616</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyanyapi@0.6.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2018-0010</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyanyapi@0.6.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp27-cp27m-win_amd64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win32-py2.7</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.12?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win32-py3.3</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp37-cp37m-win32</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp35-cp35m-win_amd64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-0899</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/rubygems-update@1.4.1?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp36-cp36m-win32</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp35-cp35m-win_amd64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp36-cp36m-win_amd64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp37-cp37m-win_amd64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp34-cp34m-win_amd64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win-amd64-py3.1</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win32-py2.6</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp27-cp27mu-manylinux1_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-0230</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-core@2.5.12?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-17530</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-core@2.5.12?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-18342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyyaml@3.11?extension=exe&amp;qualifier=win-amd64-py3.3</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pandas@0.22.0?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-10683</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.directory.server/apacheds-all@1.5.7?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2015-0002</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.directory.server/apacheds-all@1.5.7?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/ruamel.yaml@0.15.67?extension=whl&amp;qualifier=cp27-cp27mu-manylinux1_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-7525</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-0230</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-17530</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21342</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21344</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21345</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21346</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21347</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21350</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2015-0002</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>License-Banned</td>
+      	<td>CC-BY-NC-SA-4.0</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/safety-db@2017.4.19?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>License-Banned</td>
+      	<td>Proprietary-Clause</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.sonatype.nexus/nexus-platform-api@1.8.20171120-150856.6c36986?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>License-Banned</td>
+      	<td>AGPL-3.0</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyfsmlib@1.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>License-Banned</td>
+      	<td>AGPL-3.0</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyhwp@0.1b9?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>License-Banned</td>
+      	<td>CC-BY-NC-SA-4.0</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/safety-db@2017.4.19?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-11324</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/urllib3@1.22?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/matplotlib@1.3.1?extension=whl&amp;qualifier=cp33-cp33m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-17042</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/yard@0.8.7?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/yard@0.8.7?platform=ruby</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0309</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/yard@0.8.7?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-15560</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pycryptodome@3.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/simplecov-html@0.7.1?platform=ruby</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18074</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-20225</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20907</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20916</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2012-0071</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-15560</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pycryptodome@3.6.1?extension=whl&amp;qualifier=cp27-cp27mu-manylinux1_x86_64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0866</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/lxml@4.1.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27291</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pygments@2.2.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2020-1357</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pygments@2.2.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-15560</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pycryptodome@3.6.1?extension=whl&amp;qualifier=cp27-cp27m-macosx_10_6_intel</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18074</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py2-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-10906</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py2-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-11324</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py2-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20907</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py2-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27291</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pygments@2.1.2?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2020-1357</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pygments@2.1.2?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-15560</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pycryptodome@3.6.1?extension=whl&amp;qualifier=cp27-cp27m-win32</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-28243</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-35662</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21996</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-09-20 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-31607</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/salt@2016.11.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18074</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/botocore@1.10.70?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2014-0038</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:npm/shelljs@0.3.0</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pyobjc-core@2.5.1?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-10800</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/codecov@2.0.15?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-10745</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/jinja2@2.5.4?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-10906</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/jinja2@2.5.4?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/jinja2@2.5.4?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18074</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pip@18.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-20225</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pip@18.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20907</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pip@18.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20916</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pip@18.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2012-0071</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pip@18.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-14322</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/werkzeug@0.14.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-14806</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/werkzeug@0.14.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18074</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-10906</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-11324</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20907</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-3674</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-7957</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-26217</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-26258</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21343</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21348</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21349</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.8?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18074</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/requests@2.18.4?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-3483</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/activerecord@4.0.0?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-3514</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/activerecord@4.0.0?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-17916</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/activerecord@4.0.0?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-17917</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/activerecord@4.0.0?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-17919</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/activerecord@4.0.0?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-17920</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/activerecord@4.0.0?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-22880</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/activerecord@4.0.0?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-10077</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/i18n@0.6.4?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0866</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/lxml@4.2.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-5143</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-5145</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-2512</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-7401</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-9014</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-14232</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-14235</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-24584</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-31542</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-33571</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-13757</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/rsa@3.4.2?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/py2app@0.7.3?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18074</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/botocore@1.10.70?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-5143</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-5145</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-2512</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-7401</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-9014</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-14232</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-14235</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-24584</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-31542</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-33571</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/django@1.6.1?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-14322</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/werkzeug@0.14.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-14806</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/werkzeug@0.14.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-0114</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/commons-beanutils/commons-beanutils@1.9.2?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18074</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-10906</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-11324</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20907</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pipenv@2018.7.1?extension=whl&amp;qualifier=py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2017-0355</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-core@2.6.1?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18074</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-20225</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20907</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20916</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2012-0071</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@15.1.0?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-9805</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-plugin@2.5.12?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-11776</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-plugin@2.5.12?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1327</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-plugin@2.5.12?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1000656</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/flask@0.6?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-1010083</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/flask@0.6?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/aruba@0.5.3?platform=ruby</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-11324</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/urllib3@1.22?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-6594</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pycrypto@2.6.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/modulegraph@0.10.4?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/cucumber@1.2.5?platform=ruby</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/safety-db@2017.4.19?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-20225</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pip@10.0.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20907</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pip@10.0.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20916</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pip@10.0.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2012-0071</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pip@10.0.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/matplotlib@1.3.1?extension=whl&amp;qualifier=cp34-cp34m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-0114</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/commons-beanutils/commons-beanutils@1.9.3?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27291</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pygments@2.1.2?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2013-0069</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pygments@2.1.2?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pygments@2.1.2?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2020-1357</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pygments@2.1.2?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-13757</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/rsa@3.4.2?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0870</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.freemarker/freemarker@2.3.23?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/macholib@1.5.1?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/matplotlib@1.3.1?extension=whl&amp;qualifier=cp27-none-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:a-name/jquery@3.3.1</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8320</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/rubygems-update@1.4.1?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8321</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/rubygems-update@1.4.1?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8322</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/rubygems-update@1.4.1?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8323</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/rubygems-update@1.4.1?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8325</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/rubygems-update@1.4.1?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2021-0729</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/rubygems-update@1.4.1?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-20225</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@16.0.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20907</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@16.0.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-20916</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@16.0.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2012-0071</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/virtualenv@16.0.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:a-name/jQuery@1.8.0</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-29651</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/py@1.7.0?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/altgraph@0.10.2?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-15560</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/pycryptodome@3.6.1?extension=whl&amp;qualifier=cp27-cp27m-win_amd64</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2013-1424</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/matplotlib@1.3.1?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/matplotlib@1.3.1?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1000201</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:gem/ffi@1.9.0?platform=ruby</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:npm/jquery-ui@1.12.1</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-10906</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/jinja2@2.10?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:a-name/jquery@2.1.3</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-9804</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-core@2.5.12?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-11776</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-core@2.5.12?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0233</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-core@2.5.12?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18074</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:pypi/requests@2.18.4?extension=tar.gz</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2012-0881</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.directory.server/apacheds-all@1.5.7?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2013-4002</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.directory.server/apacheds-all@1.5.7?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000338</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.directory.server/apacheds-all@1.5.7?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000343</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.directory.server/apacheds-all@1.5.7?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1000632</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.directory.server/apacheds-all@1.5.7?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0231</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.directory.server/apacheds-all@1.5.7?type=jar</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-0114</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-3674</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-7957</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-9804</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-9805</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-11776</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1327</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0233</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-26217</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-26258</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21343</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21348</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21349</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2017-0355</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0870</td>
+      	<td>se-scripts__cmorenoserrano</td>
+      	<td>pkg:maven/org.apache.struts/struts2-rest-showcase@2.5.12?type=war</td>
+		<td>2021-08-29 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-10683</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/dom4j/dom4j@1.6.1?type=jar</td>
+		<td>2020-05-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2016-1000027</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.springframework/spring-web@4.3.21.RELEASE?type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-14379</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.8.11.3?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-1938</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-03-05 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21342</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21344</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21345</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21346</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21347</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21350</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-5929</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/ch.qos.logback/logback-classic@1.1.11?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-0899</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-0903</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-37714</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jsoup/jsoup@1.11.3?type=jar</td>
+		<td>2021-08-27 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:a-name/org.webjars%20jquery@1.10.2</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-22112</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.springframework.security/spring-security-web@4.2.10.RELEASE?type=jar</td>
+		<td>2021-03-04 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1000632</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/dom4j/dom4j@1.6.1?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-18640</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.yaml/snakeyaml@1.17?type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-10936</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.postgresql/postgresql@42.2.2?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-13692</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.postgresql/postgresql@42.2.2?type=jar</td>
+		<td>2020-07-13 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-12086</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.8.11.3?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-14439</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.8.11.3?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-25649</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.8.11.3?type=jar</td>
+		<td>2020-12-10 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2017-0312</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.8.11.3?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2021-1175</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/ch.qos.logback/logback-core@1.1.11?type=jar</td>
+		<td>2021-09-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:a-name/jQuery@1.6.4</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0199</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0232</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-17563</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-11996</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-07-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-13934</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-07-16 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-17527</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-12-10 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-9484</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-25122</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2021-03-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-41079</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2021-09-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23358</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:a-name/underscore@1.7.0</td>
+		<td>2021-07-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-11272</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.springframework.security/spring-security-core@4.2.10.RELEASE?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-3674</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-7957</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-26217</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2020-12-06 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-26258</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2020-12-18 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21343</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21348</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21349</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-04-01 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000338</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000342</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000343</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000344</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000352</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1000180</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:a-name/jquery@2.2.4</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000338</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000342</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000343</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000344</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000352</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-18640</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1000180</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8320</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8321</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8322</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8323</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8324</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8325</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-25613</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2020-10-22 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-31799</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2021-08-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2013-0080</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2021-0729</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2021-06-29 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2021-1118</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2021-09-11 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-25638</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.hibernate/hibernate-core@5.0.12.Final?type=jar</td>
+		<td>2020-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-13935</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-websocket@8.5.35?type=jar</td>
+		<td>2020-07-19 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-3649</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.asciidoctor/asciidoctorj@1.5.4?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18385</td>
+      	<td>SecretSauce</td>
+      	<td>pkg:maven/org.asciidoctor/asciidoctorj@1.5.4?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-33503</td>
+      	<td>success-metrics__cmorenoserrano</td>
+      	<td>pkg:pypi/urllib3@1.25.8?extension=tar.gz</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-33503</td>
+      	<td>success-metrics__cmorenoserrano</td>
+      	<td>pkg:pypi/urllib3@1.25.8?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-07-19 00:00:00</td>
+		<td>source</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp36-cp36m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_x86_64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp35-cp35m-manylinux1_i686</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2019-0659</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/ipython@7.8.0?extension=whl&amp;qualifier=py3-none-any</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp27-cp27mu-manylinux1_i686</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp36-cp36m-win32</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=tar.gz</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp27-cp27mu-manylinux1_x86_64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp27-cp27m-win32</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_x86_64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp27-cp27m-win_amd64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp35-cp35m-win_amd64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp36-cp36m-win_amd64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp36-cp36m-manylinux1_i686</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/ruamel.yaml@0.16.5?extension=tar.gz</td>
+		<td>2020-03-05 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp37-cp37m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp37-cp37m-manylinux1_x86_64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp35-cp35m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp27-cp27m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2019-0659</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/ipython@7.8.0?extension=tar.gz</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp37-cp37m-win_amd64</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp37-cp37m-win32</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20478</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/ruamel.yaml@0.16.5?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2020-03-05 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-13091</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pandas@0.24.2?extension=whl&amp;qualifier=cp35-cp35m-win32</td>
+		<td>2020-05-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/tables@3.5.2?extension=tar.gz</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-7212</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/urllib3@1.25.2?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2020-03-14 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-7212</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/urllib3@1.25.2?extension=tar.gz</td>
+		<td>2020-03-14 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27291</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pygments@2.4.2?extension=tar.gz</td>
+		<td>2021-03-26 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2020-1357</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pygments@2.4.2?extension=tar.gz</td>
+		<td>2021-02-05 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-27291</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pygments@2.4.2?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-03-26 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2020-1357</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/pygments@2.4.2?extension=whl&amp;qualifier=py2.py3-none-any</td>
+		<td>2021-02-05 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-18874</td>
+      	<td>Successmetrics</td>
+      	<td>pkg:pypi/psutil@5.6.3?extension=tar.gz</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2016-1000027</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.springframework/spring-web@4.3.21.RELEASE?type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-14379</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.8.11.3?type=jar</td>
+		<td>2020-09-16 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-1938</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-03-05 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21342</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21344</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21345</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21346</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21347</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2021-21350</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-5929</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/ch.qos.logback/logback-classic@1.1.11?type=jar</td>
+		<td>2021-08-24 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-0899</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-0903</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-37714</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jsoup/jsoup@1.11.3?type=jar</td>
+		<td>2021-08-27 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:a-name/org.webjars%20jquery@1.10.2</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-22112</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.springframework.security/spring-security-web@4.2.10.RELEASE?type=jar</td>
+		<td>2021-03-04 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1000632</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/dom4j/dom4j@1.6.1?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-18640</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.yaml/snakeyaml@1.17?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-13692</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.postgresql/postgresql@42.2.2?type=jar</td>
+		<td>2020-07-13 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-12086</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.8.11.3?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-14439</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.8.11.3?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-25649</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.8.11.3?type=jar</td>
+		<td>2020-12-10 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2017-0312</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.8.11.3?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2021-1175</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/ch.qos.logback/logback-core@1.1.11?type=jar</td>
+		<td>2021-09-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:a-name/jQuery@1.6.4</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0199</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0232</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-17563</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-11996</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-07-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-13934</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-07-16 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-17527</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-12-10 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-9484</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-25122</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2021-03-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-41079</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.35?type=jar</td>
+		<td>2021-09-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-23358</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:a-name/underscore@1.7.0</td>
+		<td>2021-07-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-11272</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.springframework.security/spring-security-core@4.2.10.RELEASE?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-3674</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-7957</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-26217</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2020-12-06 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-26258</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2020-12-18 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21343</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21348</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-03-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-21349</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/com.thoughtworks.xstream/xstream@1.4.7?type=jar</td>
+		<td>2021-04-01 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000338</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000342</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000343</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000344</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000352</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1000180</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.bouncycastle/bcprov-jdk15on@1.50?type=jar</td>
+		<td>2020-06-03 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:a-name/jquery@2.2.4</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000338</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000342</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000343</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000344</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-1000352</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-18640</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1000180</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8320</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8321</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8322</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8323</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8324</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-8325</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-25613</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2020-10-22 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-31799</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2021-08-28 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2013-0080</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2021-0729</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2021-06-29 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2021-1118</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.jruby/jruby-complete@1.7.21?type=jar</td>
+		<td>2021-09-11 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-25638</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.hibernate/hibernate-core@5.0.12.Final?type=jar</td>
+		<td>2020-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-13935</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.apache.tomcat.embed/tomcat-embed-websocket@8.5.35?type=jar</td>
+		<td>2020-07-19 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-3649</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.asciidoctor/asciidoctorj@1.5.4?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-18385</td>
+      	<td>TechEnablement</td>
+      	<td>pkg:maven/org.asciidoctor/asciidoctorj@1.5.4?type=jar</td>
+		<td>2019-09-09 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2016-1000031</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2007-4575</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/hsqldb/hsqldb@1.8.0.7?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2015-0002</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/apache-collections/commons-collections@3.1?type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2016-1000027</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-5648</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20444</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-20445</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2020-1938</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-03-05 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2019-17571</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/log4j/log4j@1.2.17?type=jar</td>
+		<td>2021-06-14 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2016-1000027</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework/spring-web@3.2.4.RELEASE?type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-7525</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.0.4?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-1270</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework/spring-expression@3.2.4.RELEASE?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2014-0043</td>
+      	<td>TradingApp</td>
+      	<td>pkg:a-name/org.webjars%20angularjs@1.2.16</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-9879</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework.security/spring-security-web@3.2.4.RELEASE?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-22112</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework.security/spring-security-web@3.2.4.RELEASE?type=jar</td>
+		<td>2021-03-04 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2017-0641</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework.security/spring-security-web@3.2.4.RELEASE?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2013-2186</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-0050</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-3092</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>TradingApp</td>
+      	<td>pkg:a-name/org.webjars%20jquery@1.10.2</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-11272</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework.security/spring-security-core@3.2.4.RELEASE?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-0050</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-0230</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-5346</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-0714</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-3092</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-5018</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-6796</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-6797</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-6816</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-8745</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-12615</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-5647</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2017-5664</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1336</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0232</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-16869</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-17563</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-13935</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-07-19 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-5398</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-7238</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-02-25 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-9484</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-22118</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2021-06-14 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-37136</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2021-09-14 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2020-0029</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-03-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2020-1031</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-10-30 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2021-0789</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2021-07-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2010-0053</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/log4j/log4j@1.2.17?type=jar</td>
+		<td>2021-06-14 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-0254</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/javax.servlet/jstl@1.2?type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0227</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/axis/axis@1.2?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-0225</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework/spring-web@3.2.4.RELEASE?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2018-1272</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework/spring-web@3.2.4.RELEASE?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-5007</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework.security/spring-security-config@3.2.4.RELEASE?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-5211</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework/spring-webmvc@3.2.4.RELEASE?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2016-9878</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/org.springframework/spring-webmvc@3.2.4.RELEASE?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-0254</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/apache-taglibs/standard@1.1.2?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-0114</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/commons-beanutils/commons-beanutils@1.6?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2017-0355</td>
+      	<td>TradingApp</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-core@2.0.4?type=jar</td>
+		<td>2019-11-20 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2016-1000031</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2015-0002</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/apache-collections/commons-collections@3.1?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-7525</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.0.4?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-1270</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.springframework/spring-expression@3.2.4.RELEASE?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-22112</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.springframework.security/spring-security-web@3.2.4.RELEASE?type=jar</td>
+		<td>2021-03-04 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-13935</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-07-19 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-7238</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-9484</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-06-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-22118</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2021-06-14 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2021-37136</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2021-09-14 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2020-0029</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2020-1031</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-10-30 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2021-0789</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2021-07-08 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:a-name/org.webjars%20jquery@1.10.2</td>
+		<td>2021-09-07 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2010-0053</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/log4j/log4j@1.2.17?type=jar</td>
+		<td>2021-06-14 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-0254</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/javax.servlet/jstl@1.2?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0227</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/axis/axis@1.2?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-0254</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/apache-taglibs/standard@1.1.2?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-0114</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/commons-beanutils/commons-beanutils@1.6?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2017-0355</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-core@2.0.4?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>build</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2016-1000031</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2019-0115</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:a-name/org.webjars%20jquery@1.10.2</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>sonatype-2015-0002</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/apache-collections/commons-collections@3.1?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2017-7525</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.0.4?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-Critical</td>
+      	<td>CVE-2018-1270</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.springframework/spring-expression@3.2.4.RELEASE?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2020-7238</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2020-0029</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-0254</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/javax.servlet/jstl@1.2?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2019-0227</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/axis/axis@1.2?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2015-0254</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/apache-taglibs/standard@1.1.2?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>CVE-2014-0114</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/commons-beanutils/commons-beanutils@1.6?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    <tr>
+		<td>Security-High</td>
+      	<td>sonatype-2017-0355</td>
+      	<td>Webgoat-legacy</td>
+      	<td>pkg:maven/com.fasterxml.jackson.core/jackson-core@2.0.4?type=jar</td>
+		<td>2020-09-17 00:00:00</td>
+		<td>release</td>
+    </tr>
+    </tbody>
+    </table>
+    
+</div>
+</div>
+</div>
+</div>
+</div>
+<br><br>
+
+      
+   </body>
+</html>
