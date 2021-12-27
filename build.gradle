@@ -31,7 +31,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation ('org.springframework.boot:spring-boot-starter-data-jpa:2.5.3')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    implementation 'com.h2database:h2'
+    implementation 'com.h2database:h2:2.0.202'
   	implementation 'org.webjars:jquery:3.5.1'
 	implementation 'org.webjars:bootstrap:4.5.0'
 	implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
