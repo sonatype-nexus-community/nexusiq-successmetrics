@@ -1,6 +1,7 @@
 package org.sonatype.cs.metrics.util;
 
 import java.util.HashMap;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 
@@ -12,46 +13,20 @@ import org.springframework.stereotype.Service;
 public class HelperService {
 
 	public int[] getPointsSumAndAverage(List<DbRow> dataList) {
-
-		int countLabels = 0;
-		int sumData = 0;
-
-		for (DbRow dp : dataList) {
-			int count = (int) dp.getPointA();
-
-			if (count > 0) {
-				sumData += count;
-				countLabels++;
-			}
-		}
-
-		int avg = sumData / countLabels;
-
-		int[] values = new int[] { sumData, avg };
-		return values;
+		IntSummaryStatistics dataListStatistics = dataList.stream()
+				.map(n -> n.getPointA())
+				.filter(n -> (n != 0))
+				.mapToInt(n -> n)
+				.summaryStatistics();
+		return new int[] { (int) dataListStatistics.getSum(), (int) dataListStatistics.getAverage() };
 	}
-	
-	
-	public Object getPointsAverage(List<Float> points) {
-		int countPoints = 0;
 
-		float sumData = 0;
-
-		for (float dp : points) {
-
-			if (dp > 0) {
-				sumData += dp;
-				countPoints++;
-			}
-		}
-
-		float a = sumData / countPoints;
-		
-		if (Float.isNaN(a)) {
-			a = 0;
-		}
-		
-		return a;
+	public Float getPointsAverage(List<Float> points) {
+		return (float) points.stream()
+				.filter(f -> (f != 0))
+				.mapToDouble(d -> d)
+				.summaryStatistics()
+				.getAverage();
 	}
 	
 	public Map<String, Object> dataMap(String key, List<DbRowStr> data) {
