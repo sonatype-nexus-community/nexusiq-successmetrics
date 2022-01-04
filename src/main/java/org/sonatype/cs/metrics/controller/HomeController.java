@@ -4,8 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.SuccessMetricsApplication;
 import org.sonatype.cs.metrics.service.LoaderService;
-import org.sonatype.cs.metrics.util.DataLoaderParams;
-import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -31,9 +29,9 @@ public class HomeController {
 		model.addAttribute("smdatabase", smdatabase);
 		model.addAttribute("successmetricsreport", SuccessMetricsApplication.successMetricsFileLoaded);
 		model.addAttribute("policyViolationsreport", loaderService.policyViolationsDataLoaded);
-		model.addAttribute(("applicationEvaluationsreport"), loaderService.applicationEvaluationsFileLoaded);
-		model.addAttribute(("firewallreport"), loaderService.quarantinedComponentsLoaded);
-		model.addAttribute(("componentWaiversReport"), loaderService.componentWaiversLoaded);
+		model.addAttribute("applicationEvaluationsreport", loaderService.applicationEvaluationsFileLoaded);
+		model.addAttribute("firewallreport", loaderService.quarantinedComponentsLoaded);
+		model.addAttribute("componentWaiversReport", loaderService.componentWaiversLoaded);
 
 		return "home";
 	}

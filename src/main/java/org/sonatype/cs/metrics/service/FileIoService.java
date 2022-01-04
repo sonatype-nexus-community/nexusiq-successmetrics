@@ -1,11 +1,8 @@
 package org.sonatype.cs.metrics.service;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,10 +14,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
-
+import java.nio.charset.StandardCharsets;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.xhtmlrenderer.pdf.ITextRenderer;
@@ -28,8 +23,6 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 
 @Service
 public class FileIoService {
-	private static final Logger log = LoggerFactory.getLogger(FileIoService.class);
-
 	@Value("${reports.outputdir}")
 	private String outputdir;
 
@@ -58,7 +51,7 @@ public class FileIoService {
 			writer.close();
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			throw e;
 		}
 		
 		return;
@@ -102,7 +95,7 @@ public class FileIoService {
 		String jsonString = null;
 		
 		if (this.fileExists(filename)) {
-			jsonString = new String(Files.readAllBytes(Paths.get(filename)));
+			jsonString = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.ISO_8859_1);
 		}
 		
 		return jsonString;

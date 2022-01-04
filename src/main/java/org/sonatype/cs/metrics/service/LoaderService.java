@@ -2,12 +2,13 @@ package org.sonatype.cs.metrics.service;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Map;
+import java.io.InputStreamReader;
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
@@ -26,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.model.PayloadItem;
 import org.sonatype.cs.metrics.util.DataLoaderParams;
-import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,9 +40,6 @@ public class LoaderService {
 	@Autowired
 	private DbService dbService;
 
-	@Autowired
-	private HelperService helperService;
-	
 	@Autowired
 	private FileIoService fileIoService;
 	
@@ -155,26 +152,24 @@ public class LoaderService {
 	}
 
 	private String getFirstLine(String fileName) throws IOException {
-	    BufferedReader br = new BufferedReader(new FileReader(fileName)); 
-
-	    String line = br.readLine(); 
-	    br.close();
-	    return line;
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.ISO_8859_1))){
+			String line = br.readLine(); 
+			return line;	
+		}
 	}
 
 	private int countLines(String fileName) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(fileName)); 
-
-		String line = br.readLine(); 
-		int lineCount = 0;
-
-		while (line != null){
-			lineCount++;
-			line = br.readLine();
-		}
-
-		br.close();
-		return lineCount;
+	    try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.ISO_8859_1))){
+			String line = br.readLine(); 
+			int lineCount = 0;
+	
+			while (line != null){
+				lineCount++;
+				line = br.readLine();
+			}
+	
+			return lineCount;				
+		} 
 	}
 
 	public void filterOutLatestPeriod(String endPeriod) throws ParseException {
@@ -236,7 +231,7 @@ public class LoaderService {
 
 		String auth = iqUser + ":" + iqPwd;
 		byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.ISO_8859_1));
-		String authHeader = "Basic " + new String(encodedAuth);
+		String authHeader = "Basic " + new String(encodedAuth, StandardCharsets.ISO_8859_1);
 		
 		request.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
 		request.addHeader("Accept", "text/csv");
@@ -313,7 +308,7 @@ public class LoaderService {
 	        String oId = jObject.getString("id");
 	        
 	        if (oName.equals(aoName)) {
-	        	StringBuffer ep = new StringBuffer(endpoint);
+	        	StringBuilder ep = new StringBuilder(endpoint);
 	        	log.info("Reporting for " + ep.deleteCharAt(ep.length()-1) + ": " + aoName + " [" + oId + "]");
 	        	s[0] =  oId;
 	        	break;
@@ -330,7 +325,7 @@ public class LoaderService {
 
 		String auth = iqUser + ":" + iqPwd;
 		byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.ISO_8859_1));
-		String authHeader = "Basic " + new String(encodedAuth);
+		String authHeader = "Basic " + new String(encodedAuth, StandardCharsets.ISO_8859_1);
 		
 		request.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
 		request.addHeader("Content-Type", "application/json");

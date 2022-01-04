@@ -1,13 +1,10 @@
 package org.sonatype.cs.metrics.service;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.model.Mttr;
 import org.sonatype.cs.metrics.model.PayloadItem;
@@ -19,8 +16,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ApplicationsDataService {
-	private static final Logger log = LoggerFactory.getLogger(ApplicationsDataService.class);
-	
 	@Autowired
 	private DbService dbService;
 	
@@ -39,37 +34,24 @@ public class ApplicationsDataService {
 		List<DbRow> applicationsOnboardedData = dbService.runSql(tableName, SqlStatements.ApplicationsOnboarded);
 		int rows = applicationsOnboardedData.size();
 
-		String startPeriod = null;
 		String endPeriod = null;
 		
 		int startPeriodCount = applicationsOnboardedData.get(0).getPointA();
 		int endPeriodCount = applicationsOnboardedData.get(rows-1).getPointA();
-		//int applicationsOnboardedInPeriod = endPeriodCount - startPeriodCount;
 
 		int applicationsOnboardedInPeriod = applicationsOnboardedData.get(rows-1).getPointA();
 
 		switch(tableName) {
 			case SqlStatements.METRICTABLENAME: 
-				startPeriod = periodsData.get("startPeriod").toString();
 				endPeriod = periodsData.get("endPeriod").toString();
 				break;
 				
 			case SqlStatements.METRICP1TABLENAME: 
-				startPeriod = periodsData.get("startPeriod").toString();
 				endPeriod = periodsData.get("midPeriod").toString();
 				break;
 				
 			case SqlStatements.METRICP2TABLENAME: 
-				startPeriod = periodsData.get("midPeriod").toString();
 				endPeriod = periodsData.get("endPeriod").toString();
-				
-//				List<DbRow> p1applicationsOnboardedData = dbService.runSql(SqlStatements.METRICP1TABLENAME, SqlStatements.ApplicationsOnboarded);
-//				int p1rows = p1applicationsOnboardedData.size();
-//				int p1endPeriodCount = p1applicationsOnboardedData.get(p1rows-1).getPointA();
-//				int applicationsOnboardedMidPeriod = startPeriodCount - p1endPeriodCount;
-//				applicationsOnboardedInPeriod = applicationsOnboardedInPeriod + applicationsOnboardedMidPeriod;
-//				rows++;
-
 				break;
 			default:
 		}
