@@ -72,6 +72,24 @@ public class SuccessMetricsWebApplicationTest {
 	}
 
 	@Test
+	public void PolicyViolationsReportPageTest() throws Exception {
+		assertTrue(this.restTemplate.getForObject("http://localhost:" + port + "/violationsage", String.class)
+				.contains("Policy Violations Age"));
+	}
+
+	@Test
+	public void ApplicationEvaluationsReportPageTest() throws Exception {
+		assertTrue(this.restTemplate.getForObject("http://localhost:" + port + "/evaluations", String.class)
+				.contains("Application Last Date Evaluated"));
+	}
+
+	@Test
+	public void omponentWaiversReportPageTest() throws Exception {
+		assertTrue(this.restTemplate.getForObject("http://localhost:" + port + "/waivers", String.class)
+				.contains("Components Waivers Report"));
+	}
+
+	@Test
 	public void defaultPageContentTest() throws Exception {
 		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/", String.class);
 		pageContents = removeLine(pageContents, 23);
@@ -106,6 +124,30 @@ public class SuccessMetricsWebApplicationTest {
 		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/licenseviolations",
 				String.class);
 		pageContents = removeLine(pageContents, 23);
+		Approvals.verify(pageContents);
+	}
+
+	@Test
+	public void PolicyViolationsReportPageContentTest() throws Exception {
+		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/violationsage",
+				String.class);
+		pageContents = removeLine(pageContents, 24);
+		Approvals.verify(pageContents);
+	}
+
+	@Test
+	public void ApplicationEvaluationsReportPageContentTest() throws Exception {
+		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/evaluations",
+				String.class);
+		pageContents = removeLine(pageContents, 23);
+		Approvals.verify(pageContents);
+	}
+
+	@Test
+	public void ComponentWaiversReportPageContentTest() throws Exception {
+		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/waivers",
+				String.class);
+		pageContents = removeLine(pageContents, 24);
 		Approvals.verify(pageContents);
 	}
 }

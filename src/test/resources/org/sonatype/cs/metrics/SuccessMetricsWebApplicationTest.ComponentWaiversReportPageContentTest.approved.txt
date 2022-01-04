@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+<div><div>
+ 
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+  
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  
+    <script src="/js/apexcharts.min.js"></script>
+    <link rel="stylesheet" href="/css/apexcharts.css"/>
+
+    <link href="/css/main.css" rel="stylesheet"/>
+    
+    <div class="text-center">
+        <img class="displayed" src="images/sonatype.png"/>   
+        <title>Success Metrics</title>
+        <h3>Success Metrics</h3>
+        <h4></h4>
+    </div>
+
+    <script>
+        var height = '700px'
+        var width = '950px'
+
+        var grid = {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            }
+        }
+
+        var barchartlabels = {
+            enabled: true,
+            enabledOnSeries: undefined,
+            formatter: function (val, opts) {
+                return val
+            },
+            textAnchor: 'middle',
+            distributed: false,
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+                fontSize: '10px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontWeight: 'bold',
+                colors: ['#fff']
+            },
+            background: {
+                enabled: false,
+                foreColor: '#fff',
+                padding: 4,
+                borderRadius: 2,
+                borderWidth: 2,
+                borderColor: '#fff',
+                opacity: 0.9,
+                
+            },
+            
+        }
+
+        var barchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var linechart = {
+            type: 'line',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var stackedbarchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            stacked: true,
+            toolbar: {
+                show: true
+            },
+            zoom: {
+                enabled: true
+            }
+        }
+
+        var legend = {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 120
+        }
+
+        var fillbar = {
+            colors: '#0118FD'
+        }
+
+        var fillStacked = {
+            colors: ['#F90707', '#F99A07', '#F9DC07']
+        }
+
+        var fillViolationsSummary = {
+            colors: ['#FA0707', '#F99A07', '#08B005', '#0080FF'],
+        }
+
+        var donutPlotOptions = {
+			expandOnClick: true,
+			donut: {
+				size: '45%',
+					labels: {
+						show: true,
+						name: {
+							show: true
+						},
+						value: {
+							show: true
+						},
+						total: {
+							show: true,
+							showAlways: true,
+							label: 'Total',
+							fontSize: '10px',
+							fontFamily: 'Helvetica, Arial, sans-serif',
+							fontWeight: 400,
+							color: '#373d3f',
+							formatter: function (w) {
+							    return w.globals.seriesTotals.reduce((a, b) => {
+									return a + b
+								}, 0)
+							}
+						}
+					}
+				}
+			}
+
+    </script>
+  
+</div></div>
+</head>
+   
+   <body>
+   	
+        <div class="jumbotron">
+        <h4>Components Waivers Report</h4>
+        </div>
+
+        <div class="container">
+        <div class="row">
+        <div class="col-xl mx-auto w-auto bg-white rounded">
+        <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+            
+        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Application Name</th>
+                <th scope="col">Stage</th>
+                <th scope="col">PackageUrl</th>
+                <th scope="col">Policy Name</th>
+                <th scope="col">Threat Level</th>
+                <th scope="col">Create Date</th>
+                <th scope="col">Expiry Date</th>
+                <th scope="col">Comment</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Successmetrics</td>
+                <td>build</td>
+                <td>pkg:pypi/parso@0.5.1?extension=whl&amp;qualifier=py2.py3-none-any</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2019-09-12</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Successmetrics</td>
+                <td>build</td>
+                <td>pkg:pypi/tables@3.5.2?extension=tar.gz</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2019-09-12</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Successmetrics</td>
+                <td>build</td>
+                <td>pkg:pypi/parso@0.5.1?extension=tar.gz</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2019-09-12</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>TechEnablement</td>
+                <td>build</td>
+                <td>pkg:maven/org.postgresql/postgresql@42.2.2?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-01-20</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>TechEnablement</td>
+                <td>build</td>
+                <td>pkg:maven/dom4j/dom4j@1.6.1?type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2021-08-24</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.springframework/spring-webmvc@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.springframework/spring-webmvc@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.springframework.security/spring-security-core@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.springframework.security/spring-security-config@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.springframework/spring-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.springframework/spring-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.springframework/spring-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/hsqldb/hsqldb@1.8.0.7?type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:a-name/org.webjars%20angularjs@1.2.16</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Component-Similar</td>
+                <td>7</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.springframework.security/spring-security-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/org.springframework.security/spring-security-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>build</td>
+                <td>pkg:maven/log4j/log4j@1.2.17?type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.springframework/spring-webmvc@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.springframework/spring-webmvc@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.springframework.security/spring-security-core@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/Log4j/log4j@1.2.17?type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.springframework.security/spring-security-config@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.springframework/spring-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.springframework/spring-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.springframework/spring-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.springframework/spring-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/hsqldb/hsqldb@1.8.0.7?type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:a-name/org.webjars%20angularjs@1.2.16</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-Critical</td>
+                <td>10</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.apache.activemq.examples.modules/artemis-tomcat-jndi-resources-sample@2.11.0?classifier=exec-war&amp;type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.springframework.security/spring-security-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/org.springframework.security/spring-security-web@3.2.4.RELEASE?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Webgoat-legacy</td>
+                <td>release</td>
+                <td>pkg:maven/commons-fileupload/commons-fileupload@1.2.2?type=jar</td>
+                <td>Security-High</td>
+                <td>9</td>
+                <td>2020-04-30</td>
+                <td>non-expiri</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+            
+        </div>
+        </div>
+        </div>
+        </div>
+
+    </body>
+</html>
