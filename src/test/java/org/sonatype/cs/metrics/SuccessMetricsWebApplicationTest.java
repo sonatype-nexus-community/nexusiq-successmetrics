@@ -129,7 +129,7 @@ public class SuccessMetricsWebApplicationTest {
 
 	@Test
 	public void PolicyViolationsReportPageContentTest() throws Exception {
-		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/violationsage",
+		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/violationsage?date=2020-12-15",
 				String.class);
 		pageContents = removeLine(pageContents, 24);
 		Approvals.verify(pageContents);
@@ -137,7 +137,7 @@ public class SuccessMetricsWebApplicationTest {
 
 	@Test
 	public void ApplicationEvaluationsReportPageContentTest() throws Exception {
-		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/evaluations",
+		String pageContents = this.restTemplate.getForObject("http://localhost:" + port + "/evaluations?date=2021-12-15",
 				String.class);
 		pageContents = removeLine(pageContents, 23);
 		Approvals.verify(pageContents);
