@@ -63,12 +63,13 @@ public class HelperServiceTest {
         populatedList.add(0f);
         populatedList.add(12f);
         assertEquals(8.5f, helper.getPointsAverage(populatedList));
+
+        List<Float> emptyList = new ArrayList<Float>();
+        assertEquals(0f, helper.getPointsAverage(emptyList));
     }
 
     @Test
     void testGetPointsSumAndAverage() {
-        // TODO: Missing handling of zero data in original function
-
         List<DbRow> datalist = new ArrayList<DbRow>();
         datalist.add(new DbRow("row1", 1, 2, 3, 4));
         datalist.add(new DbRow("row2", 5, 6, 7, 8));
@@ -79,5 +80,10 @@ public class HelperServiceTest {
         datalist.add(new DbRow("row2", 0, 0, 0, 0));
         datalist.add(new DbRow("row3", 5, 6, 7, 8));
         assertArrayEquals(new int[] { 6, 3 }, helper.getPointsSumAndAverage(datalist));
+
+        List<DbRow> emptyList = new ArrayList<DbRow>();
+        assertArrayEquals(new int[] { 0, 0 }, helper.getPointsSumAndAverage(emptyList));
+        datalist = new ArrayList<DbRow>();
+        assertArrayEquals(new int[] { 0, 0 }, helper.getPointsSumAndAverage(datalist));
     }
 }
