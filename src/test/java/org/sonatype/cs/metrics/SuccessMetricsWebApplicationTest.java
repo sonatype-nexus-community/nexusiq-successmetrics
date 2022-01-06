@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.approvaltests.Approvals;
 
 // https://spring.io/guides/gs/testing-web/
-@SpringBootTest(properties = { "data.dir=src/test/resources" }, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(properties = { "data.dir=src/test/resources", "spring.profiles.active=web" }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class SuccessMetricsWebApplicationTest {
 
 	@Autowired

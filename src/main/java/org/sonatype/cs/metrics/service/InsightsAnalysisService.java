@@ -29,7 +29,7 @@ public class InsightsAnalysisService {
 	
 	
 
-	public void writeInsightsAnalysisData() throws ParseException, IOException{
+	public void writeInsightsAnalysisData(String timestamp) throws ParseException, IOException{
 		log.info("Writing insights data file");
 
 	  	Map<String, Object> periodsData = periodsDataService.getPeriodData(SqlStatements.METRICTABLENAME);
@@ -39,7 +39,7 @@ public class InsightsAnalysisService {
 			Map<String, Object> analysisData = getInsightsAnalysisData(periodsData);
 			List<String[]> csvData = createCsvData(analysisData);
 			
-			String csvFilename = fileIoService.makeFilename("insights", "csv");
+			String csvFilename = fileIoService.makeFilename("insights", "csv", timestamp);
 
 			String beforeDateRange = "Before " + (String) periodsData.get("midPeriodDate1RangeStr");
 			String afterDateRange = "After " + (String) periodsData.get("midPeriodDate2RangeStr");
@@ -58,21 +58,21 @@ public class InsightsAnalysisService {
 	    Map<String, Object> p1metrics = metricsService.getMetrics(SqlStatements.METRICP1TABLENAME, periodsData);
 	    Map<String, Object> p2metrics = metricsService.getMetrics(SqlStatements.METRICP2TABLENAME, periodsData);
 	    
-	    int appsInFirstPeriod = Integer.parseInt((String) p1metrics.get("startPeriodCount"));
-	    int p1numberOfPeriods = Integer.parseInt((String) p1metrics.get("numberOfPeriods"));
-	    int p2numberOfPeriods = Integer.parseInt((String) p2metrics.get("numberOfPeriods"));
+	    int appsInFirstPeriod = Integer.parseInt(String.valueOf(p1metrics.get("startPeriodCount")));
+	    int p1numberOfPeriods = Integer.parseInt(String.valueOf(p1metrics.get("numberOfPeriods")));
+	    int p2numberOfPeriods = Integer.parseInt(String.valueOf(p2metrics.get("numberOfPeriods")));
 
-	    int onboardedAfter = Integer.parseInt((String) p2metrics.get("applicationsOnboarded"));
-	    int onboardedBefore = Integer.parseInt((String) p1metrics.get("applicationsOnboarded"));
+	    int onboardedAfter = Integer.parseInt(String.valueOf(p2metrics.get("applicationsOnboarded")));
+	    int onboardedBefore = Integer.parseInt(String.valueOf(p1metrics.get("applicationsOnboarded")));
 	    
-	    float scanningCoverageAfter = this.calculatePct(Integer.parseInt((String)p2metrics.get("numberOfApplicationsScannedAvg")), onboardedAfter);
-	    float scanningCoverageBefore = this.calculatePct(Integer.parseInt((String)p1metrics.get("numberOfApplicationsScannedAvg")), onboardedBefore);
+	    float scanningCoverageAfter = this.calculatePct(Integer.parseInt(String.valueOf(p2metrics.get("numberOfApplicationsScannedAvg"))), onboardedAfter);
+	    float scanningCoverageBefore = this.calculatePct(Integer.parseInt(String.valueOf(p1metrics.get("numberOfApplicationsScannedAvg"))), onboardedBefore);
 	    
-	    float totalScansAfter = Integer.parseInt((String) p2metrics.get("numberOfScans"));
-	    float totalScansBefore = Integer.parseInt((String) p1metrics.get("numberOfScans"));
+	    float totalScansAfter = Integer.parseInt(String.valueOf(p2metrics.get("numberOfScans")));
+	    float totalScansBefore = Integer.parseInt(String.valueOf(p1metrics.get("numberOfScans")));
 	    
-	    float scanningRateAfter = Integer.parseInt((String) p2metrics.get("numberOfScans"))/p2numberOfPeriods;
-	    float scanningRateBefore = Integer.parseInt((String) p1metrics.get("numberOfScans"))/p1numberOfPeriods;
+	    float scanningRateAfter = Integer.parseInt(String.valueOf(p2metrics.get("numberOfScans")))/p2numberOfPeriods;
+	    float scanningRateBefore = Integer.parseInt(String.valueOf(p1metrics.get("numberOfScans")))/p1numberOfPeriods;
 	    
 	    float scanningRateAfterAvg = scanningRateAfter/onboardedAfter;
 	    float scanningRateBeforeAvg = scanningRateBefore/onboardedBefore;
@@ -144,8 +144,8 @@ public class InsightsAnalysisService {
 	    model.put("backlogReductionCriticalsRate", this.calculateChangePctg(backlogReductionCriticalsRateBefore, backlogReductionCriticalsRateAfter));
 	    model.put("backlogReductionCriticalsRateIncrease", this.calculateChangeMultiple(backlogReductionCriticalsRateBefore, backlogReductionCriticalsRateAfter));
 
-	    float riskRatioBefore = Integer.parseInt((String) p1metrics.get("riskRatioAtEndPeriod"));
-	    float riskRatioAfter = Integer.parseInt((String) p2metrics.get("riskRatioAtEndPeriod"));
+	    float riskRatioBefore = Integer.parseInt(String.valueOf(p1metrics.get("riskRatioAtEndPeriod")));
+	    float riskRatioAfter = Integer.parseInt(String.valueOf(p2metrics.get("riskRatioAtEndPeriod")));
 	    
 	    model.put("riskRatioBefore", riskRatioBefore);
 	    model.put("riskRatioAfter", riskRatioAfter);

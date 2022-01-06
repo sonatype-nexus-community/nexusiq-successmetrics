@@ -1,5 +1,8 @@
 package org.sonatype.cs.metrics;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.service.InsightsAnalysisService;
@@ -18,6 +21,9 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 	private static final Logger log = LoggerFactory.getLogger(SuccessMetricsApplication.class);
 	
 	public static boolean successMetricsFileLoaded = false;
+
+	private String timestamp;
+//	
 	@Value("${spring.main.web-application-type}")
 	private String runMode;
 
@@ -78,14 +84,15 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 		else {
 			// non-interactive mode
 			if (successMetricsFileLoaded) {
+				this.timestamp = DateTimeFormatter.ofPattern("ddMMyy_HHmm").format(LocalDateTime.now());
 
 				switch (activeProfile){
 					case "pdf":
 						String html = pdfService.parsePdfTemplate(pdfTemplate, doAnalysis);
-						pdfService.generatePdfFromHtml(html);
+						pdfService.generatePdfFromHtml(html, this.timestamp);
 						break;
 					case "insights":
-						analysisService.writeInsightsAnalysisData();
+						analysisService.writeInsightsAnalysisData(this.timestamp);
 						break;
 					default:
 						log.error("unknown profile");
@@ -95,8 +102,6 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 			else {
 				log.error("No data file found");
 			}
-			
-			System.exit(0);
 		}
 	}
 	
@@ -110,4 +115,8 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 			System.exit(-1);
 		}
 	}	
+
+	public String gettimestamp(){
+		return this.timestamp;
+	}
 }

@@ -10,8 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.nio.charset.StandardCharsets;
@@ -71,11 +69,8 @@ public class FileIoService {
 	}
 	
 	
-	public String makeFilename(String prefix, String extension) throws IOException {
-		LocalDateTime instance = LocalDateTime.now();
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy_HHmm");
-	
-	    String filename = prefix + "-" + formatter.format(instance) + "." + extension;
+	public String makeFilename(String prefix, String extension, String timestamp) throws IOException {	
+	    String filename = prefix + "-" + timestamp + "." + extension;
 	
 	    String reportsdir = datadir + File.separator + outputdir;
 	    		
