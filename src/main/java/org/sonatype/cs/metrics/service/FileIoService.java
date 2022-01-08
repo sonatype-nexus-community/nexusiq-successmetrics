@@ -2,10 +2,8 @@ package org.sonatype.cs.metrics.service;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 
 @Service
@@ -53,19 +50,6 @@ public class FileIoService {
 		}
 		
 		return;
-	}
-	
-	public void writeSuccessMetricsPdfFile(String pdfFilename, String html) throws IOException {
-		OutputStream outputStream = new FileOutputStream(pdfFilename);
-		
-	    ITextRenderer renderer = new ITextRenderer();
-	    renderer.setDocumentFromString(html);
-	    renderer.layout();
-	    renderer.createPDF(outputStream);
-	
-	    outputStream.close();
-	    
-	    return;
 	}
 	
 	

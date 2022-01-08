@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.service.InsightsAnalysisService;
 import org.sonatype.cs.metrics.service.LoaderService;
-import org.sonatype.cs.metrics.service.SummaryPdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner;
@@ -29,9 +28,6 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 
 	@Value("${spring.profiles.active}")
 	private String activeProfile;
-
-	@Value("${pdf.htmltemplate}")
-	private String pdfTemplate;
 	
 	@Value("${iq.sm.csvfile}")
 	private boolean iqSmCsvfile;
@@ -49,13 +45,8 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 	private LoaderService loaderService;
 
 	@Autowired
-	private SummaryPdfService pdfService;
-
-	@Autowired
   	private InsightsAnalysisService analysisService;
 
-	private boolean doAnalysis = true;
-	
 
 	public static void main(String[] args) {
 
@@ -88,8 +79,7 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 
 				switch (activeProfile){
 					case "pdf":
-						String html = pdfService.parsePdfTemplate(pdfTemplate, doAnalysis);
-						pdfService.generatePdfFromHtml(html, this.timestamp);
+						System.out.println("Insights PDF output is no longer supported");
 						break;
 					case "insights":
 						analysisService.writeInsightsAnalysisData(this.timestamp);

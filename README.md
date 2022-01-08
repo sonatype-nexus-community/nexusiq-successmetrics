@@ -26,7 +26,7 @@ If you are running the application jar file directly (Option A), it is not requi
 The most important default settings are as follows:
 
 ####  spring.profiles.active
-default: web - other values: pdf, insights
+default: web - other values: insights
 
 #### data.dir
 default: '.' (ie. current directory)
@@ -92,10 +92,6 @@ On completion, you should see output similar to below after which app is ready f
 Open a browser and go to http://localhost:4040
 
 The *Summary Report* on the web app main page menu is designed to be saved to pdf. It contains most of the other reports. The recommended way to do to this is by selecting the *Save to PDF* option within the Print menu option of your web browser.
-
-#### pdf
-
-You may wish to just simply create a pdf file containing the summary metrics report. A pdf report file is created in a sub-directory of the working directory with a time-stamped file name. The application will then immediately exit after creating the pdf file. 
 
 #### insights
 
