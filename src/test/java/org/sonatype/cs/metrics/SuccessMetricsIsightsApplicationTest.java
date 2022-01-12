@@ -24,9 +24,6 @@ public class SuccessMetricsIsightsApplicationTest {
 
 	@Test
 	public void checkCSVFileIsGenerated() throws Exception {
-		SpringApplication app = new SpringApplication(SuccessMetricsApplication.class);
-		app.setBannerMode(Banner.Mode.OFF);
-		app.run();
 		assertNotNull(controller.gettimestamp());
 		File outputFile = new File("src/test/resources/output/insights-" + controller.gettimestamp() + ".csv");
 		assertTrue(outputFile.exists());
