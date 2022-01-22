@@ -144,7 +144,7 @@ public class InsightsAnalysisService {
 	    model.put("backlogReductionCriticalsRate", this.calculateChangePctg(backlogReductionCriticalsRateBefore, backlogReductionCriticalsRateAfter));
 	    model.put("backlogReductionCriticalsRateIncrease", this.calculateChangeMultiple(backlogReductionCriticalsRateBefore, backlogReductionCriticalsRateAfter));
 
-	    float riskRatioBefore = Integer.parseInt(String.valueOf(p1metrics.get("riskRatioAtEndPeriod")));
+	    float riskRatioBefore = Integer.parseInt(String.valueOf(p1metrics.get("riskRatioAtStartPeriod")));
 	    float riskRatioAfter = Integer.parseInt(String.valueOf(p2metrics.get("riskRatioAtEndPeriod")));
 	    
 	    model.put("riskRatioBefore", riskRatioBefore);
