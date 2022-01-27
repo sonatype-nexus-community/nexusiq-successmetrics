@@ -1,0 +1,12 @@
+Measure,Before (2021-01-01 - 2021-03-01),After (2021-04-01 - 2021-05-01),Delta,Change (%),xTimes
+Total Onboarded Apps (# of apps),45,107,62.00,137.78,2.38
+Onboarding Rate (apps/period),8.00,31.00,23.00,0.00,3.88
+Total Scans,711.0,298.0,-413.00,-58.09,0.42
+Scanning Coverage %(apps scanned at least once/period),71.11,37.38,-33.73,-47.43,0.53
+Scanning Rate (total scans per period),237.00,149.00,-88.00,-37.13,0.63
+Average Scans per App (scanning rate/apps),5.27,1.39,-3.87,-73.56,0.26
+Discovery Rate Criticals (# of discovered Critical violations/period & app),11.51,5.89,-5.62,-48.85,0.51
+Fixing Rate Criticals (# of fixed Critical violations/period & app),2.91,0.98,-1.93,-66.29,0.34
+Backlog Reduction Rate Criticals %(# of fixed / # of discovered),59.39,16.75,-42.65,-71.80,0.28
+Risk Ratio (# of Critical violations / # of apps),25.0,20.0,-5.00,-20.00,0.80
+MTTR Criticals (average # of days to fix Critical violations),22,28,6.00,27.27,1.27

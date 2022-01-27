@@ -76,6 +76,8 @@ public class LoaderService {
 	@Value("${iq.api.payload.organisation.name}")
 	private String iqApiOrganisationName;
 
+	@Value("${data.successmetrics}")
+	private String successmetricsFile;
 
 	private String iqSmEndpoint = "api/v2/reports/metrics";
 	
@@ -181,7 +183,7 @@ public class LoaderService {
 	public boolean loadSuccessMetricsData() throws IOException, ParseException {
 
 		String stmt = SqlStatements.MetricsTable;
-		boolean fileLoaded = loadMetricsFile(DataLoaderParams.smDatafile, DataLoaderParams.smHeader, stmt);
+		boolean fileLoaded = loadMetricsFile(successmetricsFile, DataLoaderParams.smHeader, stmt);
 		boolean doAnalysis = false;
 
 		if (fileLoaded) {
