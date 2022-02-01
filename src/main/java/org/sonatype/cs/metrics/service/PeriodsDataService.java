@@ -54,7 +54,7 @@ public class PeriodsDataService {
 		if (numberOfPeriods > 2) {
 			int midPeriodIndex = numberOfPeriods/2;
 			
-			if (midPeriodIndex % 2 == 0) {
+			if (numberOfPeriods% 2 == 0) {
 				midPeriodIndex--;
 			}
 			

@@ -10,14 +10,12 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.approvaltests.Approvals;
-import org.springframework.boot.Banner;
 
 // https://spring.io/guides/gs/testing-web/
-@SpringBootTest(properties = { "data.dir=src/test/resources", "spring.profiles.active=insights" }, webEnvironment = WebEnvironment.RANDOM_PORT)
-public class SuccessMetricsIsightsApplicationTest {
+@SpringBootTest(properties = { "data.dir=src/test/resources", "spring.profiles.active=insights", "data.successmetrics=successmetrics-2021-01-01-to-2021-06-01.csv" }, webEnvironment = WebEnvironment.RANDOM_PORT)
+public class SuccessMetricsIsightsApplicationTestTo202106 {
 
 	@Autowired
 	private SuccessMetricsApplication controller;
