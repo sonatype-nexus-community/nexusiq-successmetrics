@@ -1,20 +1,20 @@
 
  <div th:fragment="headerFrag">
- 
+
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-  
+
     <script th:src="@{webjars/jquery/3.5.1/jquery.min.js}"></script>
     <link th:href="@{webjars/bootstrap/4.5.0/css/bootstrap.min.css}" rel="stylesheet" />
     <script th:src="@{webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
-  
+
     <script th:src="@{/js/apexcharts.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/apexcharts.css}"/>
 
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
-    
+
     <div class="text-center">
-        <img class="displayed" th:src="@{images/sonatype.png}"/>   
+        <img class="displayed" th:src="@{images/sonatype.png}"/>
         <title th:text="'Success Metrics'"></title>
         <h3>Success Metrics</h3>
         <p th:text="${#dates.createNow()}"></p>
@@ -56,9 +56,9 @@
                 borderWidth: 2,
                 borderColor: '#fff',
                 opacity: 0.9,
-                
+
             },
-            
+
         }
 
         var barchart = {
@@ -141,9 +141,5 @@
 			}
 
     </script>
-  
-</div>
- 
-  
-  
 
+</div>

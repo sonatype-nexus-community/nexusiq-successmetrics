@@ -13,7 +13,16 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Mttr {
 
     @Override
     public String toString() {
-        return "DbRowFloat [label=" + label + ", pointA=" + pointA + ", pointB=" + pointB + ", pointC=" + pointC
-                + ", pointD=" + pointD + "]";
+        return "DbRowFloat [label="
+                + label
+                + ", pointA="
+                + pointA
+                + ", pointB="
+                + pointB
+                + ", pointC="
+                + pointC
+                + ", pointD="
+                + pointD
+                + "]";
     }
 }

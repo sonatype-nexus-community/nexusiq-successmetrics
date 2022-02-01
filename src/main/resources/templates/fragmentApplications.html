@@ -8,13 +8,13 @@
             var points = /*[[${applicationsOnboardedChart}]]*/'noValue';
 	     	var pdata = [];
 	     	var labels = [];
-	     	
+
 	     	points.forEach(entry => {
 	            var label = entry.label;
 	            var point = entry.pointA;
 	            labels.push(label);
 	            pdata.push(point);
-	        }); 
+	        });
 
             var options = {
                 chart: barchart,
@@ -38,21 +38,21 @@
 
             chart.render();
         </script>
-    
-        <div style="page-break-before: always;"/> 	
+
+        <div style="page-break-before: always;"/>
 
         <div id="numberOfApplicationsScannedChart"></div>
         <script th:inline="javascript">
             var points = /*[[${numberOfApplicationsScannedChart}]]*/'noValue';
             var pdata = [];
             var labels = [];
-            
+
             points.forEach(entry => {
                 var label = entry.label;
                 var point = entry.pointA;
                 labels.push(label);
                 pdata.push(point);
-            }); 
+            });
 
             var options = {
                 chart: barchart,
@@ -84,13 +84,13 @@
             var points = /*[[${numberOfScansChart}]]*/'noValue';
             var pdata = [];
             var labels = [];
-            
+
             points.forEach(entry => {
                 var label = entry.label;
                 var point = entry.pointA;
                 labels.push(label);
                 pdata.push(point);
-            }); 
+            });
 
             var options = {
                 chart: barchart,
@@ -115,20 +115,20 @@
             chart.render();
         </script>
 
-        <div style="page-break-before: always;"/> 	
-        
+        <div style="page-break-before: always;"/>
+
         <div id="riskRatioChart"></div>
         <script th:inline="javascript">
             var points = /*[[${riskRatioChart}]]*/'noValue';
 	     	var pdata = [];
 	     	var labels = [];
-	     	
+
 	     	points.forEach(entry => {
 	            var label = entry.label;
 	            var point = entry.pointA;
 	            labels.push(label);
 	            pdata.push(point);
-	        }); 
+	        });
 
             var options = {
                 chart: barchart,
@@ -161,10 +161,10 @@
 	     	var dataC = [];
 
 	     	var labels = [];
-	     	
+
 	     	points.forEach(entry => {
                 labels.push(entry.label);
-                
+
                 if (entry.pointA > 0) {
                     dataA.push(Math.ceil(entry.pointA));
                 }
@@ -185,7 +185,7 @@
                 else {
                     dataC.push(null);
                 }
-	        }); 
+	        });
 
             var options = {
                 chart: stackedbarchart,
@@ -219,9 +219,9 @@
 
             chart.render();
         </script>
-    
-    	
-        
-     </div>   
+
+
+
+     </div>
 
 </div>

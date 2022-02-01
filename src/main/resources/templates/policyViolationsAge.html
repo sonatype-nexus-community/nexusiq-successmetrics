@@ -5,25 +5,25 @@
 <head>
 <div th:insert="header :: headerFrag"></div>
 </head>
-   
+
    <body>
-   	
+
       <div class="jumbotron">
       <h4>Policy Violations Age</h4>
       </div>
-            
+
       <div class="chart-container" style="margin-left: 100px; width:40vw">
-    
+
     	<div id="securityAgeChart" width="400" height="400"></div>
       	<script th:inline="javascript">
 	      	var age90 = /*[[${age90Number}]]*/'noValue';
 	    	var age60 = /*[[${age60Number}]]*/'noValue';
 	    	var age30 = /*[[${age30Number}]]*/'noValue';
 	    	var age7 = /*[[${age7Number}]]*/'noValue';
-	    	
+
 	     	var pdata = [age7, age30, age60, age90];
 	     	var labels = ['0-7 days old', '8-30 days old', '31-60 days old', '>60 days old'];
-		 
+
 			var options = {
 				series: pdata,
 				labels: labels,
@@ -49,19 +49,19 @@
 			var chart = new ApexCharts(document.querySelector("#securityAgeChart"), options);
 			chart.render();
 		</script>
-      
+
       </div>
-     
-      
+
+
 <br><br><br><br>
-<div th:if="${age7}"> 
+<div th:if="${age7}">
 <h5>Security Policy Violations 0-7 Days</h5>
 <div class="container">
 <div class="row">
 <div class="col-xl mx-auto w-auto bg-white rounded">
 <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
-		
-	<table class="table table-striped table-bordered table-sm">	
+
+	<table class="table table-striped table-bordered table-sm">
     <thead class="thead-dark">
     <tr>
 		<th>Policy Name</th>
@@ -83,7 +83,7 @@
     </tr>
     </tbody>
     </table>
-    
+
 </div>
 </div>
 </div>
@@ -91,13 +91,13 @@
 </div>
 <br><br>
 
-<div th:if="${age30}"> 
+<div th:if="${age30}">
 <h5>Security Policy Violations 8-30 Days</h5>
 <div class="container">
 <div class="row">
 <div class="col-xl mx-auto w-auto bg-white rounded">
 <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
-	
+
 	<table class="table table-striped table-bordered table-sm">
     <thead class="thead-dark">
     <tr>
@@ -120,7 +120,7 @@
     </tr>
     </tbody>
     </table>
-    
+
 </div>
 </div>
 </div>
@@ -128,13 +128,13 @@
 </div>
 <br><br>
 
-<div th:if="${age60}"> 
+<div th:if="${age60}">
 <h5>Security Policy Violations 31-60 Days</h5>
 <div class="container">
 <div class="row">
 <div class="col-xl mx-auto w-auto bg-white rounded">
 <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
-	
+
 	<table class="table table-striped table-bordered table-sm">
 	<thead class="thead-dark">
     <tr>
@@ -157,7 +157,7 @@
     </tr>
     </tbody>
     </table>
-    
+
 </div>
 </div>
 </div>
@@ -165,13 +165,13 @@
 </div>
 <br><br>
 
-<div th:if="${age90}"> 
+<div th:if="${age90}">
 <h5>Security Policy Violations over 60 Days</h5>
 <div class="container">
 <div class="row">
 <div class="col-xl mx-auto w-auto bg-white rounded">
 <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
-	
+
 	<table class="table table-striped table-bordered table-sm">
 	<thead class="thead-dark">
     <tr>
@@ -194,7 +194,7 @@
     </tr>
     </tbody>
     </table>
-    
+
 </div>
 </div>
 </div>
@@ -202,6 +202,6 @@
 </div>
 <br><br>
 
-      
+
    </body>
 </html>

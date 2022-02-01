@@ -4,13 +4,13 @@
 
 ### Prerequisites
   * Java 8+
-  * (optional) python3  
+  * (optional) python3
 
 ### Download the java app for success metrics
   * There are two ways to run this application, by directly running the application jar file (Option A) or with the application docker image (Option B)
   * In both cases, start by downloading the zip file. To do so, go to the Releases pane on the right side of this page and click on the latest release
   * Click on the *successmetrics-[releasenumber].zip* file on the assets page to download it
-  * Unzip the contents into a directory of your choice 
+  * Unzip the contents into a directory of your choice
   * Change into the *successmetrics-[releasenumber]* directory (this will be your working directory)
 
 ```
@@ -20,7 +20,7 @@ cd successmetrics-[releasenumber]
 
 ### Setting runtime properties *application.properties*
 
-There are a number of properties that can be set to control how the application will run. These properties are set in a file called *application.properties*. The file is located in the *config* directory of the working directory. A full description of each property is provided in the file. 
+There are a number of properties that can be set to control how the application will run. These properties are set in a file called *application.properties*. The file is located in the *config* directory of the working directory. A full description of each property is provided in the file.
 
 If you are running the application jar file directly (Option A), it is not required to change any properties to run the application. Without any changes, the application will run in web mode in the current directory (ie. the directory in which the zip file is extracted) as the working directory.
 
@@ -43,7 +43,7 @@ The application is already configured with default settings. With the defaults, 
 To run the app, in the working directory
 
 ```
-Windows: runapp.bat 
+Windows: runapp.bat
 Linux: sh runapp.bat
 ```
 
@@ -55,7 +55,7 @@ Set the following mandatory properties in the *application.properties* file
 
 * iq.sm.csvfile=true
 * iq.url = your IQ server's IP address or URL:8070
-* iq.user = username of account with access to data in scope 
+* iq.user = username of account with access to data in scope
 * iq.pwd = password of account with access to data in scope
 * iq.sm.period = month or week (strongly recommended month)
 * iq.api.payload.timeperiod.first = 2020-01 (for example, or 2020-W01 for week format)
@@ -69,7 +69,7 @@ The following properties are optional:
 To run the app, in the working directory
 
 ```
-Windows: runapp-docker.bat 
+Windows: runapp-docker.bat
 Linux: sh runapp-docker.sh
 ```
 
@@ -96,11 +96,11 @@ The *Summary Report* on the web app main page menu is designed to be saved to pd
 
 #### pdf
 
-You may wish to just simply create a pdf file containing the summary metrics report. A pdf report file is created in a sub-directory of the working directory with a time-stamped file name. The application will then immediately exit after creating the pdf file. 
+You may wish to just simply create a pdf file containing the summary metrics report. A pdf report file is created in a sub-directory of the working directory with a time-stamped file name. The application will then immediately exit after creating the pdf file.
 
 #### insights
 
-In this mode, the application will simply create a CSV file containing the data required in order to create an Insights Analysis report. The CSV  file is created in a sub-directory in the working directory with a time-stamped file name. The application will then immediately exit after creating the file. 
+In this mode, the application will simply create a CSV file containing the data required in order to create an Insights Analysis report. The CSV  file is created in a sub-directory in the working directory with a time-stamped file name. The application will then immediately exit after creating the file.
 
 ### Creating the Metrics file
 
@@ -130,8 +130,8 @@ Creating the metrics file, requires sending a payload to the Nexus IQ success me
 #### Create the metrics file
 
 *There is a script available to help creating the required CSV file*
- 
- * Open a command prompt and run 
+
+ * Open a command prompt and run
 
 ```
 Windows: create-data.bat <iq-host-url> <iq-username> <iq-password> <period-file>
@@ -172,7 +172,7 @@ The files are created in the reports2 directory
 
 ## Development
 
-Should you wish to edit the source code: 
+Should you wish to edit the source code:
 
   * We strongly recommend the use of git flow http://danielkummer.github.io/git-flow-cheatsheet/ to make and manage any changes
   * Clone the repository
@@ -191,7 +191,7 @@ java -jar success-metrics-<version>.jar
 
 To scan with Nexus IQ:
  - first of all, edit the build.gradle file to configure your Nexus IQ url/username as well as your application name, then add the task to the build command above, or run on its own as below:
- 
+
 gradle nexusIQScan
 
 To make a release (using Githib CLI):

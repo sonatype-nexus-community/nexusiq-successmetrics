@@ -8,9 +8,9 @@
 <body>
 
     <div class="jumbotron">
-    
+
     	<div class="text-center">
-    	    	
+
     	<div th:if="${successmetricsreport}">
     	<a th:href="@{summary}">Summary Report <em>(anonymised)</em></a>
         <br><br>
@@ -30,12 +30,12 @@
 		<a th:href="@{firewall}">Firewall Report</a>
 		<br><br>
 		</div>
-			
+
 	    <div th:if="${policyViolationsreport}">
 	    <a th:href="@{violationsage}">Policy Violations Report</a>
 	    <br><br>
 	    </div>
-	        
+
 	    <div th:if="${applicationEvaluationsreport}">
 	    <a th:href="@{evaluations}">Application Evaluations Report</a>
 	    <br><br>
@@ -45,14 +45,13 @@
 		<a th:href="@{waivers}">Component Waivers Report</a>
 		<br><br>
 		</div>
-		
+
 	    <div th:if="${smdatabase}">
 	    <a th:href="@{/h2}">Database</a>
 	    </div>
-         
+
        </div>
     </div>
-    
-</body>
-</html> 
 
+</body>
+</html>

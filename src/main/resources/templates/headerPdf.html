@@ -1,6 +1,6 @@
 
  <div th:fragment="headerPdfFrag">
- 
+
   <meta charset="utf-8"/>
   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
 
@@ -12,9 +12,9 @@
   <link rel="stylesheet" href="/css/apexcharts.css"/>
 
   <link href="/css/main.css" rel="stylesheet"/>
-  
+
   <div class="text-center">
-      <img class="displayed" th:src="@{images/sonatype.png}"/>   
+      <img class="displayed" th:src="@{images/sonatype.png}"/>
       <title th:text="'Success Metrics'"></title>
       <h3>Success Metrics</h3>
       <p th:text="${#dates.createNow()}"></p>
@@ -55,9 +55,9 @@
               borderWidth: 2,
               borderColor: '#fff',
               opacity: 0.9,
-              
+
           },
-          
+
       }
 
       var barchart = {
@@ -142,6 +142,3 @@
   </script>
 
 </div>
-
-
-

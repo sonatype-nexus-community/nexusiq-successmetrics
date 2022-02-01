@@ -4,15 +4,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Globals {
-	
-	public final String txtMessage;
-	public final int initValue;
-	  
-	public final static Globals instance = new Globals();
 
-	private Globals(){ 
-		txtMessage = "Hello World!";
-		initValue = 1;
-	}
+    public final String txtMessage;
+    public final int initValue;
 
+    public static final Globals instance = new Globals();
+
+    private Globals() {
+        txtMessage = "Hello World!";
+        initValue = 1;
+    }
 }

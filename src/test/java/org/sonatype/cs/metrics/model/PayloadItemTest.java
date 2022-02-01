@@ -6,21 +6,21 @@ import org.junit.jupiter.api.Test;
 
 public class PayloadItemTest {
     @Test
-    void testNormalPayload(){
+    void testNormalPayload() {
         PayloadItem payload = new PayloadItem("payloadItem", false);
         assertEquals("payloadItem", payload.getItem());
         assertEquals(true, payload.isExists());
     }
 
     @Test
-    void testTrimmedPayload(){
+    void testTrimmedPayload() {
         PayloadItem payload = new PayloadItem(" payloadItem ", false);
         assertEquals("payloadItem", payload.getItem());
         assertEquals(true, payload.isExists());
     }
 
     @Test
-    void testEmptyPayload(){
+    void testEmptyPayload() {
         PayloadItem payload = new PayloadItem("", false);
         assertEquals("", payload.getItem());
         assertEquals(false, payload.isExists());

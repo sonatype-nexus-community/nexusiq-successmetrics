@@ -11,7 +11,7 @@
 	     	var dataD = [];
 
 	     	var labels = [];
-	     	
+
 	     	points.forEach(entry => {
 	            var label = entry.label;
 	            var pointA = entry.pointA;
@@ -27,14 +27,14 @@
                 dataD.push(pointD);
 
 
-            }); 
-            
+            });
+
             var options = {
                 chart: stackedbarchart,
                 dataLabels: barchartlabels,
                 grid: grid,
                 legend: legend,
-                colors: ['#FA0707', '#F99A07','#08B005',  '#0080FF'], 
+                colors: ['#FA0707', '#F99A07','#08B005',  '#0080FF'],
 
                 fill: fillViolationsSummary,
 
@@ -68,7 +68,7 @@
         </script>
 
 
-        <div style="page-break-before: always;"/> 	
+        <div style="page-break-before: always;"/>
 
         <div id="discoveredLicenseViolationsChart"></div>
         <script th:inline="javascript">
@@ -78,13 +78,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -126,13 +126,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -166,7 +166,7 @@
             chart.render();
         </script>
 
-        <div style="page-break-before: always;"/> 	
+        <div style="page-break-before: always;"/>
 
         <div id="fixedLicenseViolationsChart"></div>
         <script th:inline="javascript">
@@ -176,13 +176,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -224,13 +224,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,

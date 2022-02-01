@@ -1,5 +1,5 @@
 import java.text.SimpleDateFormat
-import org.apache.tools.ant.filters.ReplaceTokens 
+import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
 	id 'org.springframework.boot' version '2.5.6'
@@ -56,8 +56,8 @@ nexusIQScan {
   password = 'admin123'
   serverUrl = 'http://localhost:8070'
   applicationId = 'successmetrics'
-  stage = 'build'  
-  allConfigurations = true 
+  stage = 'build'
+  allConfigurations = true
 }
 
 test {
@@ -122,4 +122,3 @@ docker {
 packagejar.dependsOn bootJar
 packagefiles.dependsOn packagejar
 release.dependsOn packagefiles
-
