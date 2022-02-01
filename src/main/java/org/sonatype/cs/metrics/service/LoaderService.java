@@ -200,7 +200,7 @@ public class LoaderService {
                     String endPeriod = periods.get("endPeriod").toString();
                     filterOutLatestPeriod(
                             endPeriod); // it is likely incomplete and only where we know multiple
-                                        // periods available
+                    // periods available
                     log.info("Removing incomplete data for current month " + endPeriod);
                 }
 
@@ -224,14 +224,14 @@ public class LoaderService {
 
         String sqlStmtP1 =
                 "DROP TABLE IF EXISTS METRIC_P1; CREATE TABLE METRIC_P1 AS SELECT * FROM METRIC"
-                    + " WHERE TIME_PERIOD_START <= '"
+                        + " WHERE TIME_PERIOD_START <= '"
                         + midPeriod
                         + "'";
         dbService.runSqlLoad(sqlStmtP1);
 
         String sqlStmtP2 =
                 "DROP TABLE IF EXISTS METRIC_P2; CREATE TABLE METRIC_P2 AS SELECT * FROM METRIC"
-                    + " WHERE TIME_PERIOD_START > '"
+                        + " WHERE TIME_PERIOD_START > '"
                         + midPeriod
                         + "'";
         dbService.runSqlLoad(sqlStmtP2);

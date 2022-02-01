@@ -11,19 +11,19 @@ public class SqlStatements {
 
     public static String ApplicationsOnboarded =
             "select time_period_start as label, count(application_id) as pointA from <?> group by"
-                + " time_period_start order by 1 asc";
+                    + " time_period_start order by 1 asc";
 
     public static String MostScannedApplications =
             "select application_name as label, sum (evaluation_count) as pointA from <?> group by"
-                + " application_name order by 2 desc";
+                    + " application_name order by 2 desc";
 
     public static String NumberOfScans =
             "select time_period_start as label, sum(evaluation_count) as pointA from <?> group by"
-                + " time_period_start";
+                    + " time_period_start";
 
     public static String NumberOfScannedApplications =
             "select time_period_start as label, count(application_id) as pointA from <?> where"
-                + " evaluation_count > 0 group by time_period_start";
+                    + " evaluation_count > 0 group by time_period_start";
 
     public static String ListOfApplications = "select distinct application_name as label from <?>";
 
@@ -180,31 +180,31 @@ public class SqlStatements {
 
     public static String ApplicationsOpenViolations =
             "select  distinct application_name as label,"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_CRITICAL) +"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_CRITICAL) as pointA,"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_SEVERE)   +"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_SEVERE)as pointB,"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_MODERATE) +"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_MODERATE) as pointC, from <?>";
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_CRITICAL) +"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_CRITICAL) as pointA,"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_SEVERE)   +"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_SEVERE)as pointB,"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_MODERATE) +"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_MODERATE) as pointC, from <?>";
 
     public static String OrganisationsOpenViolations =
             "select  distinct organization_name as label,"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_CRITICAL) +"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_CRITICAL) as pointA,"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_SEVERE)   +"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_SEVERE) as pointB,"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_MODERATE) +"
-                + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_MODERATE) as pointC from <?>";
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_CRITICAL) +"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_CRITICAL) as pointA,"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_SEVERE)   +"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_SEVERE) as pointB,"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_MODERATE) +"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_MODERATE) as pointC from <?>";
 
     public static String ApplicationsSecurityRemediation =
             "select APPLICATION_NAME as label, sum(DISCOVERED_COUNT_SECURITY_CRITICAL) +"
-                + " sum(DISCOVERED_COUNT_SECURITY_SEVERE) +"
-                + " sum(DISCOVERED_COUNT_SECURITY_MODERATE)as pointA,"
-                + " sum(FIXED_COUNT_SECURITY_CRITICAL) + sum(FIXED_COUNT_SECURITY_SEVERE) +"
-                + " sum(FIXED_COUNT_SECURITY_MODERATE) as pointB,"
-                + " sum(WAIVED_COUNT_SECURITY_CRITICAL) + sum(WAIVED_COUNT_SECURITY_SEVERE) +"
-                + " sum(WAIVED_COUNT_SECURITY_MODERATE) as pointC from <?> group by"
-                + " APPLICATION_NAME order by 2 desc";
+                    + " sum(DISCOVERED_COUNT_SECURITY_SEVERE) +"
+                    + " sum(DISCOVERED_COUNT_SECURITY_MODERATE)as pointA,"
+                    + " sum(FIXED_COUNT_SECURITY_CRITICAL) + sum(FIXED_COUNT_SECURITY_SEVERE) +"
+                    + " sum(FIXED_COUNT_SECURITY_MODERATE) as pointB,"
+                    + " sum(WAIVED_COUNT_SECURITY_CRITICAL) + sum(WAIVED_COUNT_SECURITY_SEVERE) +"
+                    + " sum(WAIVED_COUNT_SECURITY_MODERATE) as pointC from <?> group by"
+                    + " APPLICATION_NAME order by 2 desc";
 
     public static String ApplicationsLicenseRemediation =
             "select APPLICATION_NAME as label, sum(DISCOVERED_COUNT_LICENSE_CRITICAL) +"
@@ -221,8 +221,8 @@ public class SqlStatements {
 
     public static String ComponentWaivers =
             "select application_name as pointA, stage as pointB, packageUrl as pointC, policyName"
-                + " as pointD, threatLevel as pointE, comment as pointF, createDate as pointG,"
-                + " expiryTime as pointH from COMPONENT_WAIVER order by 1 asc";
+                    + " as pointD, threatLevel as pointE, comment as pointF, createDate as pointG,"
+                    + " expiryTime as pointH from COMPONENT_WAIVER order by 1 asc";
 
     public static String QuarantinedComponents =
             "select repository as pointA, quarantine_date as pointB, date_cleared as pointC,"
@@ -313,11 +313,11 @@ public class SqlStatements {
 
     public static String PolicyViolationsTables =
             "DROP TABLE IF EXISTS POLICY_VIOLATION;CREATE TABLE POLICY_VIOLATION (  policy_name"
-                + " VARCHAR(250) NOT NULL,  reason VARCHAR(250) NOT NULL,  application_name"
-                + " VARCHAR(250) NOT NULL,  open_time VARCHAR(250) DEFAULT NULL,  component"
-                + " VARCHAR(250) DEFAULT NULL,  stage VARCHAR(250) DEFAULT NULL)  AS SELECT"
-                + " policyname, reason, applicationname, parsedatetime(opentime, 'yyyy-MM-dd',"
-                + " 'en'), component, stage FROM CSVREAD ";
+                    + " VARCHAR(250) NOT NULL,  reason VARCHAR(250) NOT NULL,  application_name"
+                    + " VARCHAR(250) NOT NULL,  open_time VARCHAR(250) DEFAULT NULL,  component"
+                    + " VARCHAR(250) DEFAULT NULL,  stage VARCHAR(250) DEFAULT NULL)  AS SELECT"
+                    + " policyname, reason, applicationname, parsedatetime(opentime, 'yyyy-MM-dd',"
+                    + " 'en'), component, stage FROM CSVREAD ";
 
     public static String ApplicationEvaluationsTable =
             "DROP TABLE IF EXISTS APPLICATION_EVALUATION;CREATE TABLE APPLICATION_EVALUATION ( "
