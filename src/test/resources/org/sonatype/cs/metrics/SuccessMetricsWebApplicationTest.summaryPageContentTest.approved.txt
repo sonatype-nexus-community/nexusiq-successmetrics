@@ -3,21 +3,21 @@
 
 <head>
 <div><div>
- 
+
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-  
+
     <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
     <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
     <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-  
+
     <script src="/js/apexcharts.min.js"></script>
     <link rel="stylesheet" href="/css/apexcharts.css"/>
 
     <link href="/css/main.css" rel="stylesheet"/>
-    
+
     <div class="text-center">
-        <img class="displayed" src="images/sonatype.png"/>   
+        <img class="displayed" src="images/sonatype.png"/>
         <title>Success Metrics</title>
         <h3>Success Metrics</h3>
         <h4></h4>
@@ -58,9 +58,9 @@
                 borderWidth: 2,
                 borderColor: '#fff',
                 opacity: 0.9,
-                
+
             },
-            
+
         }
 
         var barchart = {
@@ -143,7 +143,7 @@
 			}
 
     </script>
-  
+
 </div></div>
 
 </head>
@@ -158,19 +158,19 @@
     <div class="row">
     <div class="col-xl mx-auto bg-white rounded">
     <div class="table-responsive table-wrapper-scroll-y">
-    
+
     <div>
-	    
+
 	    <div><div>
 
 	<table class="table table-hover" style="width:100%">
         <thead class="thead-dark">
-            <tr>             
+            <tr>
                 <th scope="col">Current Period <span style="color:grey;font-size:11px">(2021-01-01 - 2021-06-01)</span></th>
              </tr>
         </thead>
         <tbody>
-        
+
         	<div>
         	<div>
             <tr>
@@ -181,11 +181,11 @@
             </tr>
             </div>
             </div>
-            
+
             <tr>
             <td>Performed a total of <span>1156</span> scans at an average of <span>192</span> per <span>month</span></td>
             </tr>
-            
+
         </tbody>
     </table>
 
@@ -274,13 +274,13 @@
         </tbody>
     </table>
 
-    
+
     <table class="table table-hover" style="width:100%">
         <thead class="thead-dark">
             <tr><th scope="col">Current Period</th></tr>
         </thead>
         <tbody>
-        
+
             <tr>
             <td> It took an average of <span>28</span> days to fix critical violations</td>
              </tr>
@@ -290,7 +290,7 @@
             <tr>
             <td> It took an average of <span>13</span> days to fix moderate violations</td>
             </tr>
-            
+
             <div>
             <div>
 
@@ -307,17 +307,17 @@
             </div>
 
         </tbody>
-    </table>    
+    </table>
 
 
 </div></div>
-	
+
 	    <br/><br/>
-	    
+
 	    </div>
 	    </div></div></div></div>
-		<div style="page-break-before: always;"/> 	
-	
+		<div style="page-break-before: always;"/>
+
 	    <!--  applications -->
 	    <div><div>
     <div class="chart-container">
@@ -329,13 +329,13 @@
             var points = [{"label":"2021-01-01","pointA":21,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":34,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":45,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":73,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":107,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":128,"pointB":0,"pointC":0,"pointD":0}];
 	     	var pdata = [];
 	     	var labels = [];
-	     	
+
 	     	points.forEach(entry => {
 	            var label = entry.label;
 	            var point = entry.pointA;
 	            labels.push(label);
 	            pdata.push(point);
-	        }); 
+	        });
 
             var options = {
                 chart: barchart,
@@ -359,21 +359,21 @@
 
             chart.render();
         </script>
-    
-        <div style="page-break-before: always;"/> 	
+
+        <div style="page-break-before: always;"/>
 
         <div id="numberOfApplicationsScannedChart"></div>
         <script>
             var points = [{"label":"2021-01-01","pointA":21,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":33,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":44,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":37,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":43,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":26,"pointB":0,"pointC":0,"pointD":0}];
             var pdata = [];
             var labels = [];
-            
+
             points.forEach(entry => {
                 var label = entry.label;
                 var point = entry.pointA;
                 labels.push(label);
                 pdata.push(point);
-            }); 
+            });
 
             var options = {
                 chart: barchart,
@@ -405,13 +405,13 @@
             var points = [{"label":"2021-01-01","pointA":76,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":105,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":530,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":136,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":162,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":147,"pointB":0,"pointC":0,"pointD":0}];
             var pdata = [];
             var labels = [];
-            
+
             points.forEach(entry => {
                 var label = entry.label;
                 var point = entry.pointA;
                 labels.push(label);
                 pdata.push(point);
-            }); 
+            });
 
             var options = {
                 chart: barchart,
@@ -436,20 +436,20 @@
             chart.render();
         </script>
 
-        <div style="page-break-before: always;"/> 	
-        
+        <div style="page-break-before: always;"/>
+
         <div id="riskRatioChart"></div>
         <script>
             var points = [{"label":"2021-01-01","pointA":24,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":21,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":25,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":24,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":20,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":20,"pointB":0,"pointC":0,"pointD":0}];
 	     	var pdata = [];
 	     	var labels = [];
-	     	
+
 	     	points.forEach(entry => {
 	            var label = entry.label;
 	            var point = entry.pointA;
 	            labels.push(label);
 	            pdata.push(point);
-	        }); 
+	        });
 
             var options = {
                 chart: barchart,
@@ -482,10 +482,10 @@
 	     	var dataC = [];
 
 	     	var labels = [];
-	     	
+
 	     	points.forEach(entry => {
                 labels.push(entry.label);
-                
+
                 if (entry.pointA > 0) {
                     dataA.push(Math.ceil(entry.pointA));
                 }
@@ -506,7 +506,7 @@
                 else {
                     dataC.push(null);
                 }
-	        }); 
+	        });
 
             var options = {
                 chart: stackedbarchart,
@@ -540,15 +540,15 @@
 
             chart.render();
         </script>
-    
-    	
-        
-     </div>   
+
+
+
+     </div>
 
 </div></div>
-	
-	    <div style="page-break-before: always;"/> 	
-	
+
+	    <div style="page-break-before: always;"/>
+
 	    <!--  security -->
 	    <div><div>
 
@@ -563,7 +563,7 @@
 	     	var dataD = [];
 
 	     	var labels = [];
-	     	
+
 	     	points.forEach(entry => {
 	            var label = entry.label;
 	            var pointA = entry.pointA;
@@ -576,17 +576,17 @@
 	            dataB.push(pointB);
 	            dataC.push(pointC);
 	            dataD.push(pointD);
-	            
+
 	            console.log(entry);
 
-            }); 
-            
+            });
+
             var options = {
                 chart: stackedbarchart,
                 dataLabels: barchartlabels,
                 grid: grid,
                 legend: legend,
-                colors: ['#FA0707', '#F99A07','#08B005',  '#0080FF'], 
+                colors: ['#FA0707', '#F99A07','#08B005',  '#0080FF'],
                 fill: fillViolationsSummary,
 
                 series: [{
@@ -619,7 +619,7 @@
             chart.render();
         </script>
 
-        <div style="page-break-before: always;"/> 	
+        <div style="page-break-before: always;"/>
 
         <div id="discoveredSecurityViolationsChart"></div>
         <script>
@@ -629,13 +629,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -677,13 +677,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -718,7 +718,7 @@
         </script>
 
 
-        <div style="page-break-before: always;"/> 	
+        <div style="page-break-before: always;"/>
 
         <div id="fixedSecurityViolationsChart"></div>
         <script>
@@ -728,13 +728,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -776,13 +776,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -818,9 +818,9 @@
 
     </div>
 </div></div>
-	
-	    <div style="page-break-before: always;"/> 	
-	
+
+	    <div style="page-break-before: always;"/>
+
 	    <!--  license -->
 	    <div><div>
 
@@ -835,7 +835,7 @@
 	     	var dataD = [];
 
 	     	var labels = [];
-	     	
+
 	     	points.forEach(entry => {
 	            var label = entry.label;
 	            var pointA = entry.pointA;
@@ -851,14 +851,14 @@
                 dataD.push(pointD);
 
 
-            }); 
-            
+            });
+
             var options = {
                 chart: stackedbarchart,
                 dataLabels: barchartlabels,
                 grid: grid,
                 legend: legend,
-                colors: ['#FA0707', '#F99A07','#08B005',  '#0080FF'], 
+                colors: ['#FA0707', '#F99A07','#08B005',  '#0080FF'],
 
                 fill: fillViolationsSummary,
 
@@ -892,7 +892,7 @@
         </script>
 
 
-        <div style="page-break-before: always;"/> 	
+        <div style="page-break-before: always;"/>
 
         <div id="discoveredLicenseViolationsChart"></div>
         <script>
@@ -902,13 +902,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -950,13 +950,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -990,7 +990,7 @@
             chart.render();
         </script>
 
-        <div style="page-break-before: always;"/> 	
+        <div style="page-break-before: always;"/>
 
         <div id="fixedLicenseViolationsChart"></div>
         <script>
@@ -1000,13 +1000,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -1048,13 +1048,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -1090,7 +1090,7 @@
 
     </div>
 </div></div>
-    
+
     </div>
-    
+
 </body>

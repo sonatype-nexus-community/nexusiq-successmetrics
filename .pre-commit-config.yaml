@@ -4,6 +4,7 @@ exclude: 'approved.txt$|.svg$|gradlew'  # approved excluded to prevent tests fro
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
+    exclude: ^*.approved.txt$
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
