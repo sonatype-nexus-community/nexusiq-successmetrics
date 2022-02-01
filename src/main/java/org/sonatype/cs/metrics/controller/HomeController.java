@@ -12,28 +12,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-	
-	private static final Logger log = LoggerFactory.getLogger(HomeController.class);
-	
-	@Autowired
-	private LoaderService loaderService;
-	
-	@Value("${sm.database}")
-	private String smdatabase;
-	
-	@GetMapping({"/", "/home"})
-	public String home(Model model) {
-        
-		log.info("In HomeController");
-		
-		model.addAttribute("smdatabase", smdatabase);
-		model.addAttribute("successmetricsreport", SuccessMetricsApplication.successMetricsFileLoaded);
-		model.addAttribute("policyViolationsreport", loaderService.policyViolationsDataLoaded);
-		model.addAttribute("applicationEvaluationsreport", loaderService.applicationEvaluationsFileLoaded);
-		model.addAttribute("firewallreport", loaderService.quarantinedComponentsLoaded);
-		model.addAttribute("componentWaiversReport", loaderService.componentWaiversLoaded);
 
-		return "home";
-	}
+    private static final Logger log = LoggerFactory.getLogger(HomeController.class);
+
+    @Autowired private LoaderService loaderService;
+
+    @Value("${sm.database}")
+    private String smdatabase;
+
+    @GetMapping({"/", "/home"})
+    public String home(Model model) {
+
+        log.info("In HomeController");
+
+        model.addAttribute("smdatabase", smdatabase);
+        model.addAttribute(
+                "successmetricsreport", SuccessMetricsApplication.successMetricsFileLoaded);
+        model.addAttribute("policyViolationsreport", loaderService.policyViolationsDataLoaded);
+        model.addAttribute(
+                "applicationEvaluationsreport", loaderService.applicationEvaluationsFileLoaded);
+        model.addAttribute("firewallreport", loaderService.quarantinedComponentsLoaded);
+        model.addAttribute("componentWaiversReport", loaderService.componentWaiversLoaded);
+
+        return "home";
+    }
 }
-

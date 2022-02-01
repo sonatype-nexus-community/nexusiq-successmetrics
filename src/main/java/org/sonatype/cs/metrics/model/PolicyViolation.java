@@ -11,12 +11,10 @@ public class PolicyViolation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Long id;
 
     private String policyName;
-	private String applicationName;
-	private String openTime;
-	private String component;
-    
+    private String applicationName;
+    private String openTime;
+    private String component;
 }

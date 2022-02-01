@@ -4,21 +4,21 @@
 
 <head>
 <div><div>
- 
+
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-  
+
     <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
     <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
     <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-  
+
     <script src="/js/apexcharts.min.js"></script>
     <link rel="stylesheet" href="/css/apexcharts.css"/>
 
     <link href="/css/main.css" rel="stylesheet"/>
-    
+
     <div class="text-center">
-        <img class="displayed" src="images/sonatype.png"/>   
+        <img class="displayed" src="images/sonatype.png"/>
         <title>Success Metrics</title>
         <h3>Success Metrics</h3>
         <h4></h4>
@@ -59,9 +59,9 @@
                 borderWidth: 2,
                 borderColor: '#fff',
                 opacity: 0.9,
-                
+
             },
-            
+
         }
 
         var barchart = {
@@ -144,28 +144,28 @@
 			}
 
     </script>
-  
+
 </div></div>
 </head>
-   
+
    <body>
-   	
+
       <div class="jumbotron">
       <h4>Policy Violations Age</h4>
       </div>
-            
+
       <div class="chart-container" style="margin-left: 100px; width:40vw">
-    
+
     	<div id="securityAgeChart" width="400" height="400"></div>
       	<script>
 	      	var age90 = 167;
 	    	var age60 = 28;
 	    	var age30 = 4;
 	    	var age7 = 542;
-	    	
+
 	     	var pdata = [age7, age30, age60, age90];
 	     	var labels = ['0-7 days old', '8-30 days old', '31-60 days old', '>60 days old'];
-		 
+
 			var options = {
 				series: pdata,
 				labels: labels,
@@ -191,19 +191,19 @@
 			var chart = new ApexCharts(document.querySelector("#securityAgeChart"), options);
 			chart.render();
 		</script>
-      
+
       </div>
-     
-      
+
+
 <br><br><br><br>
-<div> 
+<div>
 <h5>Security Policy Violations 0-7 Days</h5>
 <div class="container">
 <div class="row">
 <div class="col-xl mx-auto w-auto bg-white rounded">
 <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
-		
-	<table class="table table-striped table-bordered table-sm">	
+
+	<table class="table table-striped table-bordered table-sm">
     <thead class="thead-dark">
     <tr>
 		<th>Policy Name</th>
@@ -4553,7 +4553,7 @@
     </tr>
     </tbody>
     </table>
-    
+
 </div>
 </div>
 </div>
@@ -4561,13 +4561,13 @@
 </div>
 <br><br>
 
-<div> 
+<div>
 <h5>Security Policy Violations 8-30 Days</h5>
 <div class="container">
 <div class="row">
 <div class="col-xl mx-auto w-auto bg-white rounded">
 <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
-	
+
 	<table class="table table-striped table-bordered table-sm">
     <thead class="thead-dark">
     <tr>
@@ -4614,7 +4614,7 @@
     </tr>
     </tbody>
     </table>
-    
+
 </div>
 </div>
 </div>
@@ -4622,13 +4622,13 @@
 </div>
 <br><br>
 
-<div> 
+<div>
 <h5>Security Policy Violations 31-60 Days</h5>
 <div class="container">
 <div class="row">
 <div class="col-xl mx-auto w-auto bg-white rounded">
 <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
-	
+
 	<table class="table table-striped table-bordered table-sm">
 	<thead class="thead-dark">
     <tr>
@@ -4867,7 +4867,7 @@
     </tr>
     </tbody>
     </table>
-    
+
 </div>
 </div>
 </div>
@@ -4875,13 +4875,13 @@
 </div>
 <br><br>
 
-<div> 
+<div>
 <h5>Security Policy Violations over 60 Days</h5>
 <div class="container">
 <div class="row">
 <div class="col-xl mx-auto w-auto bg-white rounded">
 <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
-	
+
 	<table class="table table-striped table-bordered table-sm">
 	<thead class="thead-dark">
     <tr>
@@ -6232,7 +6232,7 @@
     </tr>
     </tbody>
     </table>
-    
+
 </div>
 </div>
 </div>
@@ -6240,6 +6240,6 @@
 </div>
 <br><br>
 
-      
+
    </body>
 </html>

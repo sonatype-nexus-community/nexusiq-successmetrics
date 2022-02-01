@@ -5,23 +5,23 @@ import csv
 
 jsonfile = 'policy_violations.json'
 csvfile = 'policy_violations.csv'
-    
-    
+
+
 def makePolicyViolationsReport():
     policies = r2.getNexusIqData('policies')
     policyIds = getPolicyIds(policies)
 
     policyViolations = r2.getNexusIqData("policyViolations?" + policyIds)
-    
+
     with open(jsonfile, 'w') as fd:
             json.dump(policyViolations, fd)
-    
+
     writeToCsvFile(policyViolations)
-    
+
     print(jsonfile)
     print(csvfile)
 
-    return 
+    return
 
 
 def getPolicyIds(data):
@@ -93,5 +93,5 @@ def writeToCsvFile(policyViolations):
                         writer.writerow(line)
 
     fd.close()
-    
+
     return

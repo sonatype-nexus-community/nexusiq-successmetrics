@@ -1,7 +1,7 @@
 package org.sonatype.cs.metrics.model;
 
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 public @Data @AllArgsConstructor @NoArgsConstructor class DbRow {
@@ -13,7 +13,16 @@ public @Data @AllArgsConstructor @NoArgsConstructor class DbRow {
 
     @Override
     public String toString() {
-        return "DbRow [label=" + label + ", pointA=" + pointA + ", pointB=" + pointB + ", pointC=" + pointC
-                + ", pointD=" + pointD + "]";
+        return "DbRow [label="
+                + label
+                + ", pointA="
+                + pointA
+                + ", pointB="
+                + pointB
+                + ", pointC="
+                + pointC
+                + ", pointD="
+                + pointD
+                + "]";
     }
 }

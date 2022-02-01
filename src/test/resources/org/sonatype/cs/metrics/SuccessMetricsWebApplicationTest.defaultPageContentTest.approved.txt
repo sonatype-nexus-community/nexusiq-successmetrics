@@ -3,21 +3,21 @@
 
 <head>
 <div><div>
- 
+
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-  
+
     <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
     <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
     <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-  
+
     <script src="/js/apexcharts.min.js"></script>
     <link rel="stylesheet" href="/css/apexcharts.css"/>
 
     <link href="/css/main.css" rel="stylesheet"/>
-    
+
     <div class="text-center">
-        <img class="displayed" src="images/sonatype.png"/>   
+        <img class="displayed" src="images/sonatype.png"/>
         <title>Success Metrics</title>
         <h3>Success Metrics</h3>
         <h4></h4>
@@ -58,9 +58,9 @@
                 borderWidth: 2,
                 borderColor: '#fff',
                 opacity: 0.9,
-                
+
             },
-            
+
         }
 
         var barchart = {
@@ -143,16 +143,16 @@
 			}
 
     </script>
-  
+
 </div></div>
 </head>
 
 <body>
 
     <div class="jumbotron">
-    
+
     	<div class="text-center">
-    	    	
+
     	<div>
     	<a href="summary">Summary Report <em>(anonymised)</em></a>
         <br><br>
@@ -169,12 +169,12 @@
         -->
 
 		
-			
+
 	    <div>
 	    <a href="violationsage">Policy Violations Report</a>
 	    <br><br>
 	    </div>
-	        
+
 	    <div>
 	    <a href="evaluations">Application Evaluations Report</a>
 	    <br><br>
@@ -184,11 +184,11 @@
 		<a href="waivers">Component Waivers Report</a>
 		<br><br>
 		</div>
-		
+
 	    
-         
+
        </div>
     </div>
-    
+
 </body>
-</html> 
+</html>

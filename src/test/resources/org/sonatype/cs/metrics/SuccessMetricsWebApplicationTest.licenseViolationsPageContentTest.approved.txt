@@ -3,21 +3,21 @@
 
 <head>
 <div><div>
- 
+
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-  
+
     <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
     <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
     <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-  
+
     <script src="/js/apexcharts.min.js"></script>
     <link rel="stylesheet" href="/css/apexcharts.css"/>
 
     <link href="/css/main.css" rel="stylesheet"/>
-    
+
     <div class="text-center">
-        <img class="displayed" src="images/sonatype.png"/>   
+        <img class="displayed" src="images/sonatype.png"/>
         <title>Success Metrics</title>
         <h3>Success Metrics</h3>
         <h4></h4>
@@ -58,9 +58,9 @@
                 borderWidth: 2,
                 borderColor: '#fff',
                 opacity: 0.9,
-                
+
             },
-            
+
         }
 
         var barchart = {
@@ -143,7 +143,7 @@
 			}
 
     </script>
-  
+
 </div></div>
 </head>
 
@@ -166,7 +166,7 @@
 	     	var dataD = [];
 
 	     	var labels = [];
-	     	
+
 	     	points.forEach(entry => {
 	            var label = entry.label;
 	            var pointA = entry.pointA;
@@ -182,14 +182,14 @@
                 dataD.push(pointD);
 
 
-            }); 
-            
+            });
+
             var options = {
                 chart: stackedbarchart,
                 dataLabels: barchartlabels,
                 grid: grid,
                 legend: legend,
-                colors: ['#FA0707', '#F99A07','#08B005',  '#0080FF'], 
+                colors: ['#FA0707', '#F99A07','#08B005',  '#0080FF'],
 
                 fill: fillViolationsSummary,
 
@@ -223,7 +223,7 @@
         </script>
 
 
-        <div style="page-break-before: always;"/> 	
+        <div style="page-break-before: always;"/>
 
         <div id="discoveredLicenseViolationsChart"></div>
         <script>
@@ -233,13 +233,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -281,13 +281,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -321,7 +321,7 @@
             chart.render();
         </script>
 
-        <div style="page-break-before: always;"/> 	
+        <div style="page-break-before: always;"/>
 
         <div id="fixedLicenseViolationsChart"></div>
         <script>
@@ -331,13 +331,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -379,13 +379,13 @@
             var dataC = [];
 
             var labels = [];
-            
+
             points.forEach(entry => {
                 labels.push(entry.label);
                 dataA.push(entry.pointA);
                 dataB.push(entry.pointB);
                 dataC.push(entry.pointC);
-            }); 
+            });
 
             var options = {
                 chart: stackedbarchart,
@@ -421,5 +421,5 @@
 
     </div>
 </div></div>
-    
+
 </body>

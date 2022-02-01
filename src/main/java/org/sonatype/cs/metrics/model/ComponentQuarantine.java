@@ -8,10 +8,9 @@ import javax.persistence.Id;
 @Entity
 @SuppressWarnings("unused")
 public class ComponentQuarantine {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Long id;
 
     private String repository;

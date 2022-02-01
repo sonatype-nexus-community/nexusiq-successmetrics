@@ -8,9 +8,9 @@ csvfile = 'component_waivers.csv'
 
 def makeComponentWaiversReport():
     initReport()
-    
+
     componentWaivers = r2.getNexusIqData('reports/components/waivers')
-    
+
     with open(jsonfile, 'w') as fd:
             json.dump(componentWaivers, fd, indent=4)
 
@@ -37,8 +37,8 @@ def initReport():
             line.append("ExpiryTime")
 
             writer.writerow(line)
-        
-    return 
+
+    return
 
 
 def writeWaiversToCsv(waiversType, componentWaivers):
@@ -46,56 +46,56 @@ def writeWaiversToCsv(waiversType, componentWaivers):
     with open(csvfile, 'a') as fd:
             writer = csv.writer(fd)
 
-            for waiver in componentWaivers:    
-                
-                if waiversType == 'application':    
+            for waiver in componentWaivers:
+
+                if waiversType == 'application':
                     applicationName = waiver['application']['publicId']
                 else:
                     applicationName = waiver['repository']['publicId']
-        
+
                 stages = waiver['stages']
-                        
+
                 for stage in stages:
                     stageId = stage['stageId']
                     componentPolicyViolations = stage['componentPolicyViolations']
-                            
+
                     for componentPolicyViolation in componentPolicyViolations:
                         packageUrl = componentPolicyViolation["component"]["packageUrl"]
                         waivedPolicyViolations = componentPolicyViolation['waivedPolicyViolations']
-        
+
                         for waivedPolicyViolation in waivedPolicyViolations:
                             policyName = waivedPolicyViolation['policyName']
                             threatLevel = waivedPolicyViolation['threatLevel']
                             comment = waivedPolicyViolation['policyWaiver']['comment']
-        
+
                             if "createTime" in waivedPolicyViolation['policyWaiver'].keys():
                                 createDate = waivedPolicyViolation['policyWaiver']['createTime']
-        
+
                                 if "expiryTime" in waivedPolicyViolation['policyWaiver'].keys():
                                     expiryTime = waivedPolicyViolation['policyWaiver']['expiryTime']
                                 else:
                                     expiryTime = "non-expiring"
-        
+
                             else:
                                 createDate = "needs re-eval"
-                                        
+
                                 if waiversType == 'application':
                                     expiryTime = "needs re-eval"
                                 else:
                                     expiryTime = "n/a"
-                
+
                             if comment is not None:
                                 if "\n" in comment:
                                     comment = comment.replace("\n", "-")
-        
+
                                 if "," in comment:
                                     comment = comment.replace(",", "|")
                             else:
                                 comment = ""
-                                        
+
                             createDate =  r2.formatDate(createDate)
                             expiryTime =  r2.formatDate(expiryTime)
-                                    
+
                             line = []
                             line.append(applicationName)
                             line.append(stageId)
@@ -105,10 +105,9 @@ def writeWaiversToCsv(waiversType, componentWaivers):
                             line.append(comment)
                             line.append(createDate)
                             line.append(expiryTime)
-        
+
                             writer.writerow(line)
 
     fd.close()
-    
-    return
 
+    return

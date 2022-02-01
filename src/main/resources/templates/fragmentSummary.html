@@ -2,12 +2,12 @@
 
 	<table class="table table-hover" style="width:100%">
         <thead class="thead-dark">
-            <tr>             
+            <tr>
                 <th scope="col">Current Period <span style="color:grey;font-size:11px" th:text="${periodDateRangeStr}"/></th>
              </tr>
         </thead>
         <tbody>
-        
+
         	<div th:if="${globalsummary}">
         	<div th:unless="${applicationReport}">
             <tr>
@@ -18,11 +18,11 @@
             </tr>
             </div>
             </div>
-            
+
             <tr>
             <td>Performed a total of <span th:text="${numberOfScans}"/> scans at an average of <span th:text="${numberOfScansAvg}"/> per <span th:text="${timePeriodFrequency}"/></td>
             </tr>
-            
+
         </tbody>
     </table>
 
@@ -113,13 +113,13 @@
         </tbody>
     </table>
 
-    
+
     <table class="table table-hover" style="width:100%">
         <thead class="thead-dark">
             <tr><th scope="col">Current Period</th></tr>
         </thead>
         <tbody>
-        
+
             <tr>
             <td> It took an average of <span th:text="${mttrAvg[0]}"/> days to fix critical violations</td>
              </tr>
@@ -129,7 +129,7 @@
             <tr>
             <td> It took an average of <span th:text="${mttrAvg[2]}"/> days to fix moderate violations</td>
             </tr>
-            
+
             <div th:if="${globalsummary}">
             <div th:unless="${applicationReport}">
 
@@ -146,7 +146,7 @@
             </div>
 
         </tbody>
-    </table>    
+    </table>
 
 
 </div>

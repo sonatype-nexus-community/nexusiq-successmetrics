@@ -18,7 +18,7 @@ licensePolicyList = []
 licensePolicyList.append("License-Banned")
 licensePolicyList.append("License-None")
 licensePolicyList.append("License-Copyleft")
-    
+
 iqapi = 'api/v2'
 
 
@@ -44,7 +44,7 @@ def formatDate(dt):
   d = dt[0:10]
   # d = d.replace("T", ".")
   return d
-  
+
 
 def getLicense(reasons):
     licenses = []
@@ -94,33 +94,29 @@ def getCVE(reasons):
 def getCVE2(reasons):
     values = []
     f = ""
-    
+
     for reason in reasons:
         reference = reason["reference"]
-        
+
         if not reference is None:
             newValue = reference["value"]
             if not itemExists(newValue, values):
                 values.append(newValue)
-        
+
     for v in values:
         f = f.join(v + ":")
-        
+
     f = f[:-1]
-    
+
     return f
 
 
 def itemExists(item,items):
     exists = False
-    
+
     for i in items:
         if i == item:
             exists = True
             break
-        
+
     return exists
-
-
-
-

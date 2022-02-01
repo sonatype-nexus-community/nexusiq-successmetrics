@@ -22,7 +22,7 @@ jobs:
           with:
             java-version: '8'
             distribution: 'adopt'
-        
+
         - name: Cache Gradle packages
           uses: actions/cache@v2
           with:
@@ -32,13 +32,13 @@ jobs:
             key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
             restore-keys: |
               ${{ runner.os }}-gradle-
-      
+
         - name: Grant execute permission for gradlew
           run: chmod +x gradlew
-          
+
         - name: Build with Gradle
           run: ./gradlew clean build
-          
+
         - name: Upload the artifact
           uses: actions/upload-artifact@v2
           with:
@@ -58,7 +58,7 @@ jobs:
 
         - uses: actions/setup-python@v2
           with:
-            python-version: '3.9.8' 
+            python-version: '3.9.8'
 
         - name: Install dependencies
           run: |
@@ -82,7 +82,7 @@ jobs:
         needs: [build_application, build_reports2]
         name: create release bundle
         runs-on: ubuntu-latest
-        
+
         steps:
         - uses: actions/checkout@v2
 
@@ -106,9 +106,9 @@ jobs:
         name: build docker image
         runs-on: ubuntu-latest
         steps:
-        
+
         - uses: actions/checkout@v2
-        
+
         - name: Download the application file
           uses: actions/download-artifact@v2
           with:
@@ -141,5 +141,3 @@ jobs:
 
               docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
               docker push $IMAGE_ID:$VERSION
-
-    

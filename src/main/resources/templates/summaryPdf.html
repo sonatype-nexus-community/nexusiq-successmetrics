@@ -5,7 +5,7 @@
 	<div th:insert="templates/headerPdf :: headerPdfFrag"></div>
 <style>
 th,tr {
-	
+
     font-size: 14px;
 }
 
@@ -34,32 +34,32 @@ p {
 	    <h4>Nexus IQ Success Metrics</h4>
 	    <p th:text="${#dates.createNow()}"></p>
   	</div>
-  	
+
   	<div>
 	    <h4>Summary Report</h4>
   	</div>
 
     <div th:insert="templates/fragmentSummary :: summaryFrag"></div>
-    
+
     <div th:if="${doAnalysis}">
-    
-	<div style="page-break-before: always;"/> 	
+
+	<div style="page-break-before: always;"/>
 
 	<div>
 	    <h4>Compare Periods</h4>
   	</div>
-	
+
     <div th:insert="templates/fragmentComparePeriods :: comparePeriodsFrag"></div>
-    
-    <div style="page-break-before: always;"/> 	
-    
+
+    <div style="page-break-before: always;"/>
+
     <div>
 	    <h4>Analysis</h4>
   	</div>
-	
+
     <div th:insert="templates/fragmentAnalysis :: analysisFrag"></div>
-    
+
     </div>
- 
+
 </body>
 </html>
