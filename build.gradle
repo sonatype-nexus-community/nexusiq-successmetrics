@@ -12,7 +12,7 @@ plugins {
  }
 
 group = 'org.sonatype.cs'
-version = '86'
+version = '87'
 sourceCompatibility = '8'
 
 def applicationname = 'nexusiq-successmetrics'
