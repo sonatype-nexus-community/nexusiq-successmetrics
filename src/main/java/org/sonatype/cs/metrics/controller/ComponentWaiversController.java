@@ -19,7 +19,7 @@ public class ComponentWaiversController {
 
     @Autowired private DbService dbService;
 
-    @GetMapping({"/waivers"})
+    @GetMapping({"/waivers", "/waivers.html"})
     public String componentWaivers(Model model) {
 
         log.info("In ComponentWaiversController");

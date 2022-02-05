@@ -22,7 +22,7 @@ public class ComparePeriodsController {
 
     @Autowired private MetricsService metricsService;
 
-    @GetMapping({"/compare"})
+    @GetMapping({"/compare", "/compare.html"})
     public String applications(Model model) throws ParseException {
         log.info("In ComparePeriodsController");
 

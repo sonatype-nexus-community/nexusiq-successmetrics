@@ -25,7 +25,7 @@ public class ApplicationEvaluationsController {
 
     @Autowired private HelperService helperService;
 
-    @GetMapping({"/evaluations"})
+    @GetMapping({"/evaluations", "/evaluations.html"})
     public String applicationEvaluations(
             Model model, @RequestParam(name = "date", required = false) String comparisonDate) {
 

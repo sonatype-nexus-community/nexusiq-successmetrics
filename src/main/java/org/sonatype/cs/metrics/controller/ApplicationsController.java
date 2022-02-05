@@ -21,7 +21,7 @@ public class ApplicationsController {
 
     @Autowired private ApplicationsDataService applicationsDataService;
 
-    @GetMapping({"/applications"})
+    @GetMapping({"/applications", "/applications.html"})
     public String applications(Model model) throws ParseException {
 
         log.info("In ApplicationsController");

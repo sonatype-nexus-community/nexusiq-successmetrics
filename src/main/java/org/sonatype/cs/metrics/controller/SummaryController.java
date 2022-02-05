@@ -22,7 +22,7 @@ public class SummaryController {
 
     @Autowired private MetricsService metricsService;
 
-    @GetMapping({"/summary"})
+    @GetMapping({"/summary", "/summary.html"})
     public String applications(Model model) throws ParseException {
 
         log.info("In ReportSummaryController");
