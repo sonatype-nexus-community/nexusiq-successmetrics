@@ -12,7 +12,7 @@ plugins {
  }
 
 group = 'org.sonatype.cs'
-version = '87'
+version = project.hasProperty('relversion') ? project.property('relversion') : 'undefined'
 sourceCompatibility = '8'
 
 def applicationname = 'nexusiq-successmetrics'
