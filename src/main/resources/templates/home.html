@@ -12,13 +12,13 @@
     	<div class="text-center">
 
     	<div th:if="${successmetricsreport}">
-    	<a th:href="@{summary}">Summary Report <em>(anonymised)</em></a>
+    	<a th:href="@{summary.html}">Summary Report <em>(anonymised)</em></a>
         <br><br>
-        <a th:href="@{applications}">Applications Report</a>
+        <a th:href="@{applications.html}">Applications Report</a>
         <br><br>
-        <a th:href="@{securityviolations}">Security Violations Report</a>
+        <a th:href="@{securityviolations.html}">Security Violations Report</a>
         <br><br>
-        <a th:href="@{licenseviolations}">License Violations Report</a>
+        <a th:href="@{licenseviolations.html}">License Violations Report</a>
         <br><br>
         <!--
 		<a th:href="@{analysis}">Insights Analysis Data</a>
@@ -27,22 +27,22 @@
         -->
 
 		<div th:if="${firewallreport}">
-		<a th:href="@{firewall}">Firewall Report</a>
+		<a th:href="@{firewall.html}">Firewall Report</a>
 		<br><br>
 		</div>
 
 	    <div th:if="${policyViolationsreport}">
-	    <a th:href="@{violationsage}">Policy Violations Report</a>
+	    <a th:href="@{violationsage.html}">Policy Violations Report</a>
 	    <br><br>
 	    </div>
 
 	    <div th:if="${applicationEvaluationsreport}">
-	    <a th:href="@{evaluations}">Application Evaluations Report</a>
+	    <a th:href="@{evaluations.html}">Application Evaluations Report</a>
 	    <br><br>
 		</div>
 
 		<div th:if="${componentWaiversReport}">
-		<a th:href="@{waivers}">Component Waivers Report</a>
+		<a th:href="@{waivers.html}">Component Waivers Report</a>
 		<br><br>
 		</div>
 

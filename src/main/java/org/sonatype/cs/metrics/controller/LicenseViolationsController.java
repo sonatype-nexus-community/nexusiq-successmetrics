@@ -24,7 +24,7 @@ public class LicenseViolationsController {
 
     @Autowired private ApplicationsDataService applicationsDataService;
 
-    @GetMapping({"/licenseviolations"})
+    @GetMapping({"/licenseviolations", "/licenseviolations.html"})
     public String licenseViolations(Model model) throws ParseException {
 
         log.info("In LicenseViolationsController");

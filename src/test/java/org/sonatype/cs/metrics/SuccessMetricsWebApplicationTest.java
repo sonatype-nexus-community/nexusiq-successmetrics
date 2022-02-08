@@ -47,6 +47,14 @@ public class SuccessMetricsWebApplicationTest {
                 this.restTemplate
                         .getForObject("http://localhost:" + port + "/", String.class)
                         .contains("Success Metrics"));
+        assertTrue(
+                this.restTemplate
+                        .getForObject("http://localhost:" + port + "/home", String.class)
+                        .contains("Success Metrics"));
+        assertTrue(
+                this.restTemplate
+                        .getForObject("http://localhost:" + port + "/home.html", String.class)
+                        .contains("Success Metrics"));
     }
 
     @Test
@@ -55,6 +63,10 @@ public class SuccessMetricsWebApplicationTest {
                 this.restTemplate
                         .getForObject("http://localhost:" + port + "/summary", String.class)
                         .contains("Summary Report"));
+        assertTrue(
+                this.restTemplate
+                        .getForObject("http://localhost:" + port + "/summary.html", String.class)
+                        .contains("Summary Report"));
     }
 
     @Test
@@ -62,6 +74,11 @@ public class SuccessMetricsWebApplicationTest {
         assertTrue(
                 this.restTemplate
                         .getForObject("http://localhost:" + port + "/applications", String.class)
+                        .contains("Applications Report"));
+        assertTrue(
+                this.restTemplate
+                        .getForObject(
+                                "http://localhost:" + port + "/applications.html", String.class)
                         .contains("Applications Report"));
     }
 
@@ -72,6 +89,12 @@ public class SuccessMetricsWebApplicationTest {
                         .getForObject(
                                 "http://localhost:" + port + "/securityviolations", String.class)
                         .contains("Security Violations Report"));
+        assertTrue(
+                this.restTemplate
+                        .getForObject(
+                                "http://localhost:" + port + "/securityviolations.html",
+                                String.class)
+                        .contains("Security Violations Report"));
     }
 
     @Test
@@ -81,6 +104,12 @@ public class SuccessMetricsWebApplicationTest {
                         .getForObject(
                                 "http://localhost:" + port + "/licenseviolations", String.class)
                         .contains("License Violations Report"));
+        assertTrue(
+                this.restTemplate
+                        .getForObject(
+                                "http://localhost:" + port + "/licenseviolations.html",
+                                String.class)
+                        .contains("License Violations Report"));
     }
 
     @Test
@@ -88,6 +117,11 @@ public class SuccessMetricsWebApplicationTest {
         assertTrue(
                 this.restTemplate
                         .getForObject("http://localhost:" + port + "/violationsage", String.class)
+                        .contains("Policy Violations Age"));
+        assertTrue(
+                this.restTemplate
+                        .getForObject(
+                                "http://localhost:" + port + "/violationsage.html", String.class)
                         .contains("Policy Violations Age"));
     }
 
@@ -97,6 +131,11 @@ public class SuccessMetricsWebApplicationTest {
                 this.restTemplate
                         .getForObject("http://localhost:" + port + "/evaluations", String.class)
                         .contains("Application Last Date Evaluated"));
+        assertTrue(
+                this.restTemplate
+                        .getForObject(
+                                "http://localhost:" + port + "/evaluations.html", String.class)
+                        .contains("Application Last Date Evaluated"));
     }
 
     @Test
@@ -104,6 +143,10 @@ public class SuccessMetricsWebApplicationTest {
         assertTrue(
                 this.restTemplate
                         .getForObject("http://localhost:" + port + "/waivers", String.class)
+                        .contains("Components Waivers Report"));
+        assertTrue(
+                this.restTemplate
+                        .getForObject("http://localhost:" + port + "/waivers.html", String.class)
                         .contains("Components Waivers Report"));
     }
 
@@ -119,7 +162,7 @@ public class SuccessMetricsWebApplicationTest {
     public void summaryPageContentTest() throws Exception {
         String pageContents =
                 this.restTemplate.getForObject(
-                        "http://localhost:" + port + "/summary", String.class);
+                        "http://localhost:" + port + "/summary.html", String.class);
         pageContents = removeLine(pageContents, 23);
         Approvals.verify(pageContents);
     }
@@ -128,7 +171,7 @@ public class SuccessMetricsWebApplicationTest {
     public void applicationsPageContentTest() throws Exception {
         String pageContents =
                 this.restTemplate.getForObject(
-                        "http://localhost:" + port + "/applications", String.class);
+                        "http://localhost:" + port + "/applications.html", String.class);
         pageContents = removeLine(pageContents, 23);
         Approvals.verify(pageContents);
     }
@@ -137,7 +180,7 @@ public class SuccessMetricsWebApplicationTest {
     public void securityViolationsPageContentTest() throws Exception {
         String pageContents =
                 this.restTemplate.getForObject(
-                        "http://localhost:" + port + "/securityviolations", String.class);
+                        "http://localhost:" + port + "/securityviolations.html", String.class);
         pageContents = removeLine(pageContents, 23);
         Approvals.verify(pageContents);
     }
@@ -146,7 +189,7 @@ public class SuccessMetricsWebApplicationTest {
     public void licenseViolationsPageContentTest() throws Exception {
         String pageContents =
                 this.restTemplate.getForObject(
-                        "http://localhost:" + port + "/licenseviolations", String.class);
+                        "http://localhost:" + port + "/licenseviolations.html", String.class);
         pageContents = removeLine(pageContents, 23);
         Approvals.verify(pageContents);
     }
@@ -155,7 +198,7 @@ public class SuccessMetricsWebApplicationTest {
     public void PolicyViolationsReportPageContentTest() throws Exception {
         String pageContents =
                 this.restTemplate.getForObject(
-                        "http://localhost:" + port + "/violationsage?date=2020-12-15",
+                        "http://localhost:" + port + "/violationsage.html?date=2020-12-15",
                         String.class);
         pageContents = removeLine(pageContents, 24);
         Approvals.verify(pageContents);
@@ -165,7 +208,8 @@ public class SuccessMetricsWebApplicationTest {
     public void ApplicationEvaluationsReportPageContentTest() throws Exception {
         String pageContents =
                 this.restTemplate.getForObject(
-                        "http://localhost:" + port + "/evaluations?date=2021-12-15", String.class);
+                        "http://localhost:" + port + "/evaluations.html?date=2021-12-15",
+                        String.class);
         pageContents = removeLine(pageContents, 23);
         Approvals.verify(pageContents);
     }
@@ -174,7 +218,7 @@ public class SuccessMetricsWebApplicationTest {
     public void ComponentWaiversReportPageContentTest() throws Exception {
         String pageContents =
                 this.restTemplate.getForObject(
-                        "http://localhost:" + port + "/waivers", String.class);
+                        "http://localhost:" + port + "/waivers.html", String.class);
         pageContents = removeLine(pageContents, 24);
         Approvals.verify(pageContents);
     }

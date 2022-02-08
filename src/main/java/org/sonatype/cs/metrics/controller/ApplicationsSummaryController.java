@@ -28,7 +28,7 @@ public class ApplicationsSummaryController {
 
     @Autowired private ApplicationsDataService applicationsDataService;
 
-    @GetMapping({"/appsummary"})
+    @GetMapping({"/appsummary", "/appsummary.html"})
     public String application(
             Model model,
             @RequestParam(value = "appname", defaultValue = "none") String applicationName)

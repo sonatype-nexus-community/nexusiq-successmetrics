@@ -24,7 +24,7 @@ public class SecurityViolationsController {
 
     @Autowired private ApplicationsDataService applicationsDataService;
 
-    @GetMapping({"/securityviolations"})
+    @GetMapping({"/securityviolations", "/securityviolations.html"})
     public String securityViolations(Model model) throws ParseException {
 
         log.info("In SecurityViolationsController");

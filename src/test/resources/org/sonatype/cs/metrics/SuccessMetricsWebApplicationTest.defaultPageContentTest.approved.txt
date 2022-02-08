@@ -154,13 +154,13 @@
     	<div class="text-center">
 
     	<div>
-    	<a href="summary">Summary Report <em>(anonymised)</em></a>
+    	<a href="summary.html">Summary Report <em>(anonymised)</em></a>
         <br><br>
-        <a href="applications">Applications Report</a>
+        <a href="applications.html">Applications Report</a>
         <br><br>
-        <a href="securityviolations">Security Violations Report</a>
+        <a href="securityviolations.html">Security Violations Report</a>
         <br><br>
-        <a href="licenseviolations">License Violations Report</a>
+        <a href="licenseviolations.html">License Violations Report</a>
         <br><br>
         <!--
 		<a th:href="@{analysis}">Insights Analysis Data</a>
@@ -171,17 +171,17 @@
 		
 
 	    <div>
-	    <a href="violationsage">Policy Violations Report</a>
+	    <a href="violationsage.html">Policy Violations Report</a>
 	    <br><br>
 	    </div>
 
 	    <div>
-	    <a href="evaluations">Application Evaluations Report</a>
+	    <a href="evaluations.html">Application Evaluations Report</a>
 	    <br><br>
 		</div>
 
 		<div>
-		<a href="waivers">Component Waivers Report</a>
+		<a href="waivers.html">Component Waivers Report</a>
 		<br><br>
 		</div>
 

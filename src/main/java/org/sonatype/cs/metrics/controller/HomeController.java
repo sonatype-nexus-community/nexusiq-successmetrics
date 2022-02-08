@@ -20,7 +20,7 @@ public class HomeController {
     @Value("${sm.database}")
     private String smdatabase;
 
-    @GetMapping({"/", "/home"})
+    @GetMapping({"/", "/home", "/home.html"})
     public String home(Model model) {
 
         log.info("In HomeController");

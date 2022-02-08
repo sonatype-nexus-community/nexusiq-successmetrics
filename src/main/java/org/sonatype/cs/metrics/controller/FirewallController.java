@@ -30,7 +30,7 @@ public class FirewallController {
     @Value("${data.dir}")
     private String dataDir;
 
-    @GetMapping({"/firewall"})
+    @GetMapping({"/firewall", "/firewall.html"})
     public String firewall(Model model) throws IOException {
         log.info("In FirewallController");
 

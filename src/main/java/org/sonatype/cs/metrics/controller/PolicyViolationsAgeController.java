@@ -24,7 +24,7 @@ public class PolicyViolationsAgeController {
 
     @Autowired private HelperService helperService;
 
-    @GetMapping({"/violationsage"})
+    @GetMapping({"/violationsage", "/violationsage.html"})
     public String policyViolationsAge(
             Model model, @RequestParam(name = "date", required = false) String comparisonDate) {
 

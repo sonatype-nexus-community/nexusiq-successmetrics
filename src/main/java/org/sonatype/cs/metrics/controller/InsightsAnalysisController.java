@@ -22,7 +22,7 @@ public class InsightsAnalysisController {
 
     @Autowired private PeriodsDataService periodsDataService;
 
-    @GetMapping({"/analysis"})
+    @GetMapping({"/analysis", "/analysis.html"})
     public String analysis(Model model) throws ParseException {
         log.info("In InsightsAnalysisController");
 
