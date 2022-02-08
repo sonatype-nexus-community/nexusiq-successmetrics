@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.text.ParseException;
 import java.util.Map;
 
 @Controller
@@ -22,7 +21,7 @@ public class ApplicationsController {
     @Autowired private ApplicationsDataService applicationsDataService;
 
     @GetMapping({"/applications", "/applications.html"})
-    public String applications(Model model) throws ParseException {
+    public String applications(Model model) {
 
         log.info("In ApplicationsController");
 

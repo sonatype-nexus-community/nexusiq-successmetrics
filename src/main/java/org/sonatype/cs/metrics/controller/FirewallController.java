@@ -33,36 +33,29 @@ public class FirewallController {
         log.info("In FirewallController");
 
         /* Firewall list reports (loaded at startup) */
-        if (loaderService.quarantinedComponentsLoaded) {
+        if (loaderService.isQuarantinedComponentsLoaded()) {
             List<DbRowStr> quarantinedComponents =
-                    dbService.runSqlStr(SqlStatements.QuarantinedComponents);
+                    dbService.runSqlStr(SqlStatements.QUARANTINEDCOMPONENTS);
             model.addAttribute("quarantinedComponents", quarantinedComponents);
-
-            if (quarantinedComponents.size() > 0) {
-                model.addAttribute("quarantinedComponentsData", true);
-            } else {
-                model.addAttribute("quarantinedComponentsData", false);
-            }
+            model.addAttribute("quarantinedComponentsData", quarantinedComponents.isEmpty());
         }
 
-        if (loaderService.autoreleasedFromQuarantineComponentsLoaded) {
+        if (loaderService.isAutoreleasedFromQuarantineComponentsLoaded()) {
             List<DbRowStr> autoReleasedFromQuarantinedComponents =
-                    dbService.runSqlStr(SqlStatements.AutoReleasedFromQuarantinedComponents);
+                    dbService.runSqlStr(SqlStatements.AUTORELEASEDFROMQUARANTINEDCOMPONENTS);
             model.addAttribute(
                     "autoReleasedFromQuarantinedComponents", autoReleasedFromQuarantinedComponents);
 
-            if (autoReleasedFromQuarantinedComponents.size() > 0) {
-                model.addAttribute("autoReleasedFromQuarantinedComponentsData", true);
-            } else {
-                model.addAttribute("autoReleasedFromQuarantinedComponentsData", false);
-            }
+            model.addAttribute(
+                    "autoReleasedFromQuarantinedComponentsData",
+                    autoReleasedFromQuarantinedComponents.isEmpty());
         }
 
         /* Firewall summary reports (read the file in here directly) */
         List<String> quarantinedComponentsSummary =
-                FileIoService.fileToStringList(dataDir + "/" + DataLoaderParams.qcsDatafile);
+                FileIoService.fileToStringList(dataDir + "/" + DataLoaderParams.QCSDATAFILE);
         List<String> autoReleasedFromQuarantinedComponentsSummary =
-                FileIoService.fileToStringList(dataDir + "/" + DataLoaderParams.afqsDatafile);
+                FileIoService.fileToStringList(dataDir + "/" + DataLoaderParams.AFQSDATAFILE);
 
         String[] qcs = quarantinedComponentsSummary.get(1).split(",");
         String[] afqc = autoReleasedFromQuarantinedComponentsSummary.get(1).split(",");

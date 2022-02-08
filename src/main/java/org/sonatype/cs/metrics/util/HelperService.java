@@ -4,6 +4,9 @@ import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.model.DbRowStr;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.List;
@@ -17,7 +20,7 @@ public class HelperService {
     public static int[] getPointsSumAndAverage(List<DbRow> dataList) {
         IntSummaryStatistics dataListStatistics =
                 dataList.stream()
-                        .map(n -> n.getPointA())
+                        .map(DbRow::getPointA)
                         .filter(n -> (n != 0))
                         .mapToInt(n -> n)
                         .summaryStatistics();
@@ -37,13 +40,13 @@ public class HelperService {
 
         Map<String, Object> map = new HashMap<>();
 
-        if (data.size() > 0) {
+        if (data.isEmpty()) {
+            map.put(key + "Number", 0);
+            map.put(key, false);
+        } else {
             map.put(key + "Data", data);
             map.put(key + "Number", data.size());
             map.put(key, true);
-        } else {
-            map.put(key + "Number", 0);
-            map.put(key, false);
         }
 
         return map;
@@ -60,5 +63,12 @@ public class HelperService {
         }
 
         return result;
+    }
+
+    public static Long convertDateStr(String str) {
+        str += " 00:00";
+        LocalDateTime localDate =
+                LocalDateTime.parse(str, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        return localDate.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 }

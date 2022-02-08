@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.text.ParseException;
 import java.util.Map;
 
 @Controller
@@ -22,13 +21,15 @@ public class ComparePeriodsController {
 
     @Autowired private MetricsService metricsService;
 
+    @Autowired private SuccessMetricsApplication successMetricsApplication;
+
     @GetMapping({"/compare", "/compare.html"})
-    public String applications(Model model) throws ParseException {
+    public String applications(Model model) {
         log.info("In ComparePeriodsController");
 
         boolean doAnalysis = false;
 
-        if (SuccessMetricsApplication.successMetricsFileLoaded) {
+        if (successMetricsApplication.isSuccessMetricsFileLoaded()) {
 
             Map<String, Object> periodsData =
                     periodsDataService.getPeriodData(SqlStatements.METRICTABLENAME);

@@ -41,24 +41,15 @@ public class FileIoService {
             "Measure", beforeDateRange, afterDateRange, "Delta", "Change (%)", "xTimes"
         };
 
-        try {
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilename));
-
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilename))) {
             writer.write(String.join(",", header));
             writer.newLine();
 
             for (String[] array : csvData) {
-                // log.info("- " + Arrays.toString(array));
                 writer.write(String.join(",", Arrays.asList(array)));
                 writer.newLine();
             }
-
-            writer.close();
-        } catch (IOException e) {
-            throw e;
         }
-
-        return;
     }
 
     public void writeSuccessMetricsPdfFile(String pdfFilename, String html) throws IOException {
@@ -70,8 +61,6 @@ public class FileIoService {
         renderer.createPDF(outputStream);
 
         outputStream.close();
-
-        return;
     }
 
     public String makeFilename(String prefix, String extension, String timestamp)
@@ -86,9 +75,7 @@ public class FileIoService {
             Files.createDirectory(path);
         }
 
-        String filepath = reportsdir + File.separator + filename;
-
-        return filepath;
+        return reportsdir + File.separator + filename;
     }
 
     public static String readJsonAsString(String filename) throws IOException {
@@ -113,7 +100,6 @@ public class FileIoService {
         File outputFile = new File(datadir + File.separator + successmetricsFile);
         java.nio.file.Files.copy(content, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         IOUtils.closeQuietly(content);
-        return;
     }
 
     public static List<String> fileToStringList(String filename) throws IOException {

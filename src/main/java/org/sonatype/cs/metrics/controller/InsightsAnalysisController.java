@@ -22,13 +22,15 @@ public class InsightsAnalysisController {
 
     @Autowired private PeriodsDataService periodsDataService;
 
+    @Autowired private SuccessMetricsApplication successMetricsApplication;
+
     @GetMapping({"/analysis", "/analysis.html"})
     public String analysis(Model model) throws ParseException {
         log.info("In InsightsAnalysisController");
 
         boolean doAnalysis = false;
 
-        if (SuccessMetricsApplication.successMetricsFileLoaded) {
+        if (successMetricsApplication.isSuccessMetricsFileLoaded()) {
 
             Map<String, Object> periodsData =
                     periodsDataService.getPeriodData(SqlStatements.METRICTABLENAME);

@@ -7,16 +7,10 @@ public class PayloadItem {
 
     public PayloadItem() {}
 
-    public PayloadItem(String payloadItem, boolean exists) {
-        String item = payloadItem.trim();
-
-        if (item.length() > 0) {
-            this.setExists(true);
-        } else {
-            this.setExists(false);
-        }
-
-        this.setItem(item);
+    public PayloadItem(String payloadItem) {
+        String trimmedItem = payloadItem.trim();
+        this.setExists(trimmedItem.length() > 0);
+        this.setItem(trimmedItem);
     }
 
     public boolean isExists() {

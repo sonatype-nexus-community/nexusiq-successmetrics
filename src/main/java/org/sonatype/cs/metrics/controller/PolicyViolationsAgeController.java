@@ -32,44 +32,36 @@ public class PolicyViolationsAgeController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             comparisonDate = dateObj.format(formatter);
         }
+        final String baseQuery =
+                "select policy_name as pointA, application_name as pointB, open_time as"
+                        + " pointC, component as pointD, stage as pointE, reason as pointF from"
+                        + " policy_violation where parsedatetime(open_time, 'yyyy-MM-dd', 'en')";
 
-        String PolicyViolationsAge7 =
+        String policyViolationsAge7 =
                 String.format(
-                        "select policy_name as pointA, application_name as pointB, open_time as"
-                            + " pointC, component as pointD, stage as pointE, reason as pointF from"
-                            + " policy_violation where parsedatetime(open_time, 'yyyy-MM-dd', 'en')"
-                            + " >= PARSEDATETIME('%s', 'yyyy-MM-dd', 'en') - INTERVAL '7' DAY",
-                        comparisonDate);
-        String PolicyViolationsAge30 =
+                        "%s >= PARSEDATETIME('%s', 'yyyy-MM-dd', 'en') - INTERVAL '7' DAY",
+                        baseQuery, comparisonDate);
+        String policyViolationsAge30 =
                 String.format(
-                        "select policy_name as pointA, application_name as pointB, open_time as"
-                            + " pointC, component as pointD, stage as pointE, reason as pointF from"
-                            + " policy_violation where parsedatetime(open_time, 'yyyy-MM-dd', 'en')"
-                            + " > PARSEDATETIME('%s', 'yyyy-MM-dd', 'en') - INTERVAL '30' DAY and"
+                        "%s > PARSEDATETIME('%s', 'yyyy-MM-dd', 'en') - INTERVAL '30' DAY and"
                             + " parsedatetime(open_time, 'yyyy-MM-dd', 'en') < PARSEDATETIME('%s',"
                             + " 'yyyy-MM-dd', 'en') - INTERVAL '7' DAY",
-                        comparisonDate, comparisonDate);
-        String PolicyViolationsAge60 =
+                        baseQuery, comparisonDate, comparisonDate);
+        String policyViolationsAge60 =
                 String.format(
-                        "select policy_name as pointA, application_name as pointB, open_time as"
-                            + " pointC, component as pointD, stage as pointE, reason as pointF from"
-                            + " policy_violation where parsedatetime(open_time, 'yyyy-MM-dd', 'en')"
-                            + " > PARSEDATETIME('%s', 'yyyy-MM-dd', 'en') - INTERVAL '90' DAY and"
+                        "%s > PARSEDATETIME('%s', 'yyyy-MM-dd', 'en') - INTERVAL '90' DAY and"
                             + " parsedatetime(open_time, 'yyyy-MM-dd', 'en') < PARSEDATETIME('%s',"
                             + " 'yyyy-MM-dd', 'en') - INTERVAL '30' DAY",
-                        comparisonDate, comparisonDate);
-        String PolicyViolationsAge90 =
+                        baseQuery, comparisonDate, comparisonDate);
+        String policyViolationsAge90 =
                 String.format(
-                        "select policy_name as pointA, application_name as pointB, open_time as"
-                            + " pointC, component as pointD, stage as pointE, reason as pointF from"
-                            + " policy_violation where parsedatetime(open_time, 'yyyy-MM-dd', 'en')"
-                            + " <= PARSEDATETIME('%s', 'yyyy-MM-dd', 'en') - INTERVAL '90' DAY",
-                        comparisonDate);
+                        "%s <= PARSEDATETIME('%s', 'yyyy-MM-dd', 'en') - INTERVAL '90' DAY",
+                        baseQuery, comparisonDate);
 
-        List<DbRowStr> age7Data = dbService.runSqlStr(PolicyViolationsAge7);
-        List<DbRowStr> age30Data = dbService.runSqlStr(PolicyViolationsAge30);
-        List<DbRowStr> age60Data = dbService.runSqlStr(PolicyViolationsAge60);
-        List<DbRowStr> age90Data = dbService.runSqlStr(PolicyViolationsAge90);
+        List<DbRowStr> age7Data = dbService.runSqlStr(policyViolationsAge7);
+        List<DbRowStr> age30Data = dbService.runSqlStr(policyViolationsAge30);
+        List<DbRowStr> age60Data = dbService.runSqlStr(policyViolationsAge60);
+        List<DbRowStr> age90Data = dbService.runSqlStr(policyViolationsAge90);
 
         Map<String, Object> age7Map = HelperService.dataMap("age7", age7Data);
         Map<String, Object> age30Map = HelperService.dataMap("age30", age30Data);

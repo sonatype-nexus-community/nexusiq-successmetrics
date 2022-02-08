@@ -43,12 +43,12 @@ public class TotalsDataService {
         }
         model.put("backlogReductionRateCritical", backlogReductionRateCritical);
         model.put("discoveredCritical", discoveredCritical);
-        model.put("mttrAvg", this.MttrAvg(tableName));
+        model.put("mttrAvg", this.mttrAvg(tableName));
 
         return model;
     }
 
-    private String[] MttrAvg(String tableName) {
+    private String[] mttrAvg(String tableName) {
         List<Float> pointA = new ArrayList<>();
         List<Float> pointB = new ArrayList<>();
         List<Float> pointC = new ArrayList<>();
@@ -68,13 +68,12 @@ public class TotalsDataService {
         String mttrModerateAvg =
                 String.format("%.0f", (float) HelperService.getPointsAverage(pointC));
 
-        String[] values = new String[] {mttrCriticalAvg, mttrSevereAvg, mttrModerateAvg};
-        return values;
+        return new String[] {mttrCriticalAvg, mttrSevereAvg, mttrModerateAvg};
     }
 
     private List<Mttr> getMttr(String tableName) {
 
-        List<Mttr> mttr = new ArrayList<Mttr>();
+        List<Mttr> mttr = new ArrayList<>();
 
         List<Mttr> points = dbService.runSqlMttr(tableName, SqlStatements.MTTR2);
 
