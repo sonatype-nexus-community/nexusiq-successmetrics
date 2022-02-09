@@ -22,8 +22,6 @@ public class PolicyViolationsAgeController {
 
     @Autowired private DbService dbService;
 
-    @Autowired private HelperService helperService;
-
     @GetMapping({"/violationsage", "/violationsage.html"})
     public String policyViolationsAge(
             Model model, @RequestParam(name = "date", required = false) String comparisonDate) {
@@ -73,10 +71,10 @@ public class PolicyViolationsAgeController {
         List<DbRowStr> age60Data = dbService.runSqlStr(PolicyViolationsAge60);
         List<DbRowStr> age90Data = dbService.runSqlStr(PolicyViolationsAge90);
 
-        Map<String, Object> age7Map = helperService.dataMap("age7", age7Data);
-        Map<String, Object> age30Map = helperService.dataMap("age30", age30Data);
-        Map<String, Object> age60Map = helperService.dataMap("age60", age60Data);
-        Map<String, Object> age90Map = helperService.dataMap("age90", age90Data);
+        Map<String, Object> age7Map = HelperService.dataMap("age7", age7Data);
+        Map<String, Object> age30Map = HelperService.dataMap("age30", age30Data);
+        Map<String, Object> age60Map = HelperService.dataMap("age60", age60Data);
+        Map<String, Object> age90Map = HelperService.dataMap("age90", age90Data);
 
         model.mergeAttributes(age7Map);
         model.mergeAttributes(age30Map);

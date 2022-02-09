@@ -23,8 +23,6 @@ public class FirewallController {
 
     @Autowired private DbService dbService;
 
-    @Autowired private FileIoService fileIoService;
-
     @Autowired private LoaderService loaderService;
 
     @Value("${data.dir}")
@@ -62,9 +60,9 @@ public class FirewallController {
 
         /* Firewall summary reports (read the file in here directly) */
         List<String> quarantinedComponentsSummary =
-                fileIoService.readFWCsvFile(dataDir + "/" + DataLoaderParams.qcsDatafile);
+                FileIoService.fileToStringList(dataDir + "/" + DataLoaderParams.qcsDatafile);
         List<String> autoReleasedFromQuarantinedComponentsSummary =
-                fileIoService.readFWCsvFile(dataDir + "/" + DataLoaderParams.afqsDatafile);
+                FileIoService.fileToStringList(dataDir + "/" + DataLoaderParams.afqsDatafile);
 
         String[] qcs = quarantinedComponentsSummary.get(1).split(",");
         String[] afqc = autoReleasedFromQuarantinedComponentsSummary.get(1).split(",");

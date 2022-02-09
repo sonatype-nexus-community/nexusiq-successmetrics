@@ -114,7 +114,7 @@ public class LoaderService {
         return true;
     }
 
-    private boolean isHeaderValid(String filename, String header) throws IOException {
+    public static boolean isHeaderValid(String filename, String header) throws IOException {
 
         boolean isValid = false;
 
@@ -127,14 +127,14 @@ public class LoaderService {
                 isValid = true;
 
                 if (header.length() > 0) {
-                    String firstLine = this.getFirstLine(metricsFile);
+                    String firstLine = getFirstLine(metricsFile);
 
                     if (!firstLine.startsWith(header)) {
                         log.error("Invalid header");
                         log.error("-> " + firstLine);
                         isValid = false;
                     } else {
-                        if (this.countLines(metricsFile) < 2) {
+                        if (countLines(metricsFile) < 2) {
                             // log.warn("No metrics data in file");
                             isValid = false;
                         }
@@ -151,7 +151,7 @@ public class LoaderService {
         return isValid;
     }
 
-    private String getFirstLine(String fileName) throws IOException {
+    public static String getFirstLine(String fileName) throws IOException {
         try (BufferedReader br =
                 new BufferedReader(
                         new InputStreamReader(
@@ -161,7 +161,7 @@ public class LoaderService {
         }
     }
 
-    private int countLines(String fileName) throws IOException {
+    public static int countLines(String fileName) throws IOException {
         try (BufferedReader br =
                 new BufferedReader(
                         new InputStreamReader(
@@ -185,7 +185,6 @@ public class LoaderService {
     }
 
     public boolean loadSuccessMetricsData() throws IOException, ParseException {
-
         String stmt = SqlStatements.MetricsTable;
         boolean fileLoaded = loadMetricsFile(successmetricsFile, DataLoaderParams.smHeader, stmt);
         boolean doAnalysis = false;
@@ -198,8 +197,8 @@ public class LoaderService {
             if (doAnalysis) {
                 if (!includelatestperiod) {
                     String endPeriod = periods.get("endPeriod").toString();
-                    filterOutLatestPeriod(
-                            endPeriod); // it is likely incomplete and only where we know multiple
+                    filterOutLatestPeriod(endPeriod); // it is likely incomplete and only where we
+                    // know multiple
                     // periods available
                     log.info("Removing incomplete data for current month " + endPeriod);
                 }

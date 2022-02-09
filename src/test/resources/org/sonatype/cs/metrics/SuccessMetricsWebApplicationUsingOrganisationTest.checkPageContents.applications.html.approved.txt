@@ -1,0 +1,5898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<div><div>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <script src="/js/apexcharts.min.js"></script>
+    <link rel="stylesheet" href="/css/apexcharts.css"/>
+
+    <link href="/css/main.css" rel="stylesheet"/>
+
+    <div class="text-center">
+        <img class="displayed" src="images/sonatype.png"/>
+        <title>Success Metrics</title>
+        <h3>Success Metrics</h3>
+        <h4>Organisation: Auto-apps</h4>
+    </div>
+
+    <script>
+        var height = '700px'
+        var width = '950px'
+
+        var grid = {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            }
+        }
+
+        var barchartlabels = {
+            enabled: true,
+            enabledOnSeries: undefined,
+            formatter: function (val, opts) {
+                return val
+            },
+            textAnchor: 'middle',
+            distributed: false,
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+                fontSize: '10px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontWeight: 'bold',
+                colors: ['#fff']
+            },
+            background: {
+                enabled: false,
+                foreColor: '#fff',
+                padding: 4,
+                borderRadius: 2,
+                borderWidth: 2,
+                borderColor: '#fff',
+                opacity: 0.9,
+
+            },
+
+        }
+
+        var barchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var linechart = {
+            type: 'line',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var stackedbarchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            stacked: true,
+            toolbar: {
+                show: true
+            },
+            zoom: {
+                enabled: true
+            }
+        }
+
+        var legend = {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 120
+        }
+
+        var fillbar = {
+            colors: '#0118FD'
+        }
+
+        var fillStacked = {
+            colors: ['#F90707', '#F99A07', '#F9DC07']
+        }
+
+        var fillViolationsSummary = {
+            colors: ['#FA0707', '#F99A07', '#08B005', '#0080FF'],
+        }
+
+        var donutPlotOptions = {
+			expandOnClick: true,
+			donut: {
+				size: '45%',
+					labels: {
+						show: true,
+						name: {
+							show: true
+						},
+						value: {
+							show: true
+						},
+						total: {
+							show: true,
+							showAlways: true,
+							label: 'Total',
+							fontSize: '10px',
+							fontFamily: 'Helvetica, Arial, sans-serif',
+							fontWeight: 400,
+							color: '#373d3f',
+							formatter: function (w) {
+							    return w.globals.seriesTotals.reduce((a, b) => {
+									return a + b
+								}, 0)
+							}
+						}
+					}
+				}
+			}
+
+    </script>
+
+</div></div>
+</head>
+
+<body>
+	<div class="jumbotron">
+	<h3>Applications Report</h3>
+    </div>
+
+    <!--  applications -->
+    <div><div>
+    <div class="chart-container">
+	<div>
+        <div>
+
+        <div id="applicationsOnboardedChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":21,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":34,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":45,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":73,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":107,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":128,"pointB":0,"pointC":0,"pointD":0}];
+	     	var pdata = [];
+	     	var labels = [];
+
+	     	points.forEach(entry => {
+	            var label = entry.label;
+	            var point = entry.pointA;
+	            labels.push(label);
+	            pdata.push(point);
+	        });
+
+            var options = {
+                chart: barchart,
+                grid: grid,
+                dataLabels: barchartlabels,
+                fill: fillbar,
+                series: [{
+                    name: 'applications',
+                    data: pdata
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Number of applications onboarded',
+                    align: 'left'
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#applicationsOnboardedChart"), options);
+
+            chart.render();
+        </script>
+
+        <div style="page-break-before: always;"/>
+
+        <div id="numberOfApplicationsScannedChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":21,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":33,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":44,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":37,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":43,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":26,"pointB":0,"pointC":0,"pointD":0}];
+            var pdata = [];
+            var labels = [];
+
+            points.forEach(entry => {
+                var label = entry.label;
+                var point = entry.pointA;
+                labels.push(label);
+                pdata.push(point);
+            });
+
+            var options = {
+                chart: barchart,
+                grid: grid,
+                dataLabels: barchartlabels,
+                fill: fillbar,
+                series: [{
+                    name: 'applications',
+                    data: pdata
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Number of applications scanned per period',
+                    align: 'left'
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#numberOfApplicationsScannedChart"), options);
+
+            chart.render();
+        </script>
+		</div>
+        </div>
+
+        <div id="numberOfScansChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":76,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":105,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":530,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":136,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":162,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":147,"pointB":0,"pointC":0,"pointD":0}];
+            var pdata = [];
+            var labels = [];
+
+            points.forEach(entry => {
+                var label = entry.label;
+                var point = entry.pointA;
+                labels.push(label);
+                pdata.push(point);
+            });
+
+            var options = {
+                chart: barchart,
+                grid: grid,
+                dataLabels: barchartlabels,
+                fill: fillbar,
+                series: [{
+                    name: 'applications',
+                    data: pdata
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Number of scans per period',
+                    align: 'left'
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#numberOfScansChart"), options);
+
+            chart.render();
+        </script>
+
+        <div style="page-break-before: always;"/>
+
+        <div id="riskRatioChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":24,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":21,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":25,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":24,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":20,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":20,"pointB":0,"pointC":0,"pointD":0}];
+	     	var pdata = [];
+	     	var labels = [];
+
+	     	points.forEach(entry => {
+	            var label = entry.label;
+	            var point = entry.pointA;
+	            labels.push(label);
+	            pdata.push(point);
+	        });
+
+            var options = {
+                chart: barchart,
+                grid: grid,
+                dataLabels: barchartlabels,
+                fill: fillbar,
+                series: [{
+                    name: 'risk ratio',
+                    data: pdata
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'Risk Ratio (Critical Violations/Applications)',
+                    align: 'left'
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#riskRatioChart"), options);
+
+            chart.render();
+        </script>
+
+        <div id="mttrChart"></div>
+        <script>
+            var points = [{"label":"2021-01-01","pointA":0.24697283,"pointB":0.24050038,"pointC":0.6549855,"pointD":0.0},{"label":"2021-02-01","pointA":33.44195,"pointB":33.89539,"pointC":12.767982,"pointD":0.0},{"label":"2021-03-01","pointA":11.755727,"pointB":9.394383,"pointC":27.699427,"pointD":0.0},{"label":"2021-04-01","pointA":19.619587,"pointB":0.11293059,"pointC":8.0912895,"pointD":0.0},{"label":"2021-05-01","pointA":35.430984,"pointB":13.863952,"pointC":18.694588,"pointD":0.0},{"label":"2021-06-01","pointA":79.61162,"pointB":65.17906,"pointC":0.0,"pointD":0.0}];
+	     	var dataA = [];
+	     	var dataB = [];
+	     	var dataC = [];
+
+	     	var labels = [];
+
+	     	points.forEach(entry => {
+                labels.push(entry.label);
+
+                if (entry.pointA > 0) {
+                    dataA.push(Math.ceil(entry.pointA));
+                }
+                else {
+                    dataA.push(null);
+                }
+
+                if (entry.pointB > 0) {
+                    dataB.push(Math.ceil(entry.pointB));
+                }
+                else {
+                    dataB.push(null);
+                }
+
+                if (entry.pointC > 0) {
+                    dataC.push(Math.ceil(entry.pointC));
+                }
+                else {
+                    dataC.push(null);
+                }
+	        });
+
+            var options = {
+                chart: stackedbarchart,
+                dataLabels: barchartlabels,
+                grid: grid,
+                legend: legend,
+                colors: ['#F90707', '#F99A07', '#F9DC07'],
+                fill: fillStacked,
+                series: [{
+                    name: 'Critical',
+                    data: dataA
+                },
+                {
+                    name: 'Severe',
+                    data: dataB
+                },
+                {
+                    name: 'Moderate',
+                    data: dataC
+                }],
+                xaxis: {
+                    categories: labels,
+                },
+                title: {
+                    text: 'MTTR (days)',
+                    align: 'left'
+                },
+            }
+
+            var chart = new ApexCharts(document.querySelector("#mttrChart"), options);
+
+            chart.render();
+        </script>
+
+
+
+     </div>
+
+</div></div>
+    <div><div>
+
+    <div>
+
+    <div class="container">
+    <div class="row">
+    <div class="col-xl mx-auto w-auto bg-white rounded">
+    <div class="table-responsive table-wrapper-scroll-y">
+
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td> Most critical application <span>app1</span> has <span>99</span> critical violations</td></tr>
+            <tr><td> Least critical application <span>yarnapp-3</span> has <span>0</span> critical violations</td></tr>
+        </tbody>
+    </table>
+    </div></div></div></div>
+    </div>
+
+    <br><br>
+
+    <h5 style="margin-left: 370px;">Security Violations - Remediation</h5>
+    <div class="container">
+    <div class="row">
+    <div class="col-xl mx-auto w-auto bg-white rounded">
+    <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+
+        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead class="thead-dark">
+        <tr>
+            <th class="th-sm">Application Name</th>
+            <th class="th-sm">Discovered Violations</th>
+            <th class="th-sm">Fixed Violations</th>
+            <th class="th-sm">Waived Violations</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+
+              <td>webgoatj</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>563</td>
+              </div>
+
+              <td>427</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-ang-dir</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>174</td>
+              </div>
+
+              <td>34</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-angtestb4</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>174</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-angular-manifest</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>171</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>app1</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>167</td>
+              </div>
+
+              <td>23</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang104</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>141</td>
+              </div>
+
+              <td>100</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang9-104</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>136</td>
+              </div>
+
+              <td>105</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-angaft</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>133</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-legacy</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>132</td>
+              </div>
+
+              <td>23</td>
+              <td>4</td>
+        </tr>
+        <tr>
+
+              <td>ang9-105</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>122</td>
+              </div>
+
+              <td>16</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>app2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>119</td>
+              </div>
+
+              <td>21</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>app3</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>119</td>
+              </div>
+
+              <td>21</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>Webgoat-Legacy-ide</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>99</td>
+              </div>
+
+              <td>4</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-shopizer-mvn</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>99</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>wbg-newcli</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>99</td>
+              </div>
+
+              <td>4</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-legacy-ci</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>99</td>
+              </div>
+
+              <td>4</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-legacy-ci-2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>99</td>
+              </div>
+
+              <td>4</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>mizuho-webapp</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>98</td>
+              </div>
+
+              <td>3</td>
+              <td>2</td>
+        </tr>
+        <tr>
+
+              <td>ang105</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>96</td>
+              </div>
+
+              <td>65</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-legacy-w</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>95</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-legacy-demo</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>94</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-simple</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>94</td>
+              </div>
+
+              <td>14</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-jira</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>93</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-jira-1</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>93</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-jira-2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>93</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoatg</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>93</td>
+              </div>
+
+              <td>7</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>wgl</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>93</td>
+              </div>
+
+              <td>65</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoatg1</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>86</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>myproj2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>82</td>
+              </div>
+
+              <td>5</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>alpine-scan</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>81</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>myproj</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>81</td>
+              </div>
+
+              <td>4</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>test</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>79</td>
+              </div>
+
+              <td>9</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang9</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>77</td>
+              </div>
+
+              <td>71</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>blog-plg</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>75</td>
+              </div>
+
+              <td>27</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang-cycdx</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>72</td>
+              </div>
+
+              <td>12</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang9-as</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>72</td>
+              </div>
+
+              <td>12</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-demo</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>71</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-demo-11</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>71</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-demo-2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>71</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-simple-shade</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>71</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-simple-std</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>71</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoatds</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>71</td>
+              </div>
+
+              <td>0</td>
+              <td>1</td>
+        </tr>
+        <tr>
+
+              <td>ang-auditjs</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>70</td>
+              </div>
+
+              <td>11</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>Webgoat Demo Ds - Solao</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>68</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>producerapp3</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>66</td>
+              </div>
+
+              <td>31</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>consumerapp</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>62</td>
+              </div>
+
+              <td>21</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang9-p</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>61</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang9app</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>61</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang9app-y</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>61</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>yl3</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>50</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>producerapp2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>49</td>
+              </div>
+
+              <td>3</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>blog-cli</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>48</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>tut-spring-boot-kotlin-master</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>48</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>quicktest</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>43</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-demo-3</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>43</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoat-legacy-gf</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>43</td>
+              </div>
+
+              <td>2</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>webgoatdemo</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>43</td>
+              </div>
+
+              <td>0</td>
+              <td>2</td>
+        </tr>
+        <tr>
+
+              <td>mono2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>42</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>producerapp</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>42</td>
+              </div>
+
+              <td>10</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>bomfile</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>39</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>juiceshop</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>39</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dekorate</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>35</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dekorate-compile</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>35</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dekorate2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>35</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dekorate3</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>35</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-ang</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>34</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-ang-net</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>34</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-angular-dotnet</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>34</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang105-1</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>31</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>mono1</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>24</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>monday</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>toh-ajsbom</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>mobi-app</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>20</td>
+              </div>
+
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dt-eshop-cx</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>18</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>idem-conan-2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>17</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>idemia-test</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>17</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>toh-iqcli</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>17</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>successmetrics</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>16</td>
+              </div>
+
+              <td>4</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>g1</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>8</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang-realworld-ajbom</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>6</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang-realworld-ajdirect</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>6</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>ang104-1</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>6</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-ui-bom</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>6</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>producer</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>6</td>
+              </div>
+
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>idem-call</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>5</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>idemia-php2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>5</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>idemia-test-php</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>4</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>deva</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+              </div>
+
+              <td>0</td>
+              <td>1</td>
+        </tr>
+        <tr>
+
+              <td>devb</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-tut-kotlin-mvn</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>yarn-tut</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+              </div>
+
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>Yarn Tut - Solao</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>boot-demo</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>boot-demo-dek</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>iqsm</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>iqsm1</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>jsapp</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>om-tut-kotlin-grd</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>success-metrics-1</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>success-metrics-py</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>yarnapp-2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>yl</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>yl2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dt-eshop-mn</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dt-safe-cx</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dt-safeapp-cli</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>iqsm2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>yarn-tut-x</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+              </div>
+
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>yarnapp</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>7zip</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>Bspecs - Solao</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>consumer-nois</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>consumerapp2</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dt-hw-cx</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dt-safe</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>dt-safeapp-manifest</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>itext</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>jira-obr</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>mono3</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>npmwg</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>r-app</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>sbom3.xml</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>sbom4</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>sbom5</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>susp</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>toh-ajdirect</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>vsc-app</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+
+              <td>yarnapp-3</td>
+
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+              </div>
+
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        </tbody>
+        </table>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <br><br>
+
+    <h5 style="margin-left: 370px;">License Violations - Remediation</h5>
+    <div class="container">
+    <div class="row">
+    <div class="col-xl mx-auto w-auto bg-white rounded">
+    <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+
+        <table  class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead class="thead-dark">
+        <tr>
+            <th>Application Name</th>
+            <th>Discovered Violations</th>
+            <th>Fixed Violations</th>
+            <th>Waived Violations</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+              <td>ang-auditjs</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1306</td>
+            </div>
+              <td>1306</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoatg</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>42</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoatg1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>42</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>app1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>38</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>app2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>38</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>app3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>38</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>38</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>test</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>g1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-jira</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-jira-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-jira-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>7zip</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>Bspecs - Solao</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>Webgoat Demo Ds - Solao</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>Webgoat-Legacy-ide</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>Yarn Tut - Solao</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>alpine-scan</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang-cycdx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang-realworld-ajbom</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang-realworld-ajdirect</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang104</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang104-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang105</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang105-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9-104</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9-105</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9-as</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9-p</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9app-y</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>blog-cli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>blog-plg</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>bomfile</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>boot-demo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>boot-demo-dek</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>consumer-nois</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>consumerapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>consumerapp2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dekorate</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dekorate-compile</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dekorate2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dekorate3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>deva</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>devb</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-eshop-cx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-eshop-mn</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-hw-cx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-safe</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-safe-cx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-safeapp-cli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-safeapp-manifest</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>idem-call</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>idem-conan-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>idemia-php2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>idemia-test</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>idemia-test-php</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>iqsm</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>iqsm1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>iqsm2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>itext</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>jira-obr</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>jsapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>juiceshop</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>mizuho-webapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>mobi-app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>monday</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>mono1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>mono2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>mono3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>myproj</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>myproj2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>npmwg</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-ang</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-ang-dir</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-ang-net</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-angaft</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-angtestb4</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-angular-dotnet</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-angular-manifest</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-shopizer-mvn</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-tut-kotlin-grd</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-tut-kotlin-mvn</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-ui-bom</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>producer</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>producerapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>producerapp2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>producerapp3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>quicktest</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>r-app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>sbom3.xml</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>sbom4</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>sbom5</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>success-metrics-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>success-metrics-py</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>successmetrics</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>susp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>toh-ajdirect</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>toh-ajsbom</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>toh-iqcli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>tut-spring-boot-kotlin-master</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>vsc-app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>wbg-newcli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-demo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-demo-11</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-demo-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-demo-3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-ci</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-ci-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-demo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-gf</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-w</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-simple</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-simple-shade</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-simple-std</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoatdemo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoatds</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoatj</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>wgl</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yarn-tut</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yarn-tut-x</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yarnapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yarnapp-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yarnapp-3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yl</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yl2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yl3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        </tbody>
+        </table>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <br><br>
+    <div>
+
+    <h5 style="margin-left: 370px;">Most Critical Organisations - (Open Violations)</h5>
+    <div class="container">
+    <div class="row">
+    <div class="col-xl mx-auto w-auto bg-white rounded">
+    <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+
+        <table  class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead class="thead-dark">
+        <tr>
+            <th>Organisation Name</th>
+            <th>Critical Violations</th>
+            <th>Severe Violations</th>
+            <th>Moderate Violations</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+              <td>Auto-apps</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2322</td>
+            </div>
+              <td>2112</td>
+              <td>139</td>
+        </tr>
+        <tr>
+              <td>OM</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>213</td>
+            </div>
+              <td>149</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>Webgoat</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>77</td>
+            </div>
+              <td>102</td>
+              <td>10</td>
+        </tr>
+        <tr>
+              <td>Testapps</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>34</td>
+            </div>
+              <td>48</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>Easy SCM</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+            </div>
+              <td>43</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>Mobile</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>4</td>
+            </div>
+              <td>14</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>Dev-B</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>Dev-A</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>Manifest</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>2</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>Intg</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        </tbody>
+        </table>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <br><br>
+
+    <h5 style="margin-left: 370px;">Most Critical Applications (Open Violations)</h5>
+    <div class="container">
+    <div class="row">
+    <div class="col-xl mx-auto w-auto bg-white rounded">
+    <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+
+        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead class="thead-dark">
+        <tr>
+            <th>Application Name</th>
+            <th>Critical Violations</th>
+            <th>Severe Violations</th>
+            <th>Moderate Violations</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+              <td>app1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>99</td>
+            </div>
+              <td>78</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>om-angtestb4</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>99</td>
+            </div>
+              <td>75</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-angular-manifest</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>98</td>
+            </div>
+              <td>73</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>83</td>
+            </div>
+              <td>55</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>app2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>83</td>
+            </div>
+              <td>48</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>app3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>83</td>
+            </div>
+              <td>48</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>om-angaft</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>78</td>
+            </div>
+              <td>55</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoatg</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>78</td>
+            </div>
+              <td>45</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>webgoatg1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>78</td>
+            </div>
+              <td>45</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>om-ang-dir</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>71</td>
+            </div>
+              <td>69</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9-105</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>57</td>
+            </div>
+              <td>49</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoatj</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>53</td>
+            </div>
+              <td>78</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>om-shopizer-mvn</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>48</td>
+            </div>
+              <td>47</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>myproj</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>44</td>
+            </div>
+              <td>32</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>myproj2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>44</td>
+            </div>
+              <td>32</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-w</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>41</td>
+            </div>
+              <td>49</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>Webgoat-Legacy-ide</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>39</td>
+            </div>
+              <td>51</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>wbg-newcli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>39</td>
+            </div>
+              <td>51</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-ci</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>39</td>
+            </div>
+              <td>51</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-ci-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>39</td>
+            </div>
+              <td>51</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-gf</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>39</td>
+            </div>
+              <td>2</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>webgoat-jira</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>38</td>
+            </div>
+              <td>51</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>webgoat-jira-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>38</td>
+            </div>
+              <td>51</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>webgoat-jira-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>38</td>
+            </div>
+              <td>51</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-demo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>38</td>
+            </div>
+              <td>51</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>mizuho-webapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>37</td>
+            </div>
+              <td>51</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>test</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>34</td>
+            </div>
+              <td>34</td>
+              <td>5</td>
+        </tr>
+        <tr>
+              <td>ang9-p</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>32</td>
+            </div>
+              <td>29</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>32</td>
+            </div>
+              <td>29</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9app-y</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>32</td>
+            </div>
+              <td>29</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang-cycdx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>32</td>
+            </div>
+              <td>28</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9-as</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>32</td>
+            </div>
+              <td>28</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang-auditjs</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>32</td>
+            </div>
+              <td>27</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>blog-cli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>31</td>
+            </div>
+              <td>17</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>blog-plg</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>31</td>
+            </div>
+              <td>17</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>tut-spring-boot-kotlin-master</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>31</td>
+            </div>
+              <td>17</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yl3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>30</td>
+            </div>
+              <td>20</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-ang</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>28</td>
+            </div>
+              <td>6</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-ang-net</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>28</td>
+            </div>
+              <td>6</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-angular-dotnet</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>28</td>
+            </div>
+              <td>6</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>mono2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>26</td>
+            </div>
+              <td>16</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>consumerapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>26</td>
+            </div>
+              <td>14</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>webgoat-simple</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>25</td>
+            </div>
+              <td>51</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>producerapp2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>25</td>
+            </div>
+              <td>17</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>bomfile</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>25</td>
+            </div>
+              <td>11</td>
+              <td>3</td>
+        </tr>
+        <tr>
+              <td>webgoat-demo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>24</td>
+            </div>
+              <td>43</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>webgoat-demo-11</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>24</td>
+            </div>
+              <td>43</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>webgoat-demo-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>24</td>
+            </div>
+              <td>43</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>webgoat-simple-shade</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>24</td>
+            </div>
+              <td>43</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>webgoat-simple-std</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>24</td>
+            </div>
+              <td>43</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>webgoatds</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+            </div>
+              <td>43</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>dekorate</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+            </div>
+              <td>11</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>dekorate-compile</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+            </div>
+              <td>11</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>dekorate2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+            </div>
+              <td>11</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>dekorate3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+            </div>
+              <td>11</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>producerapp3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+            </div>
+              <td>11</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>Webgoat Demo Ds - Solao</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>22</td>
+            </div>
+              <td>42</td>
+              <td>4</td>
+        </tr>
+        <tr>
+              <td>quicktest</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>22</td>
+            </div>
+              <td>19</td>
+              <td>2</td>
+        </tr>
+        <tr>
+              <td>webgoat-demo-3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>22</td>
+            </div>
+              <td>19</td>
+              <td>2</td>
+        </tr>
+        <tr>
+              <td>juiceshop</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>22</td>
+            </div>
+              <td>17</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>producerapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>22</td>
+            </div>
+              <td>7</td>
+              <td>3</td>
+        </tr>
+        <tr>
+              <td>alpine-scan</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>20</td>
+            </div>
+              <td>58</td>
+              <td>3</td>
+        </tr>
+        <tr>
+              <td>webgoatdemo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>20</td>
+            </div>
+              <td>19</td>
+              <td>2</td>
+        </tr>
+        <tr>
+              <td>dt-eshop-cx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>15</td>
+            </div>
+              <td>3</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang104</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>14</td>
+            </div>
+              <td>27</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>mono1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>14</td>
+            </div>
+              <td>10</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang105</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>12</td>
+            </div>
+              <td>19</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang105-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>12</td>
+            </div>
+              <td>19</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9-104</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>12</td>
+            </div>
+              <td>19</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>idem-conan-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>11</td>
+            </div>
+              <td>6</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>idemia-test</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>11</td>
+            </div>
+              <td>6</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>monday</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>7</td>
+            </div>
+              <td>16</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>toh-ajsbom</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>7</td>
+            </div>
+              <td>16</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>successmetrics</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>7</td>
+            </div>
+              <td>4</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>toh-iqcli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>6</td>
+            </div>
+              <td>11</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>idem-call</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>5</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>idemia-php2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>5</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>mobi-app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>4</td>
+            </div>
+              <td>14</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>g1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>4</td>
+            </div>
+              <td>5</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang-realworld-ajbom</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+              <td>3</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang-realworld-ajdirect</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+              <td>3</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang104-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+              <td>3</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>ang9</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+              <td>3</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>idemia-test-php</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>wgl</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+              <td>24</td>
+              <td>2</td>
+        </tr>
+        <tr>
+              <td>om-ui-bom</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+              <td>4</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>devb</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-tut-kotlin-mvn</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>boot-demo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>boot-demo-dek</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>om-tut-kotlin-grd</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>producer</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>3</td>
+              <td>1</td>
+        </tr>
+        <tr>
+              <td>Yarn Tut - Solao</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>deva</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>jsapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yarn-tut</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yarnapp-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yl</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yl2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-eshop-mn</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-safe-cx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-safeapp-cli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yarnapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>iqsm</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>2</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>iqsm1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>2</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>success-metrics-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>2</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>success-metrics-py</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>2</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>iqsm2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>1</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>7zip</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>Bspecs - Solao</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>consumer-nois</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>consumerapp2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-hw-cx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-safe</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>dt-safeapp-manifest</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>itext</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>jira-obr</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>mono3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>npmwg</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>r-app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>sbom3.xml</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>sbom4</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>sbom5</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>susp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>toh-ajdirect</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>vsc-app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yarn-tut-x</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        <tr>
+              <td>yarnapp-3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+              <td>0</td>
+              <td>0</td>
+        </tr>
+        </tbody>
+        </table>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <br><br>
+    <h5 style="margin-left: 370px;">Most Scanned Applications</h5>
+    <div class="container">
+    <div class="row">
+    <div class="col-xl mx-auto w-auto bg-white rounded">
+    <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+
+        <table  class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead class="thead-dark">
+        <tr>
+            <th>Application Name</th>
+            <th>Number of Scans</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+              <td>webgoat-legacy</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>117</td>
+            </div>
+        </tr>
+        <tr>
+              <td>app1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>89</td>
+            </div>
+        </tr>
+        <tr>
+              <td>app2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>71</td>
+            </div>
+        </tr>
+        <tr>
+              <td>app3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>71</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang9</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>27</td>
+            </div>
+        </tr>
+        <tr>
+              <td>consumerapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>27</td>
+            </div>
+        </tr>
+        <tr>
+              <td>successmetrics</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>24</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-ci-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>24</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoatj</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>24</td>
+            </div>
+        </tr>
+        <tr>
+              <td>mobi-app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-simple</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>23</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-demo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>22</td>
+            </div>
+        </tr>
+        <tr>
+              <td>producerapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>21</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-ci</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>19</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang-auditjs</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>18</td>
+            </div>
+        </tr>
+        <tr>
+              <td>myproj</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>18</td>
+            </div>
+        </tr>
+        <tr>
+              <td>myproj2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>18</td>
+            </div>
+        </tr>
+        <tr>
+              <td>producer</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>18</td>
+            </div>
+        </tr>
+        <tr>
+              <td>producerapp3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>18</td>
+            </div>
+        </tr>
+        <tr>
+              <td>success-metrics-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>18</td>
+            </div>
+        </tr>
+        <tr>
+              <td>Webgoat-Legacy-ide</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>17</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang-cycdx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>17</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang9-104</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>17</td>
+            </div>
+        </tr>
+        <tr>
+              <td>boot-demo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>17</td>
+            </div>
+        </tr>
+        <tr>
+              <td>iqsm</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>17</td>
+            </div>
+        </tr>
+        <tr>
+              <td>mizuho-webapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>17</td>
+            </div>
+        </tr>
+        <tr>
+              <td>success-metrics-py</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>17</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang9-105</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>16</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang9-as</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>16</td>
+            </div>
+        </tr>
+        <tr>
+              <td>boot-demo-dek</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>16</td>
+            </div>
+        </tr>
+        <tr>
+              <td>iqsm1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>16</td>
+            </div>
+        </tr>
+        <tr>
+              <td>iqsm2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>16</td>
+            </div>
+        </tr>
+        <tr>
+              <td>itext</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>16</td>
+            </div>
+        </tr>
+        <tr>
+              <td>producerapp2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>16</td>
+            </div>
+        </tr>
+        <tr>
+              <td>test</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>16</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-gf</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>16</td>
+            </div>
+        </tr>
+        <tr>
+              <td>wbg-newcli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>15</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-tut-kotlin-mvn</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>11</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-simple-shade</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>11</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-simple-std</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>11</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang104</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>6</td>
+            </div>
+        </tr>
+        <tr>
+              <td>consumerapp2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>6</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-shopizer-mvn</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>6</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang105</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>5</td>
+            </div>
+        </tr>
+        <tr>
+              <td>idemia-test-php</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>5</td>
+            </div>
+        </tr>
+        <tr>
+              <td>wgl</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>5</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang9-p</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>4</td>
+            </div>
+        </tr>
+        <tr>
+              <td>bomfile</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>4</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-ang-dir</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>4</td>
+            </div>
+        </tr>
+        <tr>
+              <td>r-app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>4</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoatdemo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>4</td>
+            </div>
+        </tr>
+        <tr>
+              <td>alpine-scan</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang105-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+        </tr>
+        <tr>
+              <td>blog-plg</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dekorate</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dt-safeapp-manifest</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+        </tr>
+        <tr>
+              <td>g1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>3</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang104-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>deva</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>devb</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dt-eshop-mn</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>juiceshop</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>npmwg</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-angular-manifest</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>quicktest</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>sbom4</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>susp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>toh-ajsbom</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoatds</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoatg</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>yarn-tut</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>yarn-tut-x</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>2</td>
+            </div>
+        </tr>
+        <tr>
+              <td>7zip</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>Bspecs - Solao</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>Webgoat Demo Ds - Solao</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>Yarn Tut - Solao</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang-realworld-ajbom</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang-realworld-ajdirect</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang9app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>ang9app-y</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>blog-cli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>consumer-nois</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dekorate-compile</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dekorate2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dekorate3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dt-eshop-cx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dt-hw-cx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dt-safe</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dt-safe-cx</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>dt-safeapp-cli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>idem-call</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>idem-conan-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>idemia-php2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>idemia-test</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>jira-obr</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>jsapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>monday</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>mono1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>mono2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>mono3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-ang</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-ang-net</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-angaft</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-angtestb4</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-angular-dotnet</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-tut-kotlin-grd</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>om-ui-bom</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>sbom3.xml</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>sbom5</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>toh-ajdirect</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>toh-iqcli</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>tut-spring-boot-kotlin-master</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-demo</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-demo-11</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-demo-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-demo-3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-jira</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-jira-1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-jira-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoat-legacy-w</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>webgoatg1</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>yarnapp</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>yarnapp-2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>yl</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>yl2</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>yl3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>1</td>
+            </div>
+        </tr>
+        <tr>
+              <td>vsc-app</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+        </tr>
+        <tr>
+              <td>yarnapp-3</td>
+              <!-- <td th:text="${dp.pointA}"></td> -->
+
+              <div>
+                 <td>0</td>
+            </div>
+        </tr>
+        </tbody>
+        </table>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <br><br>
+    </div>
+    </div></div>
+
+    <!-- <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td> Most critical application <span th:text="${mostCriticalApplicationName}"/> has <span th:text="${mostCriticalApplicationCount}"/> critical violations</td></tr>
+            <tr><td> Least critical application <span th:text="${leastCriticalApplicationName}"/> has <span th:text="${leastCriticalApplicationCount}"/> critical violations</td></tr>
+        </tbody>
+    </table> -->
+
+</body>

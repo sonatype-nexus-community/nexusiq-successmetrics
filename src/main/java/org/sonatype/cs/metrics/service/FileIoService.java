@@ -91,31 +91,22 @@ public class FileIoService {
         return filepath;
     }
 
-    public String readJsonAsString(String filename) throws IOException {
+    public static String readJsonAsString(String filename) throws IOException {
 
         String jsonString = null;
 
-        if (this.fileExists(filename)) {
-            jsonString =
-                    new String(
-                            Files.readAllBytes(Paths.get(filename)), StandardCharsets.ISO_8859_1);
+        if (!fileExists(filename)) {
+            throw new IOException("Failed to find file : " + filename);
         }
+        jsonString =
+                new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.ISO_8859_1);
 
         return jsonString;
     }
 
-    public boolean fileExists(String filename) throws IOException {
-        boolean exists = false;
-
+    public static boolean fileExists(String filename) {
         File f = new File(filename);
-
-        if (f.exists() && f.length() > 0) {
-            exists = true;
-        } else {
-            throw new IOException("Failed to read file : " + filename);
-        }
-
-        return exists;
+        return (f.exists() && f.length() > 0);
     }
 
     public void writeSuccessMetricsFile(InputStream content) throws IOException {
@@ -125,13 +116,7 @@ public class FileIoService {
         return;
     }
 
-    public List<String> readFWCsvFile(String filename) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(filename));
-
-        //		for (String line : lines) {
-        //			log.info(line);
-        //		}
-
-        return lines;
+    public static List<String> fileToStringList(String filename) throws IOException {
+        return Files.readAllLines(Paths.get(filename));
     }
 }

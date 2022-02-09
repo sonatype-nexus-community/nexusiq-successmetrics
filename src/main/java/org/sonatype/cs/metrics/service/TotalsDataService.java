@@ -16,8 +16,6 @@ public class TotalsDataService {
 
     @Autowired private DbService dbService;
 
-    @Autowired private HelperService helperService;
-
     @Autowired private SecurityDataService securityViolationsDataService;
 
     @Autowired private LicenseDataService licenseViolationsDataService;
@@ -64,11 +62,11 @@ public class TotalsDataService {
         }
 
         String mttrCriticalAvg =
-                String.format("%.0f", (float) helperService.getPointsAverage(pointA));
+                String.format("%.0f", (float) HelperService.getPointsAverage(pointA));
         String mttrSevereAvg =
-                String.format("%.0f", (float) helperService.getPointsAverage(pointB));
+                String.format("%.0f", (float) HelperService.getPointsAverage(pointB));
         String mttrModerateAvg =
-                String.format("%.0f", (float) helperService.getPointsAverage(pointC));
+                String.format("%.0f", (float) HelperService.getPointsAverage(pointC));
 
         String[] values = new String[] {mttrCriticalAvg, mttrSevereAvg, mttrModerateAvg};
         return values;
