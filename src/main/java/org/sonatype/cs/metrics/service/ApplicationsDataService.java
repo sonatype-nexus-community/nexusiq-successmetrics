@@ -18,8 +18,6 @@ import java.util.Map;
 public class ApplicationsDataService {
     @Autowired private DbService dbService;
 
-    @Autowired private HelperService helperService;
-
     @Value("${iq.api.payload.application.name}")
     private String iqApiApplicationName;
 
@@ -86,7 +84,7 @@ public class ApplicationsDataService {
         }
 
         List<DbRow> numberOfScansData = dbService.runSql(tableName, SqlStatements.NumberOfScans);
-        int[] numberOfScans = helperService.getPointsSumAndAverage(numberOfScansData);
+        int[] numberOfScans = HelperService.getPointsSumAndAverage(numberOfScansData);
         model.put("numberOfScansChart", numberOfScansData);
         model.put("numberOfScans", numberOfScans[0]);
         model.put("numberOfScansAvg", numberOfScans[1]);
@@ -94,7 +92,7 @@ public class ApplicationsDataService {
         List<DbRow> numberOfScannedApplicationsData =
                 dbService.runSql(tableName, SqlStatements.NumberOfScannedApplications);
         int[] numberOfScannedApplications =
-                helperService.getPointsSumAndAverage(numberOfScannedApplicationsData);
+                HelperService.getPointsSumAndAverage(numberOfScannedApplicationsData);
         model.put("numberOfApplicationsScannedChart", numberOfScannedApplicationsData);
         model.put("numberOfApplicationsScanned", numberOfScannedApplications[0]);
         model.put("numberOfApplicationsScannedAvg", numberOfScannedApplications[1]);
@@ -122,7 +120,7 @@ public class ApplicationsDataService {
             model.put("mostCriticalApplicationCount", aov.get(0).getPointA());
             model.put("leastCriticalApplicationCount", aov.get(aov.size() - 1).getPointA());
 
-            model.put("openCriticalViolationsAvg", helperService.getPointsSumAndAverage(aov)[1]);
+            model.put("openCriticalViolationsAvg", HelperService.getPointsSumAndAverage(aov)[1]);
 
             model.put("mostCriticalApplicationName", aov.get(0).getLabel());
             model.put("mostCriticalApplicationCount", aov.get(0).getPointA());

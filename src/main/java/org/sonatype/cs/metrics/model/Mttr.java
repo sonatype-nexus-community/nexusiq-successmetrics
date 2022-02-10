@@ -1,10 +1,11 @@
 package org.sonatype.cs.metrics.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public @Data @AllArgsConstructor @NoArgsConstructor class Mttr {
+public @Getter @Setter @AllArgsConstructor @NoArgsConstructor class Mttr {
     private String label;
     private float pointA;
     private float pointB;

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<div><div>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <script src="/js/apexcharts.min.js"></script>
+    <link rel="stylesheet" href="/css/apexcharts.css"/>
+
+    <link href="/css/main.css" rel="stylesheet"/>
+
+    <div class="text-center">
+        <img class="displayed" src="images/sonatype.png"/>
+        <title>Success Metrics</title>
+        <h3>Success Metrics</h3>
+        <h4></h4>
+    </div>
+
+    <script>
+        var height = '700px'
+        var width = '950px'
+
+        var grid = {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            }
+        }
+
+        var barchartlabels = {
+            enabled: true,
+            enabledOnSeries: undefined,
+            formatter: function (val, opts) {
+                return val
+            },
+            textAnchor: 'middle',
+            distributed: false,
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+                fontSize: '10px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontWeight: 'bold',
+                colors: ['#fff']
+            },
+            background: {
+                enabled: false,
+                foreColor: '#fff',
+                padding: 4,
+                borderRadius: 2,
+                borderWidth: 2,
+                borderColor: '#fff',
+                opacity: 0.9,
+
+            },
+
+        }
+
+        var barchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var linechart = {
+            type: 'line',
+            height: height,
+            width: width,
+            zoom: {
+                enabled: false
+            }
+        }
+
+        var stackedbarchart = {
+            type: 'bar',
+            height: height,
+            width: width,
+            stacked: true,
+            toolbar: {
+                show: true
+            },
+            zoom: {
+                enabled: true
+            }
+        }
+
+        var legend = {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 120
+        }
+
+        var fillbar = {
+            colors: '#0118FD'
+        }
+
+        var fillStacked = {
+            colors: ['#F90707', '#F99A07', '#F9DC07']
+        }
+
+        var fillViolationsSummary = {
+            colors: ['#FA0707', '#F99A07', '#08B005', '#0080FF'],
+        }
+
+        var donutPlotOptions = {
+			expandOnClick: true,
+			donut: {
+				size: '45%',
+					labels: {
+						show: true,
+						name: {
+							show: true
+						},
+						value: {
+							show: true
+						},
+						total: {
+							show: true,
+							showAlways: true,
+							label: 'Total',
+							fontSize: '10px',
+							fontFamily: 'Helvetica, Arial, sans-serif',
+							fontWeight: 400,
+							color: '#373d3f',
+							formatter: function (w) {
+							    return w.globals.seriesTotals.reduce((a, b) => {
+									return a + b
+								}, 0)
+							}
+						}
+					}
+				}
+			}
+
+    </script>
+
+</div></div>
+
+</head>
+
+<body>
+	<div class="jumbotron">
+	<h3>Compare Periods</h3>
+    </div>
+
+    <div>
+    <div class="container">
+    <div class="row">
+    <div class="col-xl mx-auto bg-white rounded">
+    <div class="table-responsive table-wrapper-scroll-y">
+
+
+    <div>
+    <div><div>
+
+    <table class="table table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Period 1 <span style="color:grey;font-size:11px">(2021-01-01 - 2021-03-01)</span></th>
+                <th scope="col">Period 2 <span style="color:grey;font-size:11px">(2021-04-01 - 2021-06-01)</span></th>
+                <!--
+                <th scope="col">Period 1</th>
+                <th scope="col">Period 2</th>
+                -->
+             </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td>Onboarded <span>45</span> applications at an average of <span>15</span> per <span>month</span></td>
+            <td>Onboarded <span>128</span> applications at an average of <span>42</span> per <span>month</span> <span style="color:black;font-style:italic;font-weight:light;font-size:11px">(cumulative)</span></td>
+             </tr>
+            <tr>
+            <td>Scanned applications at an average of <span>32</span> per <span>month</span></td>
+            <td>Scanned applications at an average of <span>35</span> per <span>month</span></td>
+             </tr>
+            <tr>
+            <td>Performed a total of <span>711</span> scans at an average of <span>237</span> per <span>month</span></td>
+            <td>Performed a total of <span>445</span> scans at an average of <span>148</span> per <span>month</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br/>
+
+    <table class="table table-striped table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Period 1</th>
+                <th scope="col">Total</th>
+                <th scope="col">Critical</th>
+                <th scope="col">Severe</th>
+                <th scope="col">Moderate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="font-weight:bold">
+                <td>Discovered Security Violations</td>
+                <td>3194</td>
+                <td>1555</td>
+                <td>1531</td>
+                <td>108</td>
+            </tr>
+            <tr>
+                <td>Open Security Violations</td>
+                <td>2436</td>
+                <td>1154</td>
+                <td>1194</td>
+                <td>88</td>
+            </tr>
+            <tr>
+                <td>Fixed Security Violations</td>
+                <td>752</td>
+                <td>395</td>
+                <td>337</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>Waived Security Violations</td>
+                <td>6</td>
+                <td>6</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+            </tr>
+            <tr style="font-weight:bold">
+                <td>Discovered License Violations</td>
+                <td>1309</td>
+                <td>1309</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Open License Violations</td>
+                <td>3</td>
+                <td>3</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Fixed License Violations</td>
+                <td>1306</td>
+                <td>1306</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Waived License Violations</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+            </tr>
+            <tr style="font-weight:bold">
+            	<td>Total</td>
+                <td>4503</td>
+                <td>2864</td>
+                <td>1531</td>
+                <td>108</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br/>
+
+    <table class="table table-striped table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Period 2</th>
+                <th scope="col">Total</th>
+                <th scope="col">Critical</th>
+                <th scope="col">Severe</th>
+                <th scope="col">Moderate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="font-weight:bold">
+                <td>Discovered Security Violations</td>
+                <td>3045</td>
+                <td>1509</td>
+                <td>1466</td>
+                <td>70</td>
+            </tr>
+            <tr>
+                <td>Open Security Violations</td>
+                <td>5063</td>
+                <td>2438</td>
+                <td>2467</td>
+                <td>158</td>
+            </tr>
+            <tr>
+                <td>Fixed Security Violations</td>
+                <td>414</td>
+                <td>221</td>
+                <td>193</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Waived Security Violations</td>
+                <td>4</td>
+                <td>4</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+            </tr>
+            <tr style="font-weight:bold">
+                <td>Discovered License Violations</td>
+                <td>240</td>
+                <td>235</td>
+                <td>5</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Open License Violations</td>
+                <td>243</td>
+                <td>238</td>
+                <td>5</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Fixed License Violations</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Waived License Violations</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+                <td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td><td style="background-color: aliceblue;"></td>
+            </tr>
+            <tr style="font-weight:bold">
+            	<td>Total</td>
+                <td>3285</td>
+                <td>1744</td>
+                <td>1471</td>
+                <td>70</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br/>
+
+    <table class="table table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Period 1</th>
+                <th scope="col">Period 2</th>
+             </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+            <td> Your fix rate is <span th:text="${fixRate}"/>%</td>
+             </tr> -->
+            <tr>
+            <td> It took an average of <span>22</span> days to fix critical violations</td>
+            <td> It took an average of <span>36</span> days to fix critical violations</td>
+             </tr>
+            <tr>
+            <td> It took an average of <span>16</span> days to fix severe violations</td>
+            <td> It took an average of <span>26</span> days to fix severe violations</td>
+             </tr>
+            <tr>
+            <td> It took an average of <span>12</span> days to fix moderate violations</td>
+            <td> It took an average of <span>14</span> days to fix moderate violations</td>
+             </tr>
+            <tr>
+            <td style="background-color: aliceblue;"></td>
+            <td style="background-color: aliceblue;"></td>
+            </tr>
+            <!-- <tr>
+            <td> On average, each application has <span th:text="${openCriticalViolationsAvg}"/> open critical violations</td>
+             </tr> -->
+            <tr>
+            <td> Most critical application has <span>57</span> critical violations</td>
+            <td> Most critical application has <span>99</span> critical violations</td>
+             </tr>
+            <tr>
+            <td> Least critical application has <span>0</span> critical violations</td>
+            <td> Least critical application has <span>0</span> critical violations</td>
+             </tr>
+
+        </tbody>
+    </table>
+
+
+</div></div>
+	</div>
+
+    </div>
+    </div></div></div></div>
+
+</body>

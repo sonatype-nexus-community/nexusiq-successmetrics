@@ -1,10 +1,11 @@
 package org.sonatype.cs.metrics.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public @Data @AllArgsConstructor @NoArgsConstructor class DbRowStr {
+public @Getter @Setter @AllArgsConstructor @NoArgsConstructor class DbRowStr {
     private String pointA;
     private String pointB;
     private String pointC;
@@ -13,11 +14,6 @@ public @Data @AllArgsConstructor @NoArgsConstructor class DbRowStr {
     private String pointF;
     private String pointG;
     private String pointH;
-    private String pointI;
-    private String pointJ;
-    private String pointK;
-    private String pointL;
-    private String pointM;
 
     @Override
     public String toString() {

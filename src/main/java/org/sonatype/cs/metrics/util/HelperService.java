@@ -12,7 +12,9 @@ import java.util.Map;
 @Service
 public class HelperService {
 
-    public int[] getPointsSumAndAverage(List<DbRow> dataList) {
+    private HelperService() {}
+
+    public static int[] getPointsSumAndAverage(List<DbRow> dataList) {
         IntSummaryStatistics dataListStatistics =
                 dataList.stream()
                         .map(n -> n.getPointA())
@@ -22,7 +24,7 @@ public class HelperService {
         return new int[] {(int) dataListStatistics.getSum(), (int) dataListStatistics.getAverage()};
     }
 
-    public Float getPointsAverage(List<Float> points) {
+    public static Float getPointsAverage(List<Float> points) {
         return (float)
                 points.stream()
                         .filter(f -> (f != 0))
@@ -31,7 +33,7 @@ public class HelperService {
                         .getAverage();
     }
 
-    public Map<String, Object> dataMap(String key, List<DbRowStr> data) {
+    public static Map<String, Object> dataMap(String key, List<DbRowStr> data) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -47,7 +49,7 @@ public class HelperService {
         return map;
     }
 
-    public String calculateDivision(float a, float b) {
+    public static String calculateDivision(float a, float b) {
         String result;
 
         if (a > 0 && b > 0) {
