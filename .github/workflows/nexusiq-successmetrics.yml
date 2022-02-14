@@ -40,7 +40,7 @@ jobs:
           run: chmod +x gradlew
           
         - name: Build with Gradle
-          run: ./gradlew -Pversion=$RELEASE_VERSION clean build packagefiles
+          run: ./gradlew -Pversion=$RELEASE_VERSION clean build release
 
         - name: Upload the artifact
           uses: actions/upload-artifact@v2
@@ -85,6 +85,6 @@ jobs:
 
               echo IMAGE_ID=$IMAGE_ID
               echo RELEASE_VERSION=$RELEASE_VERSION
-              
+
               docker tag $IMAGE_NAME $IMAGE_ID:$RELEASE_VERSION
               docker push $IMAGE_ID:$RELEASE_VERSION
