@@ -9,6 +9,7 @@ on:
 env:
   IMAGE_NAME: nexusiq-successmetrics
   RELEASE_BRANCH: main
+  RELEASE_VERSION: ${{ github.ref_name }}
 
 jobs:
     create_release:
@@ -18,46 +19,12 @@ jobs:
         steps:
         - uses: actions/checkout@v2
 
-        - name: Download all artifacts
-          uses: actions/download-artifact@v2
-
-        - name: Build with Gradle
-          run: |
-              # Strip git ref prefix from version
-              VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-              # Strip "v" prefix from tag name
-              [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-              ./gradlew -Prelversion=$VERSION clean build
-
-        - name: Upload the artifact
-          uses: actions/upload-artifact@v2
+        - name: Set up JDK 8
+          uses: actions/setup-java@v2
           with:
-            name: successmetrics.jar
-            path: build/libs
-
-        - name: Build release with Gradle
-          run: |
-              # Strip git ref prefix from version
-              VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-              # Strip "v" prefix from tag name
-              [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-              ./gradlew -Prelversion=$VERSION release
-
-        - name: Create release
-          uses: softprops/action-gh-release@v1
-          if: startsWith(github.ref, 'refs/tags/')
-          with:
-            files: successmetrics-*.zip
-
-    build_docker_image:
-        name: build docker image
-        runs-on: ubuntu-latest
-        steps:
-
-        - uses: actions/checkout@v2
-
+            java-version: '8'
+            distribution: 'adopt'
+        
         - name: Cache Gradle packages
           uses: actions/cache@v2
           with:
@@ -67,21 +34,37 @@ jobs:
             key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
             restore-keys: |
               ${{ runner.os }}-gradle-
-
+        
         - name: Grant execute permission for gradlew
           run: chmod +x gradlew
-
+          
         - name: Build with Gradle
-          run: |
-              # Strip git ref prefix from version
-              VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          run: ./gradlew -Pversion=$RELEASE_VERSION clean build release
 
-              # Strip "v" prefix from tag name
-              [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-              ./gradlew -Prelversion=$VERSION clean build
+        - name: Upload the artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: successmetrics.jar
+            path: build/libs
 
-        - name: Copy successmetrics jar
-          run: cp build/libs/successmetrics-*.jar .
+        - name: Create release
+          uses: softprops/action-gh-release@v1
+          if: startsWith(github.ref, 'refs/tags/')
+          with:
+            files: successmetrics-*.zip
+
+    build_docker_image:
+        needs: create_release
+        name: build docker image
+        runs-on: ubuntu-latest
+        steps:
+
+        - uses: actions/checkout@v2
+        
+        - name: Download the application file
+          uses: actions/download-artifact@v2
+          with:
+            name: successmetrics.jar
 
         - name: Build image
           run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
@@ -96,17 +79,11 @@ jobs:
               # Change all uppercase to lowercase
               IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-              # Strip git ref prefix from version
-              VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-              # Strip "v" prefix from tag name
-              [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
               # Use Docker `latest` tag convention
-              [ "$VERSION" == "$RELEASE_BRANCH" ] && VERSION=latest
+              [ "$RELEASE_VERSION" == "$RELEASE_BRANCH" ] && RELEASE_VERSION=latest
 
               echo IMAGE_ID=$IMAGE_ID
-              echo VERSION=$VERSION
+              echo RELEASE_VERSION=$RELEASE_VERSION
 
-              docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-              docker push $IMAGE_ID:$VERSION
+              docker tag $IMAGE_NAME $IMAGE_ID:$RELEASE_VERSION
+              docker push $IMAGE_ID:$RELEASE_VERSION
