@@ -3,6 +3,7 @@ package org.sonatype.cs.metrics.util;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.model.DbRowStr;
@@ -76,5 +77,17 @@ public class HelperServiceTest {
         assertArrayEquals(new int[] {0, 0}, HelperService.getPointsSumAndAverage(emptyList));
         datalist = new ArrayList<DbRow>();
         assertArrayEquals(new int[] {0, 0}, HelperService.getPointsSumAndAverage(datalist));
+    }
+
+    @Test
+    void testConvertDateStrSuccess() {
+        assertEquals(1644278400000L, HelperService.convertDateStr("2022-02-08"));
+    }
+
+    @Test
+    void testConvertDateStrException() {
+        Assertions.assertThrows(
+                java.time.format.DateTimeParseException.class,
+                () -> HelperService.convertDateStr("Bad text"));
     }
 }

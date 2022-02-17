@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.text.ParseException;
 import java.util.Map;
 
 @Controller
@@ -22,12 +21,14 @@ public class SummaryController {
 
     @Autowired private MetricsService metricsService;
 
+    @Autowired private SuccessMetricsApplication successMetricsApplication;
+
     @GetMapping({"/summary", "/summary.html"})
-    public String applications(Model model) throws ParseException {
+    public String applications(Model model) {
 
         log.info("In ReportSummaryController");
 
-        if (SuccessMetricsApplication.successMetricsFileLoaded) {
+        if (successMetricsApplication.isSuccessMetricsFileLoaded()) {
             Map<String, Object> periodsData =
                     periodsDataService.getPeriodData(SqlStatements.METRICTABLENAME);
             Map<String, Object> metrics =
@@ -36,7 +37,7 @@ public class SummaryController {
             model.mergeAttributes(periodsData);
             model.mergeAttributes(metrics);
             model.addAttribute("globalsummary", true);
-            model.addAttribute("smloaded", SuccessMetricsApplication.successMetricsFileLoaded);
+            model.addAttribute("smloaded", successMetricsApplication.isSuccessMetricsFileLoaded());
         }
 
         return "summary";

@@ -13,12 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.ParseException;
 import java.util.Map;
 
 @Controller
 public class ApplicationsSummaryController {
-    private static final Logger log = LoggerFactory.getLogger(SummaryController.class);
+    private static final Logger log = LoggerFactory.getLogger(ApplicationsSummaryController.class);
 
     @Autowired private PeriodsDataService periodsDataService;
 
@@ -31,10 +30,9 @@ public class ApplicationsSummaryController {
     @GetMapping({"/appsummary", "/appsummary.html"})
     public String application(
             Model model,
-            @RequestParam(value = "appname", defaultValue = "none") String applicationName)
-            throws ParseException {
+            @RequestParam(value = "appname", defaultValue = "none") String applicationName) {
 
-        log.info("In ApplicationSummaryController with " + applicationName);
+        log.info("In ApplicationSummaryController with {}", applicationName);
 
         model.addAttribute("applicationname", applicationName.toUpperCase());
 

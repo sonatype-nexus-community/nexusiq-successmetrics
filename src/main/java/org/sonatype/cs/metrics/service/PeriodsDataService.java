@@ -1,13 +1,11 @@
 package org.sonatype.cs.metrics.service;
 
 import org.sonatype.cs.metrics.model.DbRow;
+import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,16 +16,16 @@ public class PeriodsDataService {
 
     private static long oneMonthMs = 2629800000L;
 
-    public Map<String, Object> getPeriodData(String tableName) throws ParseException {
+    public Map<String, Object> getPeriodData(String tableName) {
         Map<String, Object> model = new HashMap<>();
         model.put("doAnalysis", false);
 
-        List<DbRow> timePeriods = dbService.runSql(tableName, SqlStatements.TimePeriods);
+        List<DbRow> timePeriods = dbService.runSql(tableName, SqlStatements.TIMEPERIODS);
 
         int numberOfPeriods = timePeriods.size();
 
         String startPeriod = timePeriods.get(0).getLabel();
-        String firstTimePeriod = startPeriod.toString();
+        String firstTimePeriod = startPeriod;
 
         String endPeriod = null;
 
@@ -35,10 +33,10 @@ public class PeriodsDataService {
 
         if (numberOfPeriods == 1) {
             endPeriod = startPeriod;
-            secondTimePeriod = startPeriod.toString();
+            secondTimePeriod = startPeriod;
         } else {
             endPeriod = timePeriods.get(timePeriods.size() - 1).getLabel();
-            secondTimePeriod = timePeriods.get(1).getLabel().toString();
+            secondTimePeriod = timePeriods.get(1).getLabel();
         }
 
         String timePeriodFrequency =
@@ -71,32 +69,16 @@ public class PeriodsDataService {
     }
 
     private String getTimePeriodFrequency(
-            int tmSize, String firstTimePeriod, String secondTimePeriod) throws ParseException {
-
-        String timePeriodLabel = "Week";
-
+            int tmSize, String firstTimePeriod, String secondTimePeriod) {
         if (tmSize > 1) {
-
-            long fp = this.convertDateStr(firstTimePeriod);
-            long sp = this.convertDateStr(secondTimePeriod);
+            long fp = HelperService.convertDateStr(firstTimePeriod);
+            long sp = HelperService.convertDateStr(secondTimePeriod);
             long diff = sp - fp;
 
-            if (diff < oneMonthMs) {
-                timePeriodLabel = "week";
-            } else {
-                timePeriodLabel = "month";
+            if (diff >= oneMonthMs) {
+                return "month";
             }
-        } else {
-            timePeriodLabel = "week";
         }
-
-        return timePeriodLabel;
-    }
-
-    private Long convertDateStr(String str) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sdf.parse(str);
-        long millis = date.getTime();
-        return millis;
+        return "week";
     }
 }

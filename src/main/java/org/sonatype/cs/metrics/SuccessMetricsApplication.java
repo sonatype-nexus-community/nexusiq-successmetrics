@@ -13,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @SpringBootApplication
@@ -20,7 +21,7 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(SuccessMetricsApplication.class);
 
-    public static boolean successMetricsFileLoaded = false;
+    private boolean successMetricsFileLoaded = false;
 
     private String timestamp;
     //
@@ -62,9 +63,9 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Run mode: " + runMode);
-        log.info("Working directory: " + System.getProperty("user.dir"));
-        log.info("Active profile: " + activeProfile);
+        log.info("Run mode: {}", runMode);
+        log.info("Working directory: {}", System.getProperty("user.dir"));
+        log.info("Active profile: {}", activeProfile);
 
         if (iqSmCsvfile) {
             loaderService.createSmDatafile(iqSmPeriod);
@@ -80,7 +81,8 @@ public class SuccessMetricsApplication implements CommandLineRunner {
             // non-interactive mode
             if (successMetricsFileLoaded) {
                 this.timestamp =
-                        DateTimeFormatter.ofPattern("ddMMyy_HHmm").format(LocalDateTime.now());
+                        DateTimeFormatter.ofPattern("ddMMyy_HHmm")
+                                .format(LocalDateTime.now(ZoneId.systemDefault()));
 
                 switch (activeProfile) {
                     case "pdf":
@@ -98,6 +100,10 @@ public class SuccessMetricsApplication implements CommandLineRunner {
                 log.error("No data file found");
             }
         }
+    }
+
+    public boolean isSuccessMetricsFileLoaded() {
+        return this.successMetricsFileLoaded;
     }
 
     private void startUp() {

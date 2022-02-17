@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,7 @@ public class InsightsAnalysisService {
 
     @Autowired private FileIoService fileIoService;
 
-    public void writeInsightsAnalysisData(String timestamp) throws ParseException, IOException {
+    public void writeInsightsAnalysisData(String timestamp) throws IOException {
         log.info("Writing insights data file");
 
         Map<String, Object> periodsData =
@@ -43,14 +42,11 @@ public class InsightsAnalysisService {
             fileIoService.writeInsightsCsvFile(
                     csvFilename, csvData, beforeDateRange, afterDateRange);
 
-            log.info("Created insights data file: " + csvFilename);
+            log.info("Created insights data file: {}", csvFilename);
         }
-
-        return;
     }
 
-    public Map<String, Object> getInsightsAnalysisData(Map<String, Object> periodsData)
-            throws ParseException {
+    public Map<String, Object> getInsightsAnalysisData(Map<String, Object> periodsData) {
         Map<String, Object> model = new HashMap<>();
 
         Map<String, Object> p1metrics =
@@ -78,14 +74,15 @@ public class InsightsAnalysisService {
                                 String.valueOf(p1metrics.get("numberOfApplicationsScannedAvg"))),
                         onboardedBefore);
 
-        float totalScansAfter = Integer.parseInt(String.valueOf(p2metrics.get("numberOfScans")));
-        float totalScansBefore = Integer.parseInt(String.valueOf(p1metrics.get("numberOfScans")));
+        final String numberOfScansStr = "numberOfScans";
+        float totalScansAfter = Integer.parseInt(String.valueOf(p2metrics.get(numberOfScansStr)));
+        float totalScansBefore = Integer.parseInt(String.valueOf(p1metrics.get(numberOfScansStr)));
 
         float scanningRateAfter =
-                Integer.parseInt(String.valueOf(p2metrics.get("numberOfScans")))
+                Integer.parseInt(String.valueOf(p2metrics.get(numberOfScansStr)))
                         / p2numberOfPeriods;
         float scanningRateBefore =
-                Integer.parseInt(String.valueOf(p1metrics.get("numberOfScans")))
+                Integer.parseInt(String.valueOf(p1metrics.get(numberOfScansStr)))
                         / p1numberOfPeriods;
 
         float scanningRateAfterAvg = scanningRateAfter / onboardedAfter;

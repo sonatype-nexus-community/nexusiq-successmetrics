@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +23,12 @@ public class ApplicationsDataService {
     @Value("${iq.api.payload.organisation.name}")
     private String iqApiOrganisationName;
 
-    public Map<String, Object> getApplicationData(String tableName, Map<String, Object> periodsData)
-            throws ParseException {
+    public Map<String, Object> getApplicationData(
+            String tableName, Map<String, Object> periodsData) {
         Map<String, Object> model = new HashMap<>();
 
         List<DbRow> applicationsOnboardedData =
-                dbService.runSql(tableName, SqlStatements.ApplicationsOnboarded);
+                dbService.runSql(tableName, SqlStatements.APPLICATIONSONBOARDED);
         int rows = applicationsOnboardedData.size();
 
         String endPeriod = null;
@@ -66,31 +65,29 @@ public class ApplicationsDataService {
         model.put("applicationsOnboarded", applicationsOnboardedInPeriod);
         model.put("applicationsOnboardedAvg", applicationsOnboardedInPeriodAvg);
 
-        if (applicationsOnboardedInPeriod == 1) {
-            model.put("applicationReport", true);
+        model.put("applicationReport", applicationsOnboardedInPeriod == 1);
+
+        PayloadItem organisationName = new PayloadItem(iqApiOrganisationName);
+        PayloadItem applicationName = new PayloadItem(iqApiApplicationName);
+
+        final String orgOrAppName = "orgOrAppName";
+
+        if (!organisationName.getItem().isEmpty()) {
+            model.put(orgOrAppName, "Organisation: " + organisationName.getItem());
+        } else if (!applicationName.getItem().isEmpty()) {
+            model.put(orgOrAppName, "Application: " + applicationName.getItem());
         } else {
-            model.put("applicationReport", false);
+            model.put(orgOrAppName, "");
         }
 
-        PayloadItem organisationName = new PayloadItem(iqApiOrganisationName, false);
-        PayloadItem applicationName = new PayloadItem(iqApiApplicationName, false);
-
-        if (organisationName.isExists()) {
-            model.put("orgOrAppName", "Organisation: " + iqApiOrganisationName);
-        } else if (applicationName.isExists()) {
-            model.put("orgOrAppName", "Application: " + iqApiApplicationName);
-        } else {
-            model.put("orgOrAppName", "");
-        }
-
-        List<DbRow> numberOfScansData = dbService.runSql(tableName, SqlStatements.NumberOfScans);
+        List<DbRow> numberOfScansData = dbService.runSql(tableName, SqlStatements.NUMBEROFSCANS);
         int[] numberOfScans = HelperService.getPointsSumAndAverage(numberOfScansData);
         model.put("numberOfScansChart", numberOfScansData);
         model.put("numberOfScans", numberOfScans[0]);
         model.put("numberOfScansAvg", numberOfScans[1]);
 
         List<DbRow> numberOfScannedApplicationsData =
-                dbService.runSql(tableName, SqlStatements.NumberOfScannedApplications);
+                dbService.runSql(tableName, SqlStatements.NUMBEROFSCANNEDAPPLICATIONS);
         int[] numberOfScannedApplications =
                 HelperService.getPointsSumAndAverage(numberOfScannedApplicationsData);
         model.put("numberOfApplicationsScannedChart", numberOfScannedApplicationsData);
@@ -101,7 +98,7 @@ public class ApplicationsDataService {
         model.put("mttrChart", mttr);
 
         String applicationOpenViolations =
-                SqlStatements.ApplicationsOpenViolations
+                SqlStatements.APPLICATIONSOPENVIOLATIONS
                         + " where time_period_start = '"
                         + endPeriod
                         + "' group by application_name"
@@ -109,41 +106,36 @@ public class ApplicationsDataService {
         List<DbRow> aov = dbService.runSql(tableName, applicationOpenViolations);
 
         String organisationOpenViolations =
-                SqlStatements.OrganisationsOpenViolations
+                SqlStatements.ORGANISATIONSOPENVIOLATIONS
                         + " where time_period_start = '"
                         + endPeriod
                         + "' group by organization_name"
                         + " order by 2 desc, 3 desc";
         List<DbRow> oov = dbService.runSql(tableName, organisationOpenViolations);
 
-        if (aov.size() > 0) {
+        if (!aov.isEmpty()) {
             model.put("mostCriticalApplicationCount", aov.get(0).getPointA());
             model.put("leastCriticalApplicationCount", aov.get(aov.size() - 1).getPointA());
-
             model.put("openCriticalViolationsAvg", HelperService.getPointsSumAndAverage(aov)[1]);
-
             model.put("mostCriticalApplicationName", aov.get(0).getLabel());
-            model.put("mostCriticalApplicationCount", aov.get(0).getPointA());
-
             model.put("leastCriticalApplicationName", aov.get(aov.size() - 1).getLabel());
-            model.put("leastCriticalApplicationCount", aov.get(aov.size() - 1).getPointA());
 
             model.put(
                     "applicationsSecurityRemediation",
-                    dbService.runSql(tableName, SqlStatements.ApplicationsSecurityRemediation));
+                    dbService.runSql(tableName, SqlStatements.APPLICATIONSSECURITYREMEDIATION));
             model.put(
                     "applicationsLicenseRemediation",
-                    dbService.runSql(tableName, SqlStatements.ApplicationsLicenseRemediation));
+                    dbService.runSql(tableName, SqlStatements.APPLICATIONSLICENSEREMEDIATION));
 
             model.put("mostCriticalOrganisationsData", oov);
             model.put("mostCriticalApplicationsData", aov);
 
             model.put(
                     "mostScannedApplicationsData",
-                    dbService.runSql(tableName, SqlStatements.MostScannedApplications));
+                    dbService.runSql(tableName, SqlStatements.MOSTSCANNEDAPPLICATIONS));
         }
 
-        List<DbRow> riskRatio = dbService.runSql(tableName, SqlStatements.RiskRatio);
+        List<DbRow> riskRatio = dbService.runSql(tableName, SqlStatements.RISKRATIO);
         model.put("riskRatioChart", riskRatio);
         model.put("riskRatioAtEndPeriod", riskRatio.get(riskRatio.size() - 1).getPointA());
         model.put("riskRatioAtStartPeriod", riskRatio.get(0).getPointA());
@@ -153,7 +145,7 @@ public class ApplicationsDataService {
 
     public boolean applicationExists(String applicationName) {
         List<DbRow> applications =
-                dbService.runSql(SqlStatements.METRICTABLENAME, SqlStatements.ListOfApplications);
+                dbService.runSql(SqlStatements.METRICTABLENAME, SqlStatements.LISTOFAPPLICATIONS);
         boolean status = false;
 
         for (DbRow r : applications) {

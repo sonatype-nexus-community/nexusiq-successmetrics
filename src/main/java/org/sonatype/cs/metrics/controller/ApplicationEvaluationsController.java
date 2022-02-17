@@ -34,45 +34,41 @@ public class ApplicationEvaluationsController {
             comparisonDate = dateObj.format(formatter);
         }
 
-        String ApplicationEvaluationsAge7 =
+        final String baseQuery =
+                "select application_name as pointA, evaluation_date as pointB, stage as"
+                        + " pointC from application_evaluation where";
+
+        String applicationEvaluationsAge7 =
                 String.format(
-                        "select application_name as pointA, evaluation_date as pointB, stage as"
-                            + " pointC from application_evaluation where"
-                            + " parsedatetime(evaluation_date, 'yyyy-MM-dd', 'en') >="
+                        "%s parsedatetime(evaluation_date, 'yyyy-MM-dd', 'en') >="
                             + " PARSEDATETIME('%s', 'yyyy-MM-dd') - INTERVAL '7' DAY order by 1",
-                        comparisonDate);
-        String ApplicationEvaluationsAge30 =
+                        baseQuery, comparisonDate);
+        String applicationEvaluationsAge30 =
                 String.format(
-                        "select application_name as pointA, evaluation_date as pointB, stage as"
-                            + " pointC from application_evaluation where"
-                            + " parsedatetime(evaluation_date, 'yyyy-MM-dd', 'en') >"
+                        "%s parsedatetime(evaluation_date, 'yyyy-MM-dd', 'en') >"
                             + " PARSEDATETIME('%s', 'yyyy-MM-dd') - INTERVAL '30' DAY and"
                             + " PARSEDATETIME(evaluation_date, 'yyyy-MM-dd', 'en') <"
                             + " parsedatetime('%s', 'yyyy-MM-dd') - INTERVAL '7' DAY order by 1",
-                        comparisonDate, comparisonDate);
-        String ApplicationEvaluationsAge60 =
+                        baseQuery, comparisonDate, comparisonDate);
+        String applicationEvaluationsAge60 =
                 String.format(
-                        "select application_name as pointA, evaluation_date as pointB, stage as"
-                            + " pointC from application_evaluation where"
-                            + " parsedatetime(evaluation_date, 'yyyy-MM-dd', 'en') >"
+                        "%s parsedatetime(evaluation_date, 'yyyy-MM-dd', 'en') >"
                             + " PARSEDATETIME('%s', 'yyyy-MM-dd', 'en') - INTERVAL '90' DAY and"
                             + " PARSEDATETIME(evaluation_date, 'yyyy-MM-dd', 'en') <"
                             + " parsedatetime('%s', 'yyyy-MM-dd', 'en') - INTERVAL '30' DAY order"
                             + " by 1",
-                        comparisonDate, comparisonDate);
-        String ApplicationEvaluationsAge90 =
+                        baseQuery, comparisonDate, comparisonDate);
+        String applicationEvaluationsAge90 =
                 String.format(
-                        "select application_name as pointA, evaluation_date as pointB, stage as"
-                            + " pointC from application_evaluation where"
-                            + " parsedatetime(evaluation_date, 'yyyy-MM-dd', 'en') <="
+                        "%s parsedatetime(evaluation_date, 'yyyy-MM-dd', 'en') <="
                             + " PARSEDATETIME('%s', 'yyyy-MM-dd', 'en') - INTERVAL '90' DAY order"
                             + " by 1",
-                        comparisonDate);
+                        baseQuery, comparisonDate);
 
-        List<DbRowStr> age7Data = dbService.runSqlStr(ApplicationEvaluationsAge7);
-        List<DbRowStr> age30Data = dbService.runSqlStr(ApplicationEvaluationsAge30);
-        List<DbRowStr> age60Data = dbService.runSqlStr(ApplicationEvaluationsAge60);
-        List<DbRowStr> age90Data = dbService.runSqlStr(ApplicationEvaluationsAge90);
+        List<DbRowStr> age7Data = dbService.runSqlStr(applicationEvaluationsAge7);
+        List<DbRowStr> age30Data = dbService.runSqlStr(applicationEvaluationsAge30);
+        List<DbRowStr> age60Data = dbService.runSqlStr(applicationEvaluationsAge60);
+        List<DbRowStr> age90Data = dbService.runSqlStr(applicationEvaluationsAge90);
 
         Map<String, Object> age7Map = HelperService.dataMap("age7", age7Data);
         Map<String, Object> age30Map = HelperService.dataMap("age30", age30Data);

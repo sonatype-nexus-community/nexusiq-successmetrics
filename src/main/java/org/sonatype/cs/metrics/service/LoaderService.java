@@ -1,8 +1,8 @@
 package org.sonatype.cs.metrics.service;
 
+import org.apache.http.HttpException;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -30,7 +30,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-import java.text.ParseException;
 import java.util.Map;
 
 @Service
@@ -79,13 +78,11 @@ public class LoaderService {
 
     private String iqSmEndpoint = "api/v2/reports/metrics";
 
-    public boolean successMetricsFileLoaded = false;
-    public boolean applicationEvaluationsFileLoaded = false;
-    public boolean policyViolationsDataLoaded = false;
-    public boolean componentsQuarantineLoaded = false;
-    public boolean componentWaiversLoaded = false;
-    public boolean autoreleasedFromQuarantineComponentsLoaded = false;
-    public boolean quarantinedComponentsLoaded = false;
+    private boolean applicationEvaluationsFileLoaded = false;
+    private boolean policyViolationsDataLoaded = false;
+    private boolean componentWaiversLoaded = false;
+    private boolean autoreleasedFromQuarantineComponentsLoaded = false;
+    private boolean quarantinedComponentsLoaded = false;
 
     public boolean loadMetricsFile(String fileName, String header, String stmt) throws IOException {
         boolean status = false;
@@ -95,7 +92,7 @@ public class LoaderService {
                         .resolve(Paths.get(dataDir).resolve(fileName))
                         .toString();
 
-        log.info("Loading file: " + filePath);
+        log.info("Loading file: {}", filePath);
 
         if (isHeaderValid(filePath, header)) {
             status = loadFile(filePath, stmt);
@@ -104,51 +101,82 @@ public class LoaderService {
         return status;
     }
 
-    private boolean loadFile(String fileName, String stmt) throws IOException {
+    public boolean isQuarantinedComponentsLoaded() {
+        return quarantinedComponentsLoaded;
+    }
+
+    public void setQuarantinedComponentsLoaded(boolean quarantinedComponentsLoaded) {
+        this.quarantinedComponentsLoaded = quarantinedComponentsLoaded;
+    }
+
+    public boolean isAutoreleasedFromQuarantineComponentsLoaded() {
+        return autoreleasedFromQuarantineComponentsLoaded;
+    }
+
+    public void setAutoreleasedFromQuarantineComponentsLoaded(
+            boolean autoreleasedFromQuarantineComponentsLoaded) {
+        this.autoreleasedFromQuarantineComponentsLoaded =
+                autoreleasedFromQuarantineComponentsLoaded;
+    }
+
+    public boolean isComponentWaiversLoaded() {
+        return componentWaiversLoaded;
+    }
+
+    public void setComponentWaiversLoaded(boolean componentWaiversLoaded) {
+        this.componentWaiversLoaded = componentWaiversLoaded;
+    }
+
+    public boolean isPolicyViolationsDataLoaded() {
+        return policyViolationsDataLoaded;
+    }
+
+    public void setPolicyViolationsDataLoaded(boolean policyViolationsDataLoaded) {
+        this.policyViolationsDataLoaded = policyViolationsDataLoaded;
+    }
+
+    public boolean isApplicationEvaluationsFileLoaded() {
+        return applicationEvaluationsFileLoaded;
+    }
+
+    public void setApplicationEvaluationsFileLoaded(boolean applicationEvaluationsFileLoaded) {
+        this.applicationEvaluationsFileLoaded = applicationEvaluationsFileLoaded;
+    }
+
+    private boolean loadFile(String fileName, String stmt) {
         String sqlStmt = stmt + " ('" + fileName + "')";
 
         dbService.runSqlLoad(sqlStmt);
 
-        log.info("Loaded file: " + fileName);
+        log.info("Loaded file: {}", fileName);
 
         return true;
     }
 
     public static boolean isHeaderValid(String filename, String header) throws IOException {
-
-        boolean isValid = false;
-
         String metricsFile = filename;
-
         File f = new File(metricsFile);
 
-        if (f.exists()) {
-            if (!f.isDirectory() && f.length() > 0) {
-                isValid = true;
-
-                if (header.length() > 0) {
-                    String firstLine = getFirstLine(metricsFile);
-
-                    if (!firstLine.startsWith(header)) {
-                        log.error("Invalid header");
-                        log.error("-> " + firstLine);
-                        isValid = false;
-                    } else {
-                        if (countLines(metricsFile) < 2) {
-                            // log.warn("No metrics data in file");
-                            isValid = false;
-                        }
-                    }
-                }
-            } else {
-                log.info("No data");
-                isValid = false;
-            }
-        } else {
-            log.warn("File not found: " + metricsFile);
+        if (!f.exists()) {
+            log.warn("File not found: {}", metricsFile);
+            return false;
+        }
+        if (f.isDirectory() || f.length() <= 0) {
+            log.info("No data");
+            return false;
+        }
+        if (header.length() == 0) {
+            return true;
         }
 
-        return isValid;
+        String firstLine = getFirstLine(metricsFile);
+        if (!firstLine.startsWith(header)) {
+            log.error("Invalid header");
+            log.error("-> {}", firstLine);
+            return false;
+        }
+
+        return countLines(metricsFile) >= 2;
     }
 
     public static String getFirstLine(String fileName) throws IOException {
@@ -156,8 +184,7 @@ public class LoaderService {
                 new BufferedReader(
                         new InputStreamReader(
                                 new FileInputStream(fileName), StandardCharsets.ISO_8859_1))) {
-            String line = br.readLine();
-            return line;
+            return br.readLine();
         }
     }
 
@@ -178,15 +205,15 @@ public class LoaderService {
         }
     }
 
-    public void filterOutLatestPeriod(String endPeriod) throws ParseException {
+    public void filterOutLatestPeriod(String endPeriod) {
         String sqlStmt = "delete from metric where time_period_start = " + "'" + endPeriod + "'";
         dbService.runSqlLoad(sqlStmt);
-        return;
     }
 
-    public boolean loadSuccessMetricsData() throws IOException, ParseException {
-        String stmt = SqlStatements.MetricsTable;
-        boolean fileLoaded = loadMetricsFile(successmetricsFile, DataLoaderParams.smHeader, stmt);
+    public boolean loadSuccessMetricsData() throws IOException {
+
+        String stmt = SqlStatements.METRICSTABLE;
+        boolean fileLoaded = loadMetricsFile(successmetricsFile, DataLoaderParams.SMHEADER, stmt);
         boolean doAnalysis = false;
 
         if (fileLoaded) {
@@ -200,10 +227,10 @@ public class LoaderService {
                     filterOutLatestPeriod(endPeriod); // it is likely incomplete and only where we
                     // know multiple
                     // periods available
-                    log.info("Removing incomplete data for current month " + endPeriod);
+                    log.info("Removing incomplete data for current month {}", endPeriod);
                 }
 
-                if (doAnalysis && loadInsightsMetrics) {
+                if (loadInsightsMetrics) {
                     log.info("Loading insights data");
                     loadInsightsData();
                 }
@@ -213,13 +240,13 @@ public class LoaderService {
         return fileLoaded;
     }
 
-    public void loadInsightsData() throws ParseException {
+    public void loadInsightsData() {
         Map<String, Object> periods =
                 periodsDataService.getPeriodData(SqlStatements.METRICTABLENAME);
 
         String midPeriod = periods.get("midPeriod").toString();
 
-        log.info("Mid period: " + midPeriod);
+        log.info("Mid period: {}", midPeriod);
 
         String sqlStmtP1 =
                 "DROP TABLE IF EXISTS METRIC_P1; CREATE TABLE METRIC_P1 AS SELECT * FROM METRIC"
@@ -234,13 +261,10 @@ public class LoaderService {
                         + midPeriod
                         + "'";
         dbService.runSqlLoad(sqlStmtP2);
-
-        return;
     }
 
     public void createSmDatafile(String iqSmPeriod)
-            throws ClientProtocolException, IOException, JSONException,
-                    org.json.simple.parser.ParseException {
+            throws IOException, JSONException, HttpException {
         log.info("Creating successmetrics.csv file");
 
         StringEntity apiPayload = getPayload(iqSmPeriod);
@@ -263,28 +287,26 @@ public class LoaderService {
         int statusCode = response.getStatusLine().getStatusCode();
 
         if (statusCode != 200) {
-            throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+            throw new HttpException("Failed with HTTP error code : " + statusCode);
         }
 
         log.info("Created successmetrics.csv file");
 
         InputStream content = response.getEntity().getContent();
         fileIoService.writeSuccessMetricsFile(content);
-
-        return;
     }
 
     private StringEntity getPayload(String iqSmPeriod)
-            throws IOException, JSONException, org.json.simple.parser.ParseException {
+            throws IOException, JSONException, HttpException {
         log.info("Making api payload");
 
-        PayloadItem firstTimePeriod = new PayloadItem(iqApiFirstTimePeriod, false);
-        PayloadItem lastTimePeriod = new PayloadItem(iqApiLastTimePeriod, false);
-        PayloadItem organisationName = new PayloadItem(iqApiOrganisationName, false);
-        PayloadItem applicationName = new PayloadItem(iqApiApplicationName, false);
+        PayloadItem firstTimePeriod = new PayloadItem(iqApiFirstTimePeriod);
+        PayloadItem lastTimePeriod = new PayloadItem(iqApiLastTimePeriod);
+        PayloadItem organisationName = new PayloadItem(iqApiOrganisationName);
+        PayloadItem applicationName = new PayloadItem(iqApiApplicationName);
 
         if (!firstTimePeriod.isExists()) {
-            throw new RuntimeException(
+            throw new IllegalArgumentException(
                     "No start period specified (iq.api.payload.timeperiod.first)");
         }
 
@@ -303,15 +325,12 @@ public class LoaderService {
             ajson.put("applicationIds", getId("applications", applicationName.getItem()));
         }
 
-        log.info("Api Payload: " + ajson.toString());
+        log.info("Api Payload: {}", ajson);
 
-        StringEntity params = new StringEntity(ajson.toString());
-
-        return params;
+        return new StringEntity(ajson.toString());
     }
 
-    private String[] getId(String endpoint, String aoName)
-            throws ClientProtocolException, IOException, org.json.simple.parser.ParseException {
+    private String[] getId(String endpoint, String aoName) throws IOException, HttpException {
         String[] s = new String[1];
 
         String apiEndpoint = "/api/v2/" + endpoint;
@@ -331,13 +350,7 @@ public class LoaderService {
             if (oName.equals(aoName)) {
                 StringBuilder ep = new StringBuilder(endpoint);
                 log.info(
-                        "Reporting for "
-                                + ep.deleteCharAt(ep.length() - 1)
-                                + ": "
-                                + aoName
-                                + " ["
-                                + oId
-                                + "]");
+                        "Reporting for {}: {} [{}]", ep.deleteCharAt(ep.length() - 1), aoName, oId);
                 s[0] = oId;
                 break;
             }
@@ -346,7 +359,7 @@ public class LoaderService {
         return s;
     }
 
-    private String getIqData(String endpoint) throws ClientProtocolException, IOException {
+    private String getIqData(String endpoint) throws IOException, HttpException {
 
         String url = iqUrl + "/" + endpoint;
         HttpGet request = new HttpGet(url);
@@ -364,41 +377,38 @@ public class LoaderService {
         int statusCode = response.getStatusLine().getStatusCode();
 
         if (statusCode != 200) {
-            throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+            throw new HttpException("Failed with HTTP error code : " + statusCode);
         }
 
-        String jsonString = EntityUtils.toString(response.getEntity());
-        return jsonString;
+        return EntityUtils.toString(response.getEntity());
     }
 
     public void loadReports2() throws IOException {
 
-        applicationEvaluationsFileLoaded =
+        setApplicationEvaluationsFileLoaded(
                 this.loadMetricsFile(
-                        DataLoaderParams.aeDatafile,
-                        DataLoaderParams.aeFileHeader,
-                        SqlStatements.ApplicationEvaluationsTable);
-        policyViolationsDataLoaded =
+                        DataLoaderParams.AEDATAFILE,
+                        DataLoaderParams.AEFILEHEADER,
+                        SqlStatements.APPLICATIONEVALUATIONSTABLE));
+        setPolicyViolationsDataLoaded(
                 this.loadMetricsFile(
-                        DataLoaderParams.pvDatafile,
-                        DataLoaderParams.pvFileHeader,
-                        SqlStatements.PolicyViolationsTables);
-        // componentsQuarantineLoaded = this.loadMetricsFile(DataLoaderParams.cqDatafile,
-        // DataLoaderParams.cqFileHeader, SqlStatements.ComponentsInQuarantineTable);
-        componentWaiversLoaded =
+                        DataLoaderParams.PVDATAFILE,
+                        DataLoaderParams.PVFILEHEADER,
+                        SqlStatements.POLICYVIOLATIONSTABLES));
+        setComponentWaiversLoaded(
                 this.loadMetricsFile(
-                        DataLoaderParams.cwDatafile,
-                        DataLoaderParams.cwFileHeader,
-                        SqlStatements.ComponentWaiversTable);
-        quarantinedComponentsLoaded =
+                        DataLoaderParams.CWDATAFILE,
+                        DataLoaderParams.CWFILEHEADER,
+                        SqlStatements.COMPONENTWAIVERSTABLE));
+        setQuarantinedComponentsLoaded(
                 this.loadMetricsFile(
-                        DataLoaderParams.qcompDatafile,
-                        DataLoaderParams.qcompHeader,
-                        SqlStatements.QuarantinedComponentsTable);
-        autoreleasedFromQuarantineComponentsLoaded =
+                        DataLoaderParams.QCOMPDATAFILE,
+                        DataLoaderParams.QCOMPHEADER,
+                        SqlStatements.QUARANTINEDCOMPONENTSTABLE));
+        setAutoreleasedFromQuarantineComponentsLoaded(
                 this.loadMetricsFile(
-                        DataLoaderParams.afqcomponentDatafile,
-                        DataLoaderParams.afqcomponentHeader,
-                        SqlStatements.AutoreleasedFromQuarantinedComponentsTable);
+                        DataLoaderParams.AFQCOMPONENTDATAFILE,
+                        DataLoaderParams.AFQCOMPONENTHEADER,
+                        SqlStatements.AUTORELEASEDFROMQUARANTINEDCOMPONENTSTABLE));
     }
 }

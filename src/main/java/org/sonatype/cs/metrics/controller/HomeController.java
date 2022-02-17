@@ -17,6 +17,8 @@ public class HomeController {
 
     @Autowired private LoaderService loaderService;
 
+    @Autowired private SuccessMetricsApplication successMetricsApplication;
+
     @Value("${sm.database}")
     private String smdatabase;
 
@@ -27,12 +29,12 @@ public class HomeController {
 
         model.addAttribute("smdatabase", smdatabase);
         model.addAttribute(
-                "successmetricsreport", SuccessMetricsApplication.successMetricsFileLoaded);
-        model.addAttribute("policyViolationsreport", loaderService.policyViolationsDataLoaded);
+                "successmetricsreport", successMetricsApplication.isSuccessMetricsFileLoaded());
+        model.addAttribute("policyViolationsreport", loaderService.isPolicyViolationsDataLoaded());
         model.addAttribute(
-                "applicationEvaluationsreport", loaderService.applicationEvaluationsFileLoaded);
-        model.addAttribute("firewallreport", loaderService.quarantinedComponentsLoaded);
-        model.addAttribute("componentWaiversReport", loaderService.componentWaiversLoaded);
+                "applicationEvaluationsreport", loaderService.isApplicationEvaluationsFileLoaded());
+        model.addAttribute("firewallreport", loaderService.isQuarantinedComponentsLoaded());
+        model.addAttribute("componentWaiversReport", loaderService.isComponentWaiversLoaded());
 
         return "home";
     }

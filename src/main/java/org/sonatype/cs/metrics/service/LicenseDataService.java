@@ -18,15 +18,15 @@ public class LicenseDataService {
         Map<String, Object> model = new HashMap<>();
 
         List<DbRow> licenseViolations =
-                dbService.runSql(tableName, SqlStatements.LicenseViolations);
+                dbService.runSql(tableName, SqlStatements.LICENSEVIOLATIONS);
         List<DbRow> discoveredLicenseViolations =
-                dbService.runSql(tableName, SqlStatements.DiscoveredLicenseViolations);
+                dbService.runSql(tableName, SqlStatements.DISCOVEREDLICENSEVIOLATIONS);
         List<DbRow> openLicenseViolations =
-                dbService.runSql(tableName, SqlStatements.OpenLicenseViolations);
+                dbService.runSql(tableName, SqlStatements.OPENLICENSEVIOLATIONS);
         List<DbRow> fixedLicenseViolations =
-                dbService.runSql(tableName, SqlStatements.FixedLicenseViolations);
+                dbService.runSql(tableName, SqlStatements.FIXEDLICENSEVIOLATIONS);
         List<DbRow> waivedLicenseViolations =
-                dbService.runSql(tableName, SqlStatements.WaivedLicenseViolations);
+                dbService.runSql(tableName, SqlStatements.WAIVEDLICENSEVIOLATIONS);
 
         model.put("LicenseViolations", licenseViolations);
         model.put("discoveredLicenseViolations", discoveredLicenseViolations);
@@ -35,13 +35,13 @@ public class LicenseDataService {
         model.put("waivedLicenseViolations", waivedLicenseViolations);
 
         DbRow discoveredLicenseViolationsTotal =
-                dbService.runSql(tableName, SqlStatements.DiscoveredLicenseViolationsTotal).get(0);
+                dbService.runSql(tableName, SqlStatements.DISCOVEREDLICENSEVIOLATIONSTOTAL).get(0);
         DbRow openLicenseViolationsTotal =
-                dbService.runSql(tableName, SqlStatements.OpenLicenseViolationsTotal).get(0);
+                dbService.runSql(tableName, SqlStatements.OPENLICENSEVIOLATIONSTOTAL).get(0);
         DbRow fixedLicenseViolationsTotal =
-                dbService.runSql(tableName, SqlStatements.FixedLicenseViolationsTotal).get(0);
+                dbService.runSql(tableName, SqlStatements.FIXEDLICENSEVIOLATIONSTOTAL).get(0);
         DbRow waivedLicenseViolationsTotal =
-                dbService.runSql(tableName, SqlStatements.WaivedLicenseViolationsTotal).get(0);
+                dbService.runSql(tableName, SqlStatements.WAIVEDLICENSEVIOLATIONSTOTAL).get(0);
 
         model.put("discoveredLicenseViolationsTotal", discoveredLicenseViolationsTotal);
         model.put("openLicenseViolationsTotal", openLicenseViolationsTotal);

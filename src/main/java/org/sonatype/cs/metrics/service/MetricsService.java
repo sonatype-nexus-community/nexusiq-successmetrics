@@ -3,7 +3,6 @@ package org.sonatype.cs.metrics.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +17,7 @@ public class MetricsService {
 
     @Autowired private TotalsDataService totalsDataService;
 
-    public Map<String, Object> getMetrics(String tableName, Map<String, Object> periodsData)
-            throws ParseException {
+    public Map<String, Object> getMetrics(String tableName, Map<String, Object> periodsData) {
 
         Map<String, Object> model = new HashMap<>();
 

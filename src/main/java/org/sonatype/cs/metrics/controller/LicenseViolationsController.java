@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.text.ParseException;
 import java.util.Map;
 
 @Controller
@@ -25,7 +24,7 @@ public class LicenseViolationsController {
     @Autowired private ApplicationsDataService applicationsDataService;
 
     @GetMapping({"/licenseviolations", "/licenseviolations.html"})
-    public String licenseViolations(Model model) throws ParseException {
+    public String licenseViolations(Model model) {
 
         log.info("In LicenseViolationsController");
 

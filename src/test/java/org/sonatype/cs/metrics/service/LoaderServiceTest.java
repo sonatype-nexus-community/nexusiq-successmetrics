@@ -38,9 +38,9 @@ public class LoaderServiceTest {
     void testGetFirstLine() {
         try {
             Assertions.assertEquals(
+                    "Header",
                     LoaderService.getFirstLine(
-                            "src/test/resources/file_with_header_but_no_content.csv"),
-                    "Header");
+                            "src/test/resources/file_with_header_but_no_content.csv"));
         } catch (Exception e) {
             Assertions.fail();
         }
