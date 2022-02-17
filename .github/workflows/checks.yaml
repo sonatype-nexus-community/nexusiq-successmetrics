@@ -12,7 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - continue-on-error: true
       - name: Install Python
         uses: actions/setup-python@v2
         with:
@@ -27,6 +26,7 @@ jobs:
       - name: Print git changes
         run: git status
       - uses: EndBug/add-and-commit@v7
+        continue-on-error: true
         with:
           default_author: github_actions
           message: "Pipeline pre-commit update"
