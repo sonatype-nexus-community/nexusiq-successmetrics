@@ -348,12 +348,12 @@ public class SqlStatements {
 
     public static final String QUARANTINEDCOMPONENTSTABLE =
             "DROP TABLE IF EXISTS QUARANTINED_COMPONENTS;CREATE TABLE QUARANTINED_COMPONENTS ( "
-                + " repository VARCHAR(250) NOT NULL,  quarantine_date VARCHAR(250) NOT NULL, "
-                + " date_cleared VARCHAR(250) DEFAULT NULL,  path_name VARCHAR(250) DEFAULT NULL, "
+                + " repository VARCHAR(250) NOT NULL,  quarantineDate VARCHAR(250) NOT NULL, "
+                + " dateCleared VARCHAR(250) DEFAULT NULL,  displayName VARCHAR(250) DEFAULT NULL, "
                 + " format VARCHAR(250) DEFAULT NULL,  quarantined VARCHAR(1024) DEFAULT NULL, "
-                + " policy_name VARCHAR(250) DEFAULT NULL,  threat_level VARCHAR(250) DEFAULT NULL,"
-                + "   cve VARCHAR(250) DEFAULT NULL)  AS SELECT repository, quarantine_date,"
-                + " date_cleared, path_name, format, quarantined, policy_name, threat_level, cve"
+                + " policyName VARCHAR(250) DEFAULT NULL,  threatLevel VARCHAR(250) DEFAULT NULL, "
+                + " reason VARCHAR(250) DEFAULT NULL)  AS SELECT repository, quarantineDate,"
+                + " dateCleared, displayName, format, quarantined, policyName, threatLevel, reason"
                 + " FROM CSVREAD ";
 
     public static final String AUTORELEASEDFROMQUARANTINEDCOMPONENTSTABLE =
