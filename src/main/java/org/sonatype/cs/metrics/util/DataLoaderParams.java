@@ -18,16 +18,16 @@ public class DataLoaderParams {
     public static final String PVDATAFILE = "policy_violations.csv";
     public static final String PVFILEHEADER = "policyName,reason,applicationName,openTime,component,stage,threatLevel";
 
-    public static final String QCOMPDATAFILE = "quarantined_components.csv";
-    public static final String QCOMPHEADER = "repository,quarantineDate,dateCleared,displayName,format,quarantined,policyName,threatLevel,reason";
+    public static final String QCDATAFILE = "quarantined_components.csv";
+    public static final String QCHEADER = "repository,quarantineDate,dateCleared,displayName,format,quarantined,policyName,threatLevel,reason";
 
-    public static final String QSCOMPDATAFILE = "quarantined_components_summary.csv";
-    public static final String QSCOMPHEADER = "repositoryCount,quarantineEnabledCount,quarantineenabled,totalComponentCount,quarantinedComponentCount";
+    public static final String QCSDATAFILE = "quarantined_components_summary.csv";
+    public static final String QCSHEADER = "repositoryCount,quarantineEnabledCount,quarantineenabled,totalComponentCount,quarantinedComponentCount";
 
-    public static final String AFQCOMPONENTDATAFILE = "autoreleased_from_quarantine_components.csv";
-    public static final String AFQCOMPONENTHEADER = "repository,quarantineDate,dateCleared,displayName,format,quarantined,policyName,threatLevel,reason";
+    public static final String AFQCDATAFILE = "autoreleased_from_quarantine_components.csv";
+    public static final String AFQCHEADER = "repository,quarantineDate,dateCleared,displayName,format,quarantined,policyName,threatLevel,reason";
 
-    public static final String AFQSDATAFILE = "autoreleased_from_quarantine_summary.csv";
+    public static final String AFQCSDATAFILE = "autoreleased_from_quarantine_components_summary.csv";
     public static final String AFQSHEADER = "MTD,YTD";
 
     public static final String AFQCONFIGDATAFILE = "autoreleased_from_quarantine_config.csv";

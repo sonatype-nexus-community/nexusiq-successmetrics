@@ -14,6 +14,8 @@ public @Getter @Setter @AllArgsConstructor @NoArgsConstructor class DbRowStr {
     private String pointF;
     private String pointG;
     private String pointH;
+    private String pointI;
+    private String pointJ;
 
     @Override
     public String toString() {

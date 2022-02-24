@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -37,7 +38,7 @@ public class FirewallController {
             List<DbRowStr> quarantinedComponents =
                     dbService.runSqlStr(SqlStatements.QUARANTINEDCOMPONENTS);
             model.addAttribute("quarantinedComponents", quarantinedComponents);
-            model.addAttribute("quarantinedComponentsData", quarantinedComponents.isEmpty());
+            model.addAttribute("quarantinedComponentsData", !quarantinedComponents.isEmpty());
         }
 
         if (loaderService.isAutoreleasedFromQuarantineComponentsLoaded()) {
@@ -48,14 +49,12 @@ public class FirewallController {
 
             model.addAttribute(
                     "autoReleasedFromQuarantinedComponentsData",
-                    autoReleasedFromQuarantinedComponents.isEmpty());
+                    !autoReleasedFromQuarantinedComponents.isEmpty());
         }
 
-        /* Firewall summary reports (read the file in here directly) */
-        List<String> quarantinedComponentsSummary =
-                FileIoService.fileToStringList(metricsDir + "/" + DataLoaderParams.QSCOMPDATAFILE);
-        List<String> autoReleasedFromQuarantinedComponentsSummary =
-                FileIoService.fileToStringList(metricsDir + "/" + DataLoaderParams.AFQSDATAFILE);
+        /* Firewall summary reports (read the files in here directly) */
+        List<String> quarantinedComponentsSummary = loadFile(DataLoaderParams.QCSDATAFILE);
+        List<String> autoReleasedFromQuarantinedComponentsSummary = loadFile(DataLoaderParams.AFQCSDATAFILE);
 
         String[] qcs = quarantinedComponentsSummary.get(1).split(",");
         String[] afqc = autoReleasedFromQuarantinedComponentsSummary.get(1).split(",");
@@ -64,5 +63,22 @@ public class FirewallController {
         model.addAttribute("autoReleasedFromQuarantinedComponentsSummary", afqc);
 
         return "firewall";
+    }
+
+    private List<String> loadFile(String filename) throws IOException {
+
+        String filepath =
+                Paths.get(System.getProperty("user.dir"))
+                        .resolve(Paths.get(metricsDir).resolve(filename))
+                        .toString();
+
+        log.info("Loading file: {}", filepath);
+
+        List<String> summary =
+                FileIoService.fileToStringList(filepath);
+
+        log.info("Loaded file: {}", filepath);
+
+        return summary;
     }
 }

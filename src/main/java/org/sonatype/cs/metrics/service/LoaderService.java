@@ -1,21 +1,7 @@
 package org.sonatype.cs.metrics.service;
 
-import org.apache.http.HttpException;
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.cs.metrics.model.PayloadItem;
 import org.sonatype.cs.metrics.util.DataLoaderParams;
 import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
@@ -80,13 +65,13 @@ public class LoaderService {
                         SqlStatements.COMPONENTWAIVERSTABLE));
         setQuarantinedComponentsLoaded(
                 this.loadMetricsFile(
-                        DataLoaderParams.QCOMPDATAFILE,
-                        DataLoaderParams.QCOMPHEADER,
+                        DataLoaderParams.QCDATAFILE,
+                        DataLoaderParams.QCHEADER,
                         SqlStatements.QUARANTINEDCOMPONENTSTABLE));
         setAutoreleasedFromQuarantineComponentsLoaded(
                 this.loadMetricsFile(
-                        DataLoaderParams.AFQCOMPONENTDATAFILE,
-                        DataLoaderParams.AFQCOMPONENTHEADER,
+                        DataLoaderParams.AFQCDATAFILE,
+                        DataLoaderParams.AFQCHEADER,
                         SqlStatements.AUTORELEASEDFROMQUARANTINEDCOMPONENTSTABLE));
 
         return successMetricsFileLoaded;
@@ -240,6 +225,10 @@ public class LoaderService {
             log.error("Invalid header");
             log.error("-> {}", firstLine);
             return false;
+        }
+
+        if (countLines(metricsFile) == 1){
+            log.warn("No metrics found for : {}", metricsFile);
         }
 
         return countLines(metricsFile) >= 2;
