@@ -206,11 +206,6 @@ public class SqlStatements {
                 + " + sum(WAIVED_COUNT_LICENSE_SEVERE) + sum(WAIVED_COUNT_LICENSE_MODERATE) as"
                 + " pointC from <?> group by APPLICATION_NAME order by 2 desc";
 
-//    public static final String COMPONENTSINQUARANTINE =
-//            "select repository as pointA, format as pointB, packageUrl as pointC, "
-//                    + "quarantineTime as pointD, policyName as pointE, threatLevel as pointF "
-//                    + "from COMPONENT_QUARANTINE order by 1 asc";
-
     public static final String COMPONENTWAIVERS =
             "select application_name as pointA, stage as pointB, packageUrl as pointC, policyName"
                     + " as pointD, threatLevel as pointE, comment as pointF, createDate as pointG,"
@@ -316,14 +311,6 @@ public class SqlStatements {
                 + " application_name VARCHAR(250) NOT NULL,  evaluation_date VARCHAR(250) DEFAULT"
                 + " NULL,  stage VARCHAR(250) DEFAULT NULL)  AS SELECT applicationname,"
                 + " parsedatetime(evaluationdate, 'yyyy-MM-dd', 'en'), stage FROM CSVREAD ";
-
-//    public static final String COMPONENTSINQUARANTINETABLE =
-//            "DROP TABLE IF EXISTS COMPONENT_QUARANTINE;CREATE TABLE COMPONENT_QUARANTINE ( "
-//                + " repository VARCHAR(250) NOT NULL,  format VARCHAR(250) NOT NULL,  packageUrl"
-//                + " VARCHAR(250) NOT NULL,  quarantineTime VARCHAR(250) DEFAULT NULL,  policyName"
-//                + " VARCHAR(250) DEFAULT NULL,  threatLevel VARCHAR(250) DEFAULT NULL)  AS SELECT"
-//                + " repository, format, packageUrl, parsedatetime(quarantineTime, 'yyyy-MM-dd',"
-//                + " 'en'), policyName, threatLevel FROM CSVREAD ";
 
     public static final String COMPONENTWAIVERSTABLE =
             "DROP TABLE IF EXISTS COMPONENT_WAIVER;CREATE TABLE COMPONENT_WAIVER ( "
