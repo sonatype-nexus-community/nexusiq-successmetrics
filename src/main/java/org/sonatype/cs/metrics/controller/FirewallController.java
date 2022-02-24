@@ -25,8 +25,8 @@ public class FirewallController {
 
     @Autowired private LoaderService loaderService;
 
-    @Value("${data.dir}")
-    private String dataDir;
+    @Value("${metrics.dir}")
+    private String metricsDir;
 
     @GetMapping({"/firewall", "/firewall.html"})
     public String firewall(Model model) throws IOException {
@@ -53,9 +53,9 @@ public class FirewallController {
 
         /* Firewall summary reports (read the file in here directly) */
         List<String> quarantinedComponentsSummary =
-                FileIoService.fileToStringList(dataDir + "/" + DataLoaderParams.QCSDATAFILE);
+                FileIoService.fileToStringList(metricsDir + "/" + DataLoaderParams.QSCOMPDATAFILE);
         List<String> autoReleasedFromQuarantinedComponentsSummary =
-                FileIoService.fileToStringList(dataDir + "/" + DataLoaderParams.AFQSDATAFILE);
+                FileIoService.fileToStringList(metricsDir + "/" + DataLoaderParams.AFQSDATAFILE);
 
         String[] qcs = quarantinedComponentsSummary.get(1).split(",");
         String[] afqc = autoReleasedFromQuarantinedComponentsSummary.get(1).split(",");

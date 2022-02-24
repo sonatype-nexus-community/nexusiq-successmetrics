@@ -24,8 +24,8 @@ public class FileIoService {
     @Value("${reports.outputdir}")
     private String outputdir;
 
-    @Value("${data.dir}")
-    private String datadir;
+    @Value("${metrics.dir}")
+    private String metricsDir;
 
     @Value("${data.successmetrics}")
     private String successmetricsFile;
@@ -67,7 +67,7 @@ public class FileIoService {
             throws IOException {
         String filename = prefix + "-" + timestamp + "." + extension;
 
-        String reportsdir = datadir + File.separator + outputdir;
+        String reportsdir = metricsDir + File.separator + outputdir;
 
         Path path = Paths.get(reportsdir);
 
@@ -97,7 +97,7 @@ public class FileIoService {
     }
 
     public void writeSuccessMetricsFile(InputStream content) throws IOException {
-        File outputFile = new File(datadir + File.separator + successmetricsFile);
+        File outputFile = new File(metricsDir + File.separator + successmetricsFile);
         java.nio.file.Files.copy(content, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         IOUtils.closeQuietly(content);
     }
