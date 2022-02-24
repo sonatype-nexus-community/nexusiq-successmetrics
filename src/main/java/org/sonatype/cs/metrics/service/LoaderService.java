@@ -228,7 +228,7 @@ public class LoaderService {
         }
 
         if (countLines(metricsFile) == 1){
-            log.warn("No metrics found for : {}", metricsFile);
+            log.warn("No metrics found for: {}", metricsFile);
         }
 
         return countLines(metricsFile) >= 2;
