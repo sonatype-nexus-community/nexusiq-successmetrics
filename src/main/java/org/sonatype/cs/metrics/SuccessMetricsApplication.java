@@ -12,6 +12,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -22,8 +24,6 @@ public class SuccessMetricsApplication implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(SuccessMetricsApplication.class);
 
     private boolean successMetricsFileLoaded = false;
-
-    private String timestamp;
 
     @Value("${spring.main.web-application-type}")
     private String runMode;
@@ -49,7 +49,6 @@ public class SuccessMetricsApplication implements CommandLineRunner {
     private boolean doAnalysis = true;
 
     public static void main(String[] args) {
-
         SpringApplication app = new SpringApplication(SuccessMetricsApplication.class);
         app.setBannerMode(Banner.Mode.OFF);
         app.run(args);
@@ -63,31 +62,26 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 
         successMetricsFileLoaded = loaderService.loadAllMetrics();
 
-        if (runMode.contains("SERVLET")) {
-            // web app
-            this.startUp();
-        } else {
-            // non-interactive mode
-            if (successMetricsFileLoaded) {
-                this.timestamp =
-                        DateTimeFormatter.ofPattern("ddMMyy_HHmm")
-                                .format(LocalDateTime.now(ZoneId.systemDefault()));
-
+        if (isSuccessMetricsFileLoaded()) {
+            if (runMode.contains("SERVLET")){
+                // web app
+                this.startUp();
+            }
+            else {
+                // non-interactive mode
                 switch (activeProfile) {
-                    case "pdf":
-                        String html = pdfService.parsePdfTemplate(pdfTemplate, doAnalysis);
-                        pdfService.generatePdfFromHtml(html, this.timestamp);
-                        break;
-                    case "insights":
-                        analysisService.writeInsightsAnalysisData(this.timestamp);
+                    case "data":
+                        createDataFiles();
                         break;
                     default:
                         log.error("unknown profile");
                         break;
                 }
-            } else {
-                log.error("No data file found");
             }
+        }
+        else {
+            log.error("No data files found");
+            System.exit(-1);
         }
     }
 
@@ -96,19 +90,20 @@ public class SuccessMetricsApplication implements CommandLineRunner {
     }
 
     private void startUp() {
-
-        if (successMetricsFileLoaded) {
-            log.info(
-                    "Ready for viewing at http://localhost:{}{}",
+        log.info("Ready for viewing at http://localhost:{}{}",
                     port,
-                    contextPath != null ? contextPath : "");
-        } else {
-            log.error("No data files found");
-            System.exit(-1);
-        }
+                 contextPath != null ? contextPath : "");
     }
 
-    public String gettimestamp() {
-        return this.timestamp;
+    private void createDataFiles() throws IOException, ParseException {
+        String timestamp = DateTimeFormatter.ofPattern("ddMMyy_HHmm")
+                .format(LocalDateTime.now(ZoneId.systemDefault()));
+
+        // case "pdf":
+        String html = pdfService.parsePdfTemplate(pdfTemplate, doAnalysis);
+        pdfService.generatePdfFromHtml(html, timestamp);
+
+        //case "insights":
+        analysisService.writeInsightsAnalysisData(timestamp);
     }
 }

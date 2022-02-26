@@ -186,3 +186,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+datafiles
+iqmetrics
+

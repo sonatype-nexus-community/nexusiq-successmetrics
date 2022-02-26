@@ -67,7 +67,7 @@ public class FileIoService {
             throws IOException {
         String filename = prefix + "-" + timestamp + "." + extension;
 
-        String reportsdir = metricsDir + File.separator + outputdir;
+        String reportsdir = "." + File.separator + outputdir;
 
         Path path = Paths.get(reportsdir);
 
@@ -97,7 +97,7 @@ public class FileIoService {
     }
 
     public void writeSuccessMetricsFile(InputStream content) throws IOException {
-        File outputFile = new File(metricsDir + File.separator + successmetricsFile);
+        File outputFile = new File(outputdir + File.separator + successmetricsFile);
         java.nio.file.Files.copy(content, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         IOUtils.closeQuietly(content);
     }
