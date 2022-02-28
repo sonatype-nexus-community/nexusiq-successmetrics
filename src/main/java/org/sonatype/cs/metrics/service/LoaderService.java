@@ -44,35 +44,38 @@ public class LoaderService {
     private boolean autoreleasedFromQuarantineComponentsLoaded = false;
     private boolean quarantinedComponentsLoaded = false;
 
-    public boolean loadAllMetrics() throws IOException {
+    public boolean loadAllMetrics(String activeProfile) throws IOException {
 
         successMetricsFileLoaded = loadSuccessMetricsData();
 
-        setApplicationEvaluationsFileLoaded(
-                this.loadMetricsFile(
-                        DataLoaderParams.AEDATAFILE,
-                        DataLoaderParams.AEFILEHEADER,
-                        SqlStatements.APPLICATIONEVALUATIONSTABLE));
-        setPolicyViolationsDataLoaded(
-                this.loadMetricsFile(
-                        DataLoaderParams.PVDATAFILE,
-                        DataLoaderParams.PVFILEHEADER,
-                        SqlStatements.POLICYVIOLATIONSTABLES));
-        setComponentWaiversLoaded(
-                this.loadMetricsFile(
-                        DataLoaderParams.CWDATAFILE,
-                        DataLoaderParams.CWFILEHEADER,
-                        SqlStatements.COMPONENTWAIVERSTABLE));
-        setQuarantinedComponentsLoaded(
-                this.loadMetricsFile(
-                        DataLoaderParams.QCDATAFILE,
-                        DataLoaderParams.QCHEADER,
-                        SqlStatements.QUARANTINEDCOMPONENTSTABLE));
-        setAutoreleasedFromQuarantineComponentsLoaded(
-                this.loadMetricsFile(
-                        DataLoaderParams.AFQCDATAFILE,
-                        DataLoaderParams.AFQCHEADER,
-                        SqlStatements.AUTORELEASEDFROMQUARANTINEDCOMPONENTSTABLE));
+        if (activeProfile.equalsIgnoreCase("web")) {
+
+            setApplicationEvaluationsFileLoaded(
+                    this.loadMetricsFile(
+                            DataLoaderParams.AEDATAFILE,
+                            DataLoaderParams.AEFILEHEADER,
+                            SqlStatements.APPLICATIONEVALUATIONSTABLE));
+            setPolicyViolationsDataLoaded(
+                    this.loadMetricsFile(
+                            DataLoaderParams.PVDATAFILE,
+                            DataLoaderParams.PVFILEHEADER,
+                            SqlStatements.POLICYVIOLATIONSTABLES));
+            setComponentWaiversLoaded(
+                    this.loadMetricsFile(
+                            DataLoaderParams.CWDATAFILE,
+                            DataLoaderParams.CWFILEHEADER,
+                            SqlStatements.COMPONENTWAIVERSTABLE));
+            setQuarantinedComponentsLoaded(
+                    this.loadMetricsFile(
+                            DataLoaderParams.QCDATAFILE,
+                            DataLoaderParams.QCHEADER,
+                            SqlStatements.QUARANTINEDCOMPONENTSTABLE));
+            setAutoreleasedFromQuarantineComponentsLoaded(
+                    this.loadMetricsFile(
+                            DataLoaderParams.AFQCDATAFILE,
+                            DataLoaderParams.AFQCHEADER,
+                            SqlStatements.AUTORELEASEDFROMQUARANTINEDCOMPONENTSTABLE));
+        }
 
         return successMetricsFileLoaded;
     }

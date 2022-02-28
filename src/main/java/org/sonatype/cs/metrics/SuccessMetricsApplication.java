@@ -60,7 +60,7 @@ public class SuccessMetricsApplication implements CommandLineRunner {
         log.info("Working directory: {}", System.getProperty("user.dir"));
         log.info("Active profile: {}", activeProfile);
 
-        successMetricsFileLoaded = loaderService.loadAllMetrics();
+        successMetricsFileLoaded = loaderService.loadAllMetrics(activeProfile);
 
         if (isSuccessMetricsFileLoaded()) {
             if (runMode.contains("SERVLET")){
