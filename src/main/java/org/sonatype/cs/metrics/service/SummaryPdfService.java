@@ -65,8 +65,10 @@ public class SummaryPdfService {
 
     public void generatePdfFromHtml(String html, String timestamp)
             throws DocumentException, IOException {
+        log.info("Writing summary report file");
+
         String pdfFilename = fileIoService.makeFilename("successmetrics", "pdf", timestamp);
         fileIoService.writeSuccessMetricsPdfFile(pdfFilename, html);
-        log.info("Created pdf report: {}", pdfFilename);
+        log.info("Created summary report: {}", pdfFilename);
     }
 }

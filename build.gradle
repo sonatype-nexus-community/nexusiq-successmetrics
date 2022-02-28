@@ -17,6 +17,7 @@ sourceCompatibility = '8'
 def applicationname = 'nexusiq-successmetrics'
 def packagedir = "successmetrics-${version}"
 def releasedir = "${packagedir}/${packagedir}"
+def configdir = "${packagedir}/${packagedir}/config"
 
 repositories {
 	mavenCentral()
@@ -98,13 +99,16 @@ task packagejar (type: Copy) {
 
 task packagefiles (type: Copy) {
 	from 'releasefiles'
-	include '*.json'
-	include 'create*'
-	include 'reports2/'
 	include 'config/'
 	include 'runapp*'
 	into "${releasedir}"
 	filter(ReplaceTokens, tokens: [APPVER: project.version])
+}
+
+task copyconfig (type: Copy) {
+	from 'src/main/resources'
+	include "application.properties"
+	into "${configdir}"
 }
 
 task release(type: Zip) {
@@ -120,4 +124,5 @@ docker {
 
 packagejar.dependsOn bootJar
 packagefiles.dependsOn packagejar
-release.dependsOn packagefiles
+copyconfig.dependsOn packagefiles
+release.dependsOn copyconfig

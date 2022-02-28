@@ -1,6 +1,8 @@
 #!/bin/sh
 
-workdir=$(pwd)
-datadir="${workdir}"
+# full pathname to directory containing metrics csv files
+metricsdir=${1}
 
-docker run -p 4040:4040 -v "${workdir}":/config -v "${workdir}:${datadir}" -e data.dir="${datadir}" ghcr.io/sonatype-nexus-community/nexusiq-successmetrics:@APPVER@
+workdir=$(pwd)
+
+docker run -p 4040:4040 -v "${workdir}":/config -v "${metricsdir}":/iqmetrics ghcr.io/sonatype-nexus-community/nexusiq-successmetrics:@APPVER@

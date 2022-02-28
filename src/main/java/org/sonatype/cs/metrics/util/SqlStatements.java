@@ -206,27 +206,22 @@ public class SqlStatements {
                 + " + sum(WAIVED_COUNT_LICENSE_SEVERE) + sum(WAIVED_COUNT_LICENSE_MODERATE) as"
                 + " pointC from <?> group by APPLICATION_NAME order by 2 desc";
 
-    public static final String COMPONENTSINQUARANTINE =
-            "select repository as pointA, format as pointB, packageUrl as pointC, "
-                    + "quarantineTime as pointD, policyName as pointE, threatLevel as pointF "
-                    + "from COMPONENT_QUARANTINE order by 1 asc";
-
     public static final String COMPONENTWAIVERS =
             "select application_name as pointA, stage as pointB, packageUrl as pointC, policyName"
                     + " as pointD, threatLevel as pointE, comment as pointF, createDate as pointG,"
                     + " expiryTime as pointH from COMPONENT_WAIVER order by 1 asc";
 
     public static final String QUARANTINEDCOMPONENTS =
-            "select repository as pointA, quarantine_date as pointB, date_cleared as pointC,"
-                + " path_name as pointD, format as pointE, quarantined as pointF, policy_name as"
-                + " pointG, threat_level as pointH, cve as pointI from QUARANTINED_COMPONENTS order"
+            "select repository as pointA, quarantineDate as pointB, dateCleared as pointC,"
+                + " displayName as pointD, format as pointE, quarantined as pointF, policyName as"
+                + " pointG, threatLevel as pointH, reason as pointI from QUARANTINED_COMPONENTS order"
                 + " by 6 asc";
 
     public static final String AUTORELEASEDFROMQUARANTINEDCOMPONENTS =
-            "select repository as pointA, quarantine_date as pointB, date_cleared as pointC,"
-                + " path_name as pointD, format as pointE, quarantined as pointF, policy_name as"
-                + " pointG, threat_level as pointH, cve as pointI from AUTORELEASED_FROM_QUARANTINE"
-                + " order by 6 asc";
+            "select repository as pointA, quarantineDate as pointB, dateCleared as pointC,"
+                    + " displayName as pointD, format as pointE, quarantined as pointF, policyName as"
+                    + " pointG, threatLevel as pointH, reason as pointI from AUTORELEASED_FROM_QUARANTINED_COMPONENTS order"
+                    + " by 6 asc";
 
     public static final String METRICSTABLE =
             "DROP TABLE IF EXISTS METRIC; "
@@ -317,14 +312,6 @@ public class SqlStatements {
                 + " NULL,  stage VARCHAR(250) DEFAULT NULL)  AS SELECT applicationname,"
                 + " parsedatetime(evaluationdate, 'yyyy-MM-dd', 'en'), stage FROM CSVREAD ";
 
-    public static final String COMPONENTSINQUARANTINETABLE =
-            "DROP TABLE IF EXISTS COMPONENT_QUARANTINE;CREATE TABLE COMPONENT_QUARANTINE ( "
-                + " repository VARCHAR(250) NOT NULL,  format VARCHAR(250) NOT NULL,  packageUrl"
-                + " VARCHAR(250) NOT NULL,  quarantineTime VARCHAR(250) DEFAULT NULL,  policyName"
-                + " VARCHAR(250) DEFAULT NULL,  threatLevel VARCHAR(250) DEFAULT NULL)  AS SELECT"
-                + " repository, format, packageUrl, parsedatetime(quarantineTime, 'yyyy-MM-dd',"
-                + " 'en'), policyName, threatLevel FROM CSVREAD ";
-
     public static final String COMPONENTWAIVERSTABLE =
             "DROP TABLE IF EXISTS COMPONENT_WAIVER;CREATE TABLE COMPONENT_WAIVER ( "
                 + " application_name VARCHAR(250) NOT NULL,  stage VARCHAR(250) NOT NULL, "
@@ -348,21 +335,21 @@ public class SqlStatements {
 
     public static final String QUARANTINEDCOMPONENTSTABLE =
             "DROP TABLE IF EXISTS QUARANTINED_COMPONENTS;CREATE TABLE QUARANTINED_COMPONENTS ( "
-                + " repository VARCHAR(250) NOT NULL,  quarantine_date VARCHAR(250) NOT NULL, "
-                + " date_cleared VARCHAR(250) DEFAULT NULL,  path_name VARCHAR(250) DEFAULT NULL, "
+                + " repository VARCHAR(250) NOT NULL,  quarantineDate VARCHAR(250) NOT NULL, "
+                + " dateCleared VARCHAR(250) DEFAULT NULL,  displayName VARCHAR(250) DEFAULT NULL, "
                 + " format VARCHAR(250) DEFAULT NULL,  quarantined VARCHAR(1024) DEFAULT NULL, "
-                + " policy_name VARCHAR(250) DEFAULT NULL,  threat_level VARCHAR(250) DEFAULT NULL,"
-                + "   cve VARCHAR(250) DEFAULT NULL)  AS SELECT repository, quarantine_date,"
-                + " date_cleared, path_name, format, quarantined, policy_name, threat_level, cve"
+                + " policyName VARCHAR(250) DEFAULT NULL,  threatLevel VARCHAR(250) DEFAULT NULL, "
+                + " reason VARCHAR(250) DEFAULT NULL)  AS SELECT repository, quarantineDate,"
+                + " dateCleared, displayName, format, quarantined, policyName, threatLevel, reason"
                 + " FROM CSVREAD ";
 
     public static final String AUTORELEASEDFROMQUARANTINEDCOMPONENTSTABLE =
-            "DROP TABLE IF EXISTS AUTORELEASED_FROM_QUARANTINE;CREATE TABLE"
-                + " AUTORELEASED_FROM_QUARANTINE (  repository VARCHAR(250) NOT NULL, "
-                + " quarantine_date VARCHAR(250) NOT NULL,  date_cleared VARCHAR(250) DEFAULT NULL,"
-                + "  path_name VARCHAR(250) DEFAULT NULL,  format VARCHAR(250) DEFAULT NULL, "
-                + " quarantined VARCHAR(1024) DEFAULT NULL,  policy_name VARCHAR(250) DEFAULT NULL,"
-                + "  threat_level VARCHAR(250) DEFAULT NULL,   cve VARCHAR(250) DEFAULT NULL)  AS"
-                + " SELECT repository, quarantine_date, date_cleared, path_name, format,"
-                + " quarantined, policy_name, threat_level, cve FROM CSVREAD ";
+            "DROP TABLE IF EXISTS AUTORELEASED_FROM_QUARANTINED_COMPONENTS;CREATE TABLE AUTORELEASED_FROM_QUARANTINED_COMPONENTS ( "
+                    + " repository VARCHAR(250) NOT NULL,  quarantineDate VARCHAR(250) NOT NULL, "
+                    + " dateCleared VARCHAR(250) DEFAULT NULL,  displayName VARCHAR(250) DEFAULT NULL, "
+                    + " format VARCHAR(250) DEFAULT NULL,  quarantined VARCHAR(1024) DEFAULT NULL, "
+                    + " policyName VARCHAR(250) DEFAULT NULL,  threatLevel VARCHAR(250) DEFAULT NULL, "
+                    + " reason VARCHAR(250) DEFAULT NULL)  AS SELECT repository, quarantineDate,"
+                    + " dateCleared, displayName, format, quarantined, policyName, threatLevel, reason"
+                    + " FROM CSVREAD ";
 }
