@@ -1,9 +1,18 @@
 package org.sonatype.cs.metrics.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import org.sonatype.cs.metrics.model.DataExtractObject;
+import org.sonatype.cs.metrics.util.CustomBeanToCSVMappingStrategy;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,6 +30,9 @@ import java.util.List;
 
 @Service
 public class FileIoService {
+    
+    private static final Logger log = LoggerFactory.getLogger(FileIoService.class);
+
     @Value("${reports.outputdir}")
     private String outputdir;
 
@@ -104,5 +116,27 @@ public class FileIoService {
 
     public static List<String> fileToStringList(String filename) throws IOException {
         return Files.readAllLines(Paths.get(filename));
+    }
+
+    public void writeDataExtractCsvFile(String csvFilename, List<DataExtractObject> deoList) {
+
+        try {
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilename));
+
+            CustomBeanToCSVMappingStrategy<DataExtractObject> mappingStrategy = new CustomBeanToCSVMappingStrategy<>();
+            mappingStrategy.setType(DataExtractObject.class);
+            StatefulBeanToCsvBuilder<DataExtractObject> builder = new StatefulBeanToCsvBuilder<DataExtractObject>(writer);
+            StatefulBeanToCsv<DataExtractObject> beanWriter = builder.withMappingStrategy(mappingStrategy).withApplyQuotesToAll(false).build();
+            beanWriter.write(deoList);
+
+            writer.close();
+        } catch (IOException e) {
+            log.info("Data Extract CSV failed with IOException " + e);
+        } catch (CsvDataTypeMismatchException e) {
+            log.info("Data Extract CSV failed with CsvDataTypeMismatchException " + e);
+        } catch (CsvRequiredFieldEmptyException e) {
+            log.info("Data Extract CSV failed with CsvRequiredFieldEmptyException " + e);
+        }
+        return;
     }
 }
