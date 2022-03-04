@@ -156,9 +156,9 @@
     <div class="chart-container" style="margin-left: 100px; width:40vw">
         <div id="applicationEvaluationsChart" width="400" height="400"></div>
             <script>
-                var age90 = 3;
-                var age60 = 17;
-                var age30 = 0;
+                var age90 = 0;
+                var age60 = 3;
+                var age30 = 17;
                 var age7 = 0;
 
                 var pdata = [age7, age30, age60, age90];
@@ -196,11 +196,8 @@
     
     <br><br>
 
-    
-    <br><br>
-
     <div>
-    <h5>Security Policy Violations 31-60 Days</h5>
+    <h5>Security Policy Violations 8-30 Days</h5>
     <div class="container">
     <div class="row">
     <div class="col-xl mx-auto w-auto bg-white rounded">
@@ -311,7 +308,7 @@
     <br><br>
 
     <div>
-    <h5>Security Policy Violations over 60 Days</h5>
+    <h5>Security Policy Violations 31-60 Days</h5>
     <div class="container">
     <div class="row">
     <div class="col-xl mx-auto w-auto bg-white rounded">
@@ -349,6 +346,9 @@
     </div>
     </div>
     </div>
+    <br><br>
+
+    
     <br><br>
 
    </body>

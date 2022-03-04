@@ -1,0 +1,2 @@
+repository,quarantineDate,dateCleared,displayName,format,quarantined,policyName,threatLevel,reason
+test_repo,2022-01-01,2022-01-02,test_display,test_format,test_quarantined,test_policy,10,test_reason

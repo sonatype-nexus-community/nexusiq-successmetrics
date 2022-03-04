@@ -26,7 +26,7 @@ import java.util.List;
 
 // https://spring.io/guides/gs/testing-web/
 @SpringBootTest(
-        properties = {"data.dir=src/test/resources", "spring.profiles.active=web"},
+        properties = {"metrics.dir=src/test/resources/iqmetrics", "spring.profiles.active=web"},
         webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public class SuccessMetricsWebApplicationTest {
@@ -71,6 +71,8 @@ public class SuccessMetricsWebApplicationTest {
                 "violationsage.html",
                 "evaluations",
                 "evaluations.html",
+                "firewall",
+                "firewall.html",
                 "waivers",
                 "waivers.html",
                 "analysis",
@@ -97,12 +99,13 @@ public class SuccessMetricsWebApplicationTest {
                 "applications.html, 23",
                 "securityviolations.html, 23",
                 "licenseviolations.html, 23",
-                "violationsage.html?date=2020-12-15, 24",
-                "evaluations.html?date=2021-12-15, 23",
-                "waivers.html, 24",
+                "firewall.html, 24",
+                "violationsage.html?date=2022-03-01, 24",
+                "evaluations.html?date=2021-11-01, 23",
                 "analysis.html, 23",
                 "appsummary.html?appname=webgoatj, 23",
-                "compare, 23"
+                "compare, 23",
+                "waivers.html, 24"
             })
     public void checkPageContents(String page, String lineToRemove) throws Exception {
         try (NamedEnvironment en = NamerFactory.withParameters(page)) {

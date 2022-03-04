@@ -1,0 +1,6 @@
+id,name,autoReleaseQuarantineEnabled
+IntegrityRating,Integrity Rating,true
+License,License,false
+License Threat Group,License Threat Group,false
+SecurityVulnerabilitySeverity,Security Vulnerability Severity,true
+SecurityVulnerabilityCategory,Security Vulnerability Category,false

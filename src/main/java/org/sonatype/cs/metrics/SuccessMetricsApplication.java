@@ -25,6 +25,8 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 
     private boolean successMetricsFileLoaded = false;
 
+    private String timestamp;
+
     @Value("${spring.main.web-application-type}")
     private String runMode;
 
@@ -63,12 +65,14 @@ public class SuccessMetricsApplication implements CommandLineRunner {
         successMetricsFileLoaded = loaderService.loadAllMetrics(activeProfile);
 
         if (isSuccessMetricsFileLoaded()) {
-            if (runMode.contains("SERVLET")){
+            if (runMode.contains("SERVLET")) {
                 // web app
                 this.startUp();
-            }
-            else {
+            } else {
                 // non-interactive mode
+                this.timestamp =
+                        DateTimeFormatter.ofPattern("ddMMyy_HHmm")
+                                .format(LocalDateTime.now(ZoneId.systemDefault()));
                 switch (activeProfile) {
                     case "data":
                         createDataFiles();
@@ -78,8 +82,7 @@ public class SuccessMetricsApplication implements CommandLineRunner {
                         break;
                 }
             }
-        }
-        else {
+        } else {
             log.error("No data files found");
             System.exit(-1);
         }
@@ -90,20 +93,22 @@ public class SuccessMetricsApplication implements CommandLineRunner {
     }
 
     private void startUp() {
-        log.info("Ready for viewing at http://localhost:{}{}",
-                    port,
-                 contextPath != null ? contextPath : "");
+        log.info(
+                "Ready for viewing at http://localhost:{}{}",
+                port,
+                contextPath != null ? contextPath : "");
+    }
+
+    public String gettimestamp() {
+        return this.timestamp;
     }
 
     private void createDataFiles() throws IOException, ParseException {
-        String timestamp = DateTimeFormatter.ofPattern("ddMMyy_HHmm")
-                .format(LocalDateTime.now(ZoneId.systemDefault()));
-
         // case "pdf":
         String html = pdfService.parsePdfTemplate(pdfTemplate, doAnalysis);
         pdfService.generatePdfFromHtml(html, timestamp);
 
-        //case "insights":
+        // case "insights":
         analysisService.writeInsightsAnalysisData(timestamp);
     }
 }

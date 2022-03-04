@@ -168,7 +168,10 @@
         </div>
         -->
 
-		
+		<div>
+		<a href="firewall.html">Firewall Report</a>
+		<br><br>
+		</div>
 
 	    <div>
 	    <a href="violationsage.html">Policy Violations Report</a>

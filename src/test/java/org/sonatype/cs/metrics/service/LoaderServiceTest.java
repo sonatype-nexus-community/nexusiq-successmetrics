@@ -9,16 +9,17 @@ public class LoaderServiceTest {
         try {
             Assertions.assertTrue(
                     LoaderService.isHeaderValid(
-                            "src/test/resources/successmetrics.csv",
+                            "src/test/resources/iqmetrics/successmetrics.csv",
                             "applicationId,applicationName,applicationPublicId,"));
             Assertions.assertFalse(
                     LoaderService.isHeaderValid(
                             "unknown file", "applicationId,applicationName,applicationPublicId,"));
             Assertions.assertFalse(
                     LoaderService.isHeaderValid(
-                            "src/test/resources/successmetrics.csv", "Incorrect header"));
+                            "src/test/resources//iqmetrics/successmetrics.csv",
+                            "Incorrect header"));
             Assertions.assertFalse(
-                    LoaderService.isHeaderValid("src/test/resources/reports2/", "Dummy header"));
+                    LoaderService.isHeaderValid("src/test/resources/iqmetrics/", "Dummy header"));
             Assertions.assertFalse(
                     LoaderService.isHeaderValid(
                             "src/test/resources/empty_file.csv", "Dummy header"));

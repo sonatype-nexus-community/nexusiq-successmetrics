@@ -22,7 +22,7 @@ import java.util.List;
 // https://spring.io/guides/gs/testing-web/
 @SpringBootTest(
         properties = {
-            "data.dir=src/test/resources",
+            "metrics.dir=src/test/resources/iqmetrics",
             "spring.profiles.active=web",
             "iq.api.payload.organisation.name=Auto-apps"
         },
