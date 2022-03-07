@@ -49,12 +49,6 @@ successmetrics*
 tmp/
 
 .pydevproject
-!src/test/resources/*.csv
-!src/test/resources/*.json
-!src/test/resources/**/*.approved.txt
-!src/test/resources/reports2/*
-!src/test/java/org/sonatype/cs/**/*.java
-
 ###
 
 # Byte-compiled / optimized / DLL files
@@ -189,3 +183,4 @@ dmypy.json
 datafiles
 iqmetrics
 
+!src/test/resources/**
