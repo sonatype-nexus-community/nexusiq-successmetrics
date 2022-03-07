@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.text.ParseException;
 import java.util.Map;
 
 @Controller
@@ -25,7 +24,7 @@ public class InsightsAnalysisController {
     @Autowired private SuccessMetricsApplication successMetricsApplication;
 
     @GetMapping({"/analysis", "/analysis.html"})
-    public String analysis(Model model) throws ParseException {
+    public String analysis(Model model) {
         log.info("In InsightsAnalysisController");
 
         boolean doAnalysis = false;
