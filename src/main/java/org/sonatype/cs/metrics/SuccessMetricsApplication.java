@@ -73,13 +73,10 @@ public class SuccessMetricsApplication implements CommandLineRunner {
                 this.timestamp =
                         DateTimeFormatter.ofPattern("ddMMyy_HHmm")
                                 .format(LocalDateTime.now(ZoneId.systemDefault()));
-                switch (activeProfile) {
-                    case "data":
-                        createDataFiles();
-                        break;
-                    default:
-                        log.error("unknown profile");
-                        break;
+                if ("data".equals(activeProfile)) {
+                    createDataFiles();
+                } else {
+                    log.error("unknown profile");
                 }
             }
         } else {

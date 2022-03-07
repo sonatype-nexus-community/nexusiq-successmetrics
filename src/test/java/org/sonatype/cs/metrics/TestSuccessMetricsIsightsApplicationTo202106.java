@@ -18,10 +18,10 @@ import java.nio.file.Paths;
         properties = {
             "metrics.dir=src/test/resources",
             "spring.profiles.active=data",
-            "data.successmetrics=successmetrics-2021-01-01-to-2021-07-01.csv"
+            "data.successmetrics=successmetrics-2021-01-01-to-2021-06-01.csv"
         },
         webEnvironment = WebEnvironment.RANDOM_PORT)
-public class SuccessMetricsIsightsApplicationTestTo202107 {
+public class TestSuccessMetricsIsightsApplicationTo202106 {
 
     @Autowired private SuccessMetricsApplication controller;
 
