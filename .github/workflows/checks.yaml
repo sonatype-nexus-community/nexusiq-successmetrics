@@ -51,7 +51,7 @@ jobs:
 
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          ./gradlew -Prelversion=$VERSION clean build test
+          ./gradlew -Prelversion=$VERSION clean build test --info
 
       - name: Generate JaCoCo Badge
         id: jacoco
