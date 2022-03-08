@@ -31,8 +31,8 @@ public class HelperServiceTest {
         assertEquals(emptyMap, HelperService.dataMap("test", emptyDatalist));
 
         List<DbRowStr> datalist = new ArrayList<DbRowStr>();
-        datalist.add(new DbRowStr("a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"));
-        datalist.add(new DbRowStr("a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"));
+        datalist.add(new DbRowStr("a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "i1", "j1"));
+        datalist.add(new DbRowStr("a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "i1", "j1"));
         Map<String, Object> fullMap = new HashMap<>();
         fullMap.put("testData", datalist);
         fullMap.put("testNumber", 2);

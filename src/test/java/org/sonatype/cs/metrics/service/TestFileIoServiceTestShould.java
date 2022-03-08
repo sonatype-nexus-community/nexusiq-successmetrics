@@ -15,7 +15,7 @@ public class TestFileIoServiceTestShould {
     void testFileExists() {
         try {
             Assertions.assertTrue(
-                    FileIoService.fileExists("src/test/resources/successmetrics.csv"));
+                    FileIoService.fileExists("src/test/resources/iqmetrics/successmetrics.csv"));
         } catch (Exception e) {
             Assertions.fail();
         }

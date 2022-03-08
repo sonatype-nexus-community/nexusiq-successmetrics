@@ -16,21 +16,19 @@ import java.nio.file.Paths;
 // https://spring.io/guides/gs/testing-web/
 @SpringBootTest(
         properties = {
-            "data.dir=src/test/resources",
-            "spring.profiles.active=insights",
+            "metrics.dir=src/test/resources",
+            "spring.profiles.active=data",
             "data.successmetrics=successmetrics-2021-01-01-to-2021-07-01.csv"
         },
         webEnvironment = WebEnvironment.RANDOM_PORT)
-public class SuccessMetricsIsightsApplicationTestTo202107 {
+public class TestSuccessMetricsIsightsApplicationTo202107 {
 
     @Autowired private SuccessMetricsApplication controller;
 
     @Test
     public void checkCSVFileIsGenerated() throws Exception {
         assertNotNull(controller.gettimestamp());
-        File outputFile =
-                new File(
-                        "src/test/resources/output/insights-" + controller.gettimestamp() + ".csv");
+        File outputFile = new File("datafiles/insights-" + controller.gettimestamp() + ".csv");
         assertTrue(outputFile.exists());
         String fileContents =
                 new String(Files.readAllBytes(Paths.get(outputFile.getAbsolutePath())));

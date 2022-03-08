@@ -2,11 +2,9 @@ package org.sonatype.cs.metrics.service;
 
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.model.Mttr;
-import org.sonatype.cs.metrics.model.PayloadItem;
 import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,12 +14,6 @@ import java.util.Map;
 @Service
 public class ApplicationsDataService {
     @Autowired private DbService dbService;
-
-//    @Value("${iq.api.payload.application.name}")
-//    private String iqApiApplicationName;
-//
-//    @Value("${iq.api.payload.organisation.name}")
-//    private String iqApiOrganisationName;
 
     public Map<String, Object> getApplicationData(
             String tableName, Map<String, Object> periodsData) {
@@ -66,19 +58,6 @@ public class ApplicationsDataService {
         model.put("applicationsOnboardedAvg", applicationsOnboardedInPeriodAvg);
 
         model.put("applicationReport", applicationsOnboardedInPeriod == 1);
-
-//        PayloadItem organisationName = new PayloadItem(iqApiOrganisationName);
-//        PayloadItem applicationName = new PayloadItem(iqApiApplicationName);
-//
-//        final String orgOrAppName = "orgOrAppName";
-//
-//        if (!organisationName.getItem().isEmpty()) {
-//            model.put(orgOrAppName, "Organisation: " + organisationName.getItem());
-//        } else if (!applicationName.getItem().isEmpty()) {
-//            model.put(orgOrAppName, "Application: " + applicationName.getItem());
-//        } else {
-//            model.put(orgOrAppName, "");
-//        }
 
         List<DbRow> numberOfScansData = dbService.runSql(tableName, SqlStatements.NUMBEROFSCANS);
         int[] numberOfScans = HelperService.getPointsSumAndAverage(numberOfScansData);

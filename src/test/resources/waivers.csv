@@ -1,0 +1,9 @@
+applicationName,stage,packageUrl,policyName,threatLevel,comment,createDate,expiryTime
+summary-metrics__sonatype,develop,pkg:pypi/flask@2.0.2?extension=tar.gz,Security-Medium,7,"This has been mitigated in https://github.com/sonatype/summary-metrics/pull/5","2022-01-25T10:55:55.444+0000",
+summary-metrics__sonatype,source,pkg:pypi/flask@2.0.2?extension=tar.gz,Security-Medium,7,"This has been mitigated in https://github.com/sonatype/summary-metrics/pull/5","2022-01-25T10:55:55.444+0000",
+summary-metrics__sonatype,source,pkg:pypi/pip@21.3.1?extension=tar.gz,Security-High,9,"Use Pip without --extra-index-url","2022-02-02T13:14:14.258+0000",
+summary-metrics__sonatype,source,pkg:pypi/pip@21.3.1?extension=tar.gz,Security-High,9,"","2022-02-02T13:16:15.040+0000",
+summary-metrics__sonatype,source,pkg:pypi/pip@21.3.1?extension=whl&qualifier=py3-none-any,Security-High,9,"","2022-02-02T13:16:30.670+0000",
+summary-metrics__sonatype,source,pkg:pypi/pip@21.3.1?extension=whl&qualifier=py3-none-any,Security-High,9,"","2022-02-02T13:17:54.656+0000",
+summary-metrics__sonatype,source,pkg:pypi/flask@2.0.2?extension=whl&qualifier=py3-none-any,Security-Medium,7,"This has been mitigated in:\nhttps://github.com/sonatype/summary-metrics/pull/5","2022-01-25T10:55:14.276+0000",
+PyPi_proxy,proxy,pkg:pypi/django@1.6?extension=whl&qualifier=py2.py3-none-any,Security-Medium,7,"Test waive","2022-02-17T11:09:28.816+0000",

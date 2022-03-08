@@ -20,7 +20,7 @@
         <img class="displayed" src="images/sonatype.png"/>
         <title>Success Metrics</title>
         <h3>Success Metrics</h3>
-        <h4>Application: ang-cycdx</h4>
+        <h4></h4>
     </div>
 
     <script>
