@@ -1,0 +1,12 @@
+[
+    {
+        "id": "IntegrityRating",
+        "name": "Integrity Rating",
+        "autoReleaseQuarantineEnabled": true
+    },
+    {
+        "id": "License",
+        "name": "License",
+        "autoReleaseQuarantineEnabled": true
+    }
+]

@@ -1,0 +1,46 @@
+{
+    "total": 1,
+    "page": 1,
+    "pageSize": 10,
+    "pageCount": 1,
+    "results": [
+        {
+            "displayName": "add-fedops : 0.0.0",
+            "repository": "npm_proxy",
+            "quarantineDate": "2021-03-29T14:43:51.477+0000",
+            "dateCleared": null,
+            "quarantinePolicyViolations": [
+                {
+                    "policyId": "384b7857d9b5424d91e00a0b945e3ec8",
+                    "policyName": "Integrity-Rating",
+                    "policyViolationId": "974d9e6cd7924ecdb622f9f7cef47510",
+                    "threatLevel": 9,
+                    "constraintViolations": [
+                        {
+                            "constraintId": "f03a3a2abdf94703a019e37b8c5cdc16",
+                            "constraintName": "Suspicious integrity rating",
+                            "reasons": [
+                                {
+                                    "reason": "Integrity Rating was Suspicious",
+                                    "reference": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+			"componentIdentifier": {
+                "format": "npm",
+                "coordinates": {
+                    "packageId": "add-fedops",
+                    "version": "0.0.0"
+                }
+            },
+			"pathname": "add-fedops/-/add-fedops-0.0.0.tgz",
+            "hash": "b1b6ea3b7e4aa4f49250",
+            "matchState": "exact",
+            "repositoryId": "298bf707fd4f4323b7a0200b8dddd201",
+            "quarantined": true
+        }
+    ]
+}

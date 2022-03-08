@@ -1,0 +1,19 @@
+{
+    "reasons": [
+        {
+            "reason": "Found 'MIT' license",
+            "reference": null
+        },        {
+            "reason": "Found 'MIT' license - duplication",
+            "reference": null
+        },
+        {
+            "reason": "Found 'MIT-O' license",
+            "reference": null
+        },
+        {
+            "reason": "Found licenses in the 'Banned' license threat group ('Apache-2.0')",
+            "reference": null
+        }
+    ]
+}

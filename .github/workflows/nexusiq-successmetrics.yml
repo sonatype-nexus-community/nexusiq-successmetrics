@@ -1,5 +1,5 @@
 
-name: Build and Release nexusiq-successmetrics
+name: Build and Release nexusiq-view-metrics
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
       - '*'
 
 env:
-  IMAGE_NAME: nexusiq-successmetrics
+  REGISTRY: ghcr.io
+  IMAGE_NAME: nexusiq-successmetrics-view-metrics
   RELEASE_BRANCH: main
   RELEASE_VERSION: ${{ github.ref_name }}
 
@@ -24,7 +25,7 @@ jobs:
           with:
             java-version: '8'
             distribution: 'adopt'
-        
+
         - name: Cache Gradle packages
           uses: actions/cache@v2
           with:
@@ -34,56 +35,77 @@ jobs:
             key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
             restore-keys: |
               ${{ runner.os }}-gradle-
-        
+
         - name: Grant execute permission for gradlew
           run: chmod +x gradlew
-          
+
         - name: Build with Gradle
-          run: ./gradlew -Pversion=$RELEASE_VERSION clean build release
+          run: ./gradlew -Pversion=$RELEASE_VERSION clean build release codeCoverageReport
 
         - name: Upload the artifact
           uses: actions/upload-artifact@v2
           with:
-            name: successmetrics.jar
-            path: build/libs
+            name: jar_files
+            path: |
+              get-metrics/build/libs/
+              view-metrics/build/libs/
 
         - name: Create release
           uses: softprops/action-gh-release@v1
           if: startsWith(github.ref, 'refs/tags/')
           with:
-            files: successmetrics-*.zip
+            files: nexusiq-successmetrics-*.zip
 
-    build_docker_image:
+    build_and_push_image:
         needs: create_release
-        name: build docker image
         runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            include:
+              - dockerfile: ./get-metrics/Dockerfile
+                image: ghcr.io/richardpanman/nexusiq-successmetrics-get-metrics
+              - dockerfile: ./view-metrics/Dockerfile
+                image: ghcr.io/richardpanman/nexusiq-successmetrics-view-metrics
+        permissions:
+          contents: read
+          packages: write
         steps:
+          - name: Checkout repository
+            uses: actions/checkout@v2
 
-        - uses: actions/checkout@v2
-        
-        - name: Download the application file
-          uses: actions/download-artifact@v2
-          with:
-            name: successmetrics.jar
+          - name: Download the application files
+            uses: actions/download-artifact@v2
+            with:
+              name: jar_files
 
-        - name: Build image
-          run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+          - name: Set up QEMU
+            uses: docker/setup-qemu-action@v1
 
-        - name: Log in to registry
-          run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          - uses: docker/setup-buildx-action@v1
+            id: buildx
+            with:
+              install: true
 
-        - name: Push image
-          run: |
-              IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          - name: Log in to the Container registry
+            uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+            with:
+              registry: ${{ env.REGISTRY }}
+              username: ${{ github.actor }}
+              password: ${{ secrets.GITHUB_TOKEN }}
 
-              # Change all uppercase to lowercase
-              IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          - name: Extract metadata (tags, labels) for Docker
+            id: meta
+            uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+            with:
+              images: ${{ matrix.image }}
 
-              # Use Docker `latest` tag convention
-              [ "$RELEASE_VERSION" == "$RELEASE_BRANCH" ] && RELEASE_VERSION=latest
-
-              echo IMAGE_ID=$IMAGE_ID
-              echo RELEASE_VERSION=$RELEASE_VERSION
-
-              docker tag $IMAGE_NAME $IMAGE_ID:$RELEASE_VERSION
-              docker push $IMAGE_ID:$RELEASE_VERSION
+          - name: Build and push Docker image
+            uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+            with:
+              context: .
+              file: ${{ matrix.dockerfile }}
+              push: true
+              tags: ${{ steps.meta.outputs.tags }}
+              labels: ${{ steps.meta.outputs.labels }}
+              platforms: linux/amd64,linux/arm64

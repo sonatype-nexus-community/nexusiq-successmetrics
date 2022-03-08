@@ -1,0 +1,220 @@
+{
+    "applicationWaivers": [
+        {
+            "application": {
+                "id": "43b8a9abf99b4f73bfd9dda174cbbd4a",
+                "publicId": "public_id_1",
+                "name": "name_1",
+                "organizationId": "4b6b92347d194781823102a6851ff474",
+                "contactUserName": null
+            },
+            "stages": [
+                {
+                    "stageId": "develop",
+                    "componentPolicyViolations": [
+                        {
+                            "component": {
+                                "packageUrl": "pkg:pypi/flask@2.0.2?extension=tar.gz",
+                                "hash": "9a13d5432660af5b5760",
+                                "componentIdentifier": {
+                                    "format": "pypi",
+                                    "coordinates": {
+                                        "extension": "tar.gz",
+                                        "name": "Flask",
+                                        "qualifier": "",
+                                        "version": "2.0.2"
+                                    }
+                                },
+                                "displayName": "Flask 2.0.2 (.tar.gz)"
+                            },
+                            "waivedPolicyViolations": [
+                                {
+                                    "policyId": "40271a9268624bf9ba6ea6a8ae85df2b",
+                                    "policyName": "Security-Medium",
+                                    "policyViolationId": "5114b4ac6a444eccb87950bfb40ccc32",
+                                    "threatLevel": 7,
+                                    "constraintViolations": [
+                                        {
+                                            "constraintId": "3fedf3a95068478a9a671c6dd89b278c",
+                                            "constraintName": "Medium risk CVSS score",
+                                            "reasons": [
+                                                {
+                                                    "reason": "Found security vulnerability sonatype-2020-0201 with severity >= 4 (severity = 4.8)",
+                                                    "reference": {
+                                                        "type": "SECURITY_VULNERABILITY_REFID",
+                                                        "value": "sonatype-2020-0201"
+                                                    }
+                                                },
+                                                {
+                                                    "reason": "Found security vulnerability sonatype-2020-0201 with severity < 7 (severity = 4.8)",
+                                                    "reference": {
+                                                        "type": "SECURITY_VULNERABILITY_REFID",
+                                                        "value": "sonatype-2020-0201"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "policyWaiver": {
+                                        "policyWaiverId": "6b6ac61be23b4e6594b613470a301900",
+                                        "comment": "This has been mitigated in https://github.com/example/application/pull/5",
+                                        "createTime": "2022-01-25T10:55:55.444+0000",
+                                        "expiryTime": "2022-01-26T10:55:55.444+0000",
+                                        "isObsolete": false,
+                                        "scopeOwnerType": "application",
+                                        "scopeOwnerId": "43b8a9abf99b4f73bfd9dda174cbbd4a",
+                                        "scopeOwnerName": "name_1",
+                                        "hash": "9a13d5432660af5b5760",
+                                        "policyId": "40271a9268624bf9ba6ea6a8ae85df2b",
+                                        "vulnerabilityId": "sonatype-2020-0201",
+                                        "creatorId": null,
+                                        "creatorName": null
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "stageId": "source",
+                    "componentPolicyViolations": [
+                        {
+                            "component": {
+                                "packageUrl": "pkg:pypi/flask@2.0.2?extension=tar.gz",
+                                "hash": "9a13d5432660af5b5760",
+                                "componentIdentifier": {
+                                    "format": "pypi",
+                                    "coordinates": {
+                                        "extension": "tar.gz",
+                                        "name": "Flask",
+                                        "qualifier": "",
+                                        "version": "2.0.2"
+                                    }
+                                },
+                                "displayName": "Flask 2.0.2 (.tar.gz)"
+                            },
+                            "waivedPolicyViolations": [
+                                {
+                                    "policyId": "40271a9268624bf9ba6ea6a8ae85df2b",
+                                    "policyName": "Security-Medium",
+                                    "policyViolationId": "751a0a775455479d9290bf4bea48dad7",
+                                    "threatLevel": 7,
+                                    "constraintViolations": [
+                                        {
+                                            "constraintId": "3fedf3a95068478a9a671c6dd89b278c",
+                                            "constraintName": "Medium risk CVSS score",
+                                            "reasons": [
+                                                {
+                                                    "reason": "Found security vulnerability sonatype-2020-0201 with severity >= 4 (severity = 4.8)",
+                                                    "reference": {
+                                                        "type": "SECURITY_VULNERABILITY_REFID",
+                                                        "value": "sonatype-2020-0201"
+                                                    }
+                                                },
+                                                {
+                                                    "reason": "Found security vulnerability sonatype-2020-0201 with severity < 7 (severity = 4.8)",
+                                                    "reference": {
+                                                        "type": "SECURITY_VULNERABILITY_REFID",
+                                                        "value": "sonatype-2020-0201"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "policyWaiver": {
+                                        "policyWaiverId": "6b6ac61be23b4e6594b613470a301900",
+                                        "comment": "This has been mitigated in https://github.com/example/application/pull/5",
+                                        "createTime": "2022-01-25T10:55:55.444+0000",
+                                        "isObsolete": false,
+                                        "scopeOwnerType": "application",
+                                        "scopeOwnerId": "43b8a9abf99b4f73bfd9dda174cbbd4a",
+                                        "scopeOwnerName": "name_1",
+                                        "hash": "9a13d5432660af5b5760",
+                                        "policyId": "40271a9268624bf9ba6ea6a8ae85df2b",
+                                        "vulnerabilityId": "sonatype-2020-0201",
+                                        "creatorId": null,
+                                        "creatorName": null
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "repositoryWaivers": [
+        {
+            "repository": {
+                "repositoryId": "829860e7f4d14a8888561472b8977ce3",
+                "publicId": "PyPi_proxy",
+                "format": "pypi"
+            },
+            "stages": [
+                {
+                    "stageId": "proxy",
+                    "componentPolicyViolations": [
+                        {
+                            "component": {
+                                "packageUrl": "pkg:pypi/django@1.6?extension=whl&qualifier=py2.py3-none-any",
+                                "hash": "d045feb089e591346ad0",
+                                "componentIdentifier": {
+                                    "format": "pypi",
+                                    "coordinates": {
+                                        "extension": "whl",
+                                        "name": "Django",
+                                        "qualifier": "py2.py3-none-any",
+                                        "version": "1.6"
+                                    }
+                                },
+                                "displayName": "Django (py2.py3-none-any) 1.6 (.whl)"
+                            },
+                            "waivedPolicyViolations": [
+                                {
+                                    "policyId": "40271a9268624bf9ba6ea6a8ae85df2b",
+                                    "policyName": "Security-Medium",
+                                    "policyViolationId": "7a684aada09a4b0ba431a6701be049ad",
+                                    "threatLevel": 7,
+                                    "constraintViolations": [
+                                        {
+                                            "constraintId": "3fedf3a95068478a9a671c6dd89b278c",
+                                            "constraintName": "Medium risk CVSS score",
+                                            "reasons": [
+                                                {
+                                                    "reason": "Found security vulnerability CVE-2014-0472 with severity >= 4 (severity = 5.1)",
+                                                    "reference": {
+                                                        "type": "SECURITY_VULNERABILITY_REFID",
+                                                        "value": "CVE-2014-0472"
+                                                    }
+                                                },
+                                                {
+                                                    "reason": "Found security vulnerability CVE-2014-0472 with severity < 7 (severity = 5.1)",
+                                                    "reference": {
+                                                        "type": "SECURITY_VULNERABILITY_REFID",
+                                                        "value": "CVE-2014-0472"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "policyWaiver": {
+                                        "policyWaiverId": "6addd348e8dd458fb92224cbec988869",
+                                        "isObsolete": false,
+                                        "scopeOwnerType": "repository",
+                                        "scopeOwnerId": "829860e7f4d14a8888561472b8977ce3",
+                                        "scopeOwnerName": "PyPi_proxy",
+                                        "hash": "d045feb089e591346ad0",
+                                        "policyId": "40271a9268624bf9ba6ea6a8ae85df2b",
+                                        "vulnerabilityId": "CVE-2014-0472",
+                                        "creatorId": "admin",
+                                        "creatorName": "Admin BuiltIn"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

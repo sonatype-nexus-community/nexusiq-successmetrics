@@ -1,0 +1,36 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "com.palantir.docker" version "0.22.1"
+    id "io.freefair.lombok" version "6.3.0"
+ }
+
+group = 'org.sonatype.cs'
+sourceCompatibility = '1.8'
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation ('org.springframework.boot:spring-boot-starter-data-jpa')
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'com.h2database:h2:2.0.202'
+  	implementation 'org.webjars:jquery:3.5.1'
+	implementation 'org.webjars:bootstrap:4.5.0'
+	implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
+	implementation 'org.xhtmlrenderer:flying-saucer-pdf-openpdf:9.1.20'
+	implementation 'org.apache.commons:commons-csv:1.5'
+	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+    implementation 'commons-codec:commons-codec:1.10'
+    implementation 'commons-io:commons-io:2.11.0'
+	implementation 'org.json:json:20210307'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'com.opencsv:opencsv:5.6'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+	testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
+	testImplementation("com.approvaltests:approvaltests:12.4.1")
+}
