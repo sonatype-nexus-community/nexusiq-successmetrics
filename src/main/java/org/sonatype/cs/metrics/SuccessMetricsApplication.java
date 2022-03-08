@@ -104,29 +104,14 @@ public class SuccessMetricsApplication implements CommandLineRunner {
     }
 
     private void createDataFiles() throws IOException, ParseException {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/main
         // case "pdf":
         String html = pdfService.parsePdfTemplate(pdfTemplate, doAnalysis);
-        pdfService.generatePdfFromHtml(html, getTimestamp());
+        pdfService.generatePdfFromHtml(html, gettimestamp());
 
-<<<<<<< HEAD
         //case "insights":
-        analysisService.writeInsightsAnalysisData(getTimestamp());
+        analysisService.writeInsightsAnalysisData(gettimestamp());
 
         //csv data extract
-        dataExtractService.writeDataExtract(getTimestamp());
-    }
-
-    public String getTimestamp() {
-        return DateTimeFormatter.ofPattern("ddMMyy_HHmm")
-                .format(LocalDateTime.now(ZoneId.systemDefault()));
-=======
-        // case "insights":
-        analysisService.writeInsightsAnalysisData(timestamp);
->>>>>>> origin/main
+        dataExtractService.writeDataExtract(gettimestamp());
     }
 }
