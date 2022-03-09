@@ -1,4 +1,5 @@
-# Success Metrics Application for IQ Server ![Coverage](.github/badges/jacoco.svg)
+![Coverage](.github/badges/jacoco.svg)
+# Success Metrics Application for IQ Server
 
 IQ Server has a number of REST APIs, one of which is the [Success Metrics REST API](https://help.sonatype.com/iqserver/automating/rest-apis/success-metrics-data-rest-api---v2) which retuns policy evaluation, violation and remediation data in csv or JSON format. The Customer Success team at Sonatype have created this Success Metrics Application to give a better visual representation of the aggregated data. This provides you with outcome-based metrics which can be measured over a period of time and help drive desired behvaiour change towards agreed goals.
 
@@ -18,7 +19,7 @@ unzip successmetrics-[releasenumber].zip
 cd successmetrics-[releasenumber]
 ```
 
-# Extract Metrics from the IQ Server REST API
+# 1. Extract Metrics from the IQ Server REST API
 
 To use the Success Metrics application you must first have an extract of raw success metric data from your IQ Server by using the [Success Metrics REST API](https://help.sonatype.com/iqserver/automating/rest-apis/success-metrics-data-rest-api---v2). To help with this we have included a **create-data** script in the root directory which will retrieve success metric data from your IQ Server.
 
@@ -84,90 +85,70 @@ Example (Windows):  create-data.bat http://localhost:8070 admin admin123 monthly
 The resulting data files will be created within the *successmetrics-[releasenumber]/reports2/* directory, these will be used by the success metrics application when it starts up.
 
 
+# 2. Run the Success Metrics Application
 
+The Success Metrics application is a Java application which can be run from the command line, via our shell wrapper script or inside a Docker Container using our Docker image. 
 
+There are two modes to the application;
+1. Web mode (interactive)
+2. Data extract mode (non-interactive)
 
+The application mode should be set in the `./successmetrics-[releasenumber]/application.properties`
 
+```
+spring.profiles.active=web
+```
+```
+spring.profiles.active=data
+```
 
+### Web Mode
+This mode will start up the Web UI for the Success Metrics application on the localhost http://localhost:4040
 
+The Web UI will display the provided success metrics through various charts.
 
+### Data Extract Mode
+The Success Metrics application will perform calculations on the provided metrics, output files representing this and then close. Three output files can then be found in the `./successmetrics-[releasenumber]/output` directory.
+* Metrics Summary pdf
+* Insights csv
+* Data Extract csv
 
-# Run the Success Metrics Application
-
-The Success Metrics application is a Java application which can be run from the command line, via our shell wrapper script or using our Docker image. 
-
-It is a simple web app running by default on port 4040 allowing you to view all the metrics and charts for your metrics extract. The metrics extracts are loaded on start-up of the app and large extracts can sometime take longer to load.
-
-When the Success Metrics application starts there must be a **successmetrics.csv** present containing the data you wish to process, see the previous section of this readme for more details on this.
+### Prerequisites 
+When the Success Metrics application starts there must be a `successmetrics.csv` present containing the data you wish to process, see the previous section of this readme for more details on this.
 
 ## OPTION A - Start using the shell wrapper script
 
-Run one of the following commands from the working directory `./successmetrics-[releasenumber]/`
+Execute the `runapp.bat` script from the working directory `./successmetrics-[releasenumber]/`
 
 ```
 Windows: runapp.bat
 Linux: sh runapp.bat
 ```
-This will start up the Success Metrics application and provided this is successful you will see the following stdout:
-```
-2020-10-19 20:49:01.271  INFO 93369 --- [  restartedMain] o.s.cs.metrics.service.FileService       : Data loaded.
-2020-10-19 20:49:01.271  INFO 93369 --- [  restartedMain] o.s.cs.metrics.runner.StartupRunner      : Ready for browsing at http://localhost:4040
-```
-
-Open a browser and navigate to http://localhost:4040
-
+Depending on which run mode you selected you will then have either a webserver running or data extract output into the output directory.
 
 ## OPTION B - Start using the Docker Image
 
-There is one step required before running the application. This is to set a few runtime properties in the properties file. Once the properties are set, the application is ready to run.
-
-Set the following mandatory properties in the *application.properties* file
-
-* iq.sm.csvfile=true
-* iq.url = your IQ server's IP address or URL:8070
-* iq.user = username of account with access to data in scope
-* iq.pwd = password of account with access to data in scope
-* iq.sm.period = month or week (strongly recommended month)
-* iq.api.payload.timeperiod.first = 2020-01 (for example, or 2020-W01 for week format)
-
+Set the following mandatory properties in the `./successmetrics-[releasenumber]/application.properties` file:
+```
+iq.sm.csvfile = true
+iq.url = your IQ server's IP address or URL:8070
+iq.user = username of account with access to data in scope
+iq.pwd = password of account with access to data in scope
+iq.sm.period = month or week (month is recommended for large time periods)
+iq.api.payload.timeperiod.first = yyyy-mm or yyyy-ww (eg. 2021-01 for the first month or week of 2021)
+```
 The following properties are optional:
-
-* iq.api.payload.timeperiod.last
-* iq.api.payload.organisation.name
-* iq.api.payload.application.name
-
+```
+iq.api.payload.timeperiod.last
+iq.api.payload.organisation.name
+iq.api.payload.application.name
+```
 To run the app, in the working directory
 
 ```
 Windows: runapp-docker.bat
 Linux: sh runapp-docker.sh
 ```
-
-### Setting runtime properties *application.properties*
-
-There are a number of properties that can be set to control how the application will run. These properties are set in a file called *application.properties*. The file is located in the *config* directory of the working directory. A full description of each property is provided in the file.
-
-If you are running the application jar file directly (Option A), it is not required to change any properties to run the application. Without any changes, the application will run in web mode in the current directory (ie. the directory in which the zip file is extracted) as the working directory.
-
-The most important default settings are as follows:
-
-####  spring.profiles.active
-default: web - other values: data
-
-#### data.dir
-default: '.' (ie. current directory)
-
-If you are running with the docker image (Option B), there are some mandatory property settings required (see below)
-
-
-#### pdf
-
-You may wish to just simply create a pdf file containing the summary metrics report. A pdf report file is created in a sub-directory of the working directory with a time-stamped file name. The application will then immediately exit after creating the pdf file.
-
-#### insights
-
-In this mode, the application will simply create a CSV file containing the data required in order to create an Insights Analysis report. The CSV  file is created in a sub-directory in the working directory with a time-stamped file name. The application will then immediately exit after creating the file.
-
 
 
 # Development
@@ -176,8 +157,10 @@ Should you wish to edit the source code:
 
   * We strongly recommend the use of git flow http://danielkummer.github.io/git-flow-cheatsheet/ to make and manage any changes
   * Clone the repository
+  * Branch
   * Make your changes
-  * At the command line in the root directory of the repo
+  * Build and Test
+  * Create a PR to merge changes back to the main
 
 ```
 To test:
@@ -201,17 +184,15 @@ gh release create [releasenumber]
 ![image](https://user-images.githubusercontent.com/35227270/141003665-fb2fc00e-6784-4e56-af6f-6c75e2d9d397.png)
 
 # The Fine Print
-* We recommend running it for 4 weeks of data at a time and for sets of orgs instead of the full scope if you have a large dataset.
+For large datasets we recommend running extracts for small periods of time and for sets of organisations instead of the full system.
 
-* This application is NOT SUPPORTED by Sonatype, and is a contribution of ours to the open source community (read: you!)
+This application is NOT SUPPORTED by Sonatype, and is a contribution of ours to the open source community (read: you!)
 
-* Don't worry, using this community item does not "void your warranty". In a worst case scenario, you may be asked by the Sonatype Support team to remove the community item in order to determine the root cause of any issues.
+Don't worry, using this community item does not "void your warranty". In a worst case scenario, you may be asked by the Sonatype Support team to remove the community item in order to determine the root cause of any issues.
 
-* Remember:
+Please remember:
 
 * Use this contribution at the risk tolerance that you have
 * Do NOT file Sonatype support tickets related to iq-success-metrics
 * DO file issues here on GitHub, so that the community can pitch in
-* Phew, that was easier than I thought. Last but not least of all:
-
-* Have fun creating and using this application and the Nexus platform, we are glad to have you here!
+* Phew, that was easier than I thought. Last but not least of all, have fun creating and using this application and the Nexus platform, we are glad to have you here!
