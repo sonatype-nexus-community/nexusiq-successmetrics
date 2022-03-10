@@ -3,6 +3,7 @@ package org.sonatype.cs.metrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.service.InsightsAnalysisService;
+import org.sonatype.cs.metrics.service.DataExtractService;
 import org.sonatype.cs.metrics.service.LoaderService;
 import org.sonatype.cs.metrics.service.SummaryPdfService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,8 @@ public class SuccessMetricsApplication implements CommandLineRunner {
     @Autowired private SummaryPdfService pdfService;
 
     @Autowired private InsightsAnalysisService analysisService;
+
+    @Autowired private DataExtractService dataExtractService;
 
     private boolean doAnalysis = true;
 
@@ -103,9 +106,12 @@ public class SuccessMetricsApplication implements CommandLineRunner {
     private void createDataFiles() throws IOException, ParseException {
         // case "pdf":
         String html = pdfService.parsePdfTemplate(pdfTemplate, doAnalysis);
-        pdfService.generatePdfFromHtml(html, timestamp);
+        pdfService.generatePdfFromHtml(html, gettimestamp());
 
-        // case "insights":
-        analysisService.writeInsightsAnalysisData(timestamp);
+        //case "insights":
+        analysisService.writeInsightsAnalysisData(gettimestamp());
+
+        //csv data extract
+        dataExtractService.writeDataExtract(gettimestamp());
     }
 }
