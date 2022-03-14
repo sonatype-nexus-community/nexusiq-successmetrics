@@ -1,0 +1,25 @@
+{
+    "reasons": [
+        {
+            "reason": "Found security vulnerability CVE-2021-43466 with severity >= 9 (severity = 9.8)",
+            "reference": {
+                "type": "SECURITY_VULNERABILITY_REFID",
+                "value": "CVE-2021-43466"
+            }
+        },
+        {
+            "reason": "Found security vulnerability CVE-2016-1000027 with severity >= 9 (severity = 9.8)",
+            "reference": {
+                "type": "SECURITY_VULNERABILITY_REFID",
+                "value": "CVE-2016-1000027"
+            }
+        },
+        {
+            "reason": "Found security vulnerability CVE-2016-1000027 with severity >= 9 (severity = 9.8) duplicate",
+            "reference": {
+                "type": "SECURITY_VULNERABILITY_REFID",
+                "value": "CVE-2016-1000027"
+            }
+        }
+    ]
+}

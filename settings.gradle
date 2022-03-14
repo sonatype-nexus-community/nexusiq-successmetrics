@@ -1,1 +1,3 @@
 rootProject.name = 'successmetrics'
+include 'view-metrics'
+include 'get-metrics'

@@ -1,0 +1,84 @@
+{
+    "total": 2,
+    "page": 1,
+    "pageSize": 10,
+    "pageCount": 1,
+    "results": [
+        {
+            "displayName": "1_test : 0.0.0",
+            "repository": "npm_proxy",
+            "quarantineDate": "2021-03-24T17:36:34.612+0000",
+            "dateCleared": "2021-03-24T18:53:45.588+0000",
+            "quarantinePolicyViolations": [
+                {
+                    "policyId": "384b7857d9b5424d91e00a0b945e3ec8",
+                    "policyName": "Integrity-Rating",
+                    "policyViolationId": "974d9e6cd7924ecdb622f9f7cef47510",
+                    "threatLevel": 9,
+                    "constraintViolations": [
+                        {
+                            "constraintId": "f03a3a2abdf94703a019e37b8c5cdc16",
+                            "constraintName": "Suspicious integrity rating",
+                            "reasons": [
+                                {
+                                    "reason": "Integrity Rating was Suspicious",
+                                    "reference": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "componentIdentifier": {
+                "format": "npm",
+                "coordinates": {
+                    "packageId": "1_test",
+                    "version": "0.0.0"
+                }
+            },
+            "pathname": "1_test/-/1_test-0.0.0.tgz",
+            "hash": "2cfd634fae225311e3b6",
+            "matchState": "exact",
+            "repositoryId": "298bf707fd4f4323b7a0200b8dddd201",
+            "quarantined": false
+        },
+        {
+            "displayName": "rc-util : 5.9.5",
+            "repository": "npm_proxy",
+            "quarantineDate": "2021-03-24T14:45:02.567+0000",
+            "dateCleared": "2021-03-24T18:53:46.115+0000",
+            "quarantinePolicyViolations": [
+                {
+                    "policyId": "384b7857d9b5424d91e00a0b945e3ec8",
+                    "policyName": "Integrity-Rating",
+                    "policyViolationId": "974d9e6cd7924ecdb622f9f7cef47510",
+                    "threatLevel": 9,
+                    "constraintViolations": [
+                        {
+                            "constraintId": "f03a3a2abdf94703a019e37b8c5cdc16",
+                            "constraintName": "Suspicious integrity rating",
+                            "reasons": [
+                                {
+                                    "reason": "Integrity Rating was Suspicious",
+                                    "reference": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "componentIdentifier": {
+                "format": "npm",
+                "coordinates": {
+                    "packageId": "rc-util",
+                    "version": "1.2.0"
+                }
+            },
+            "pathname": "rc-util/-/rc-util-5.9.5.tgz",
+            "hash": "b3e3c46f8a404334a2b3a5633d4f0be7",
+            "matchState": "exact",
+            "repositoryId": "298bf707fd4f4323b7a0200b8dddd201",
+            "quarantined": false
+        }
+    ]
+}

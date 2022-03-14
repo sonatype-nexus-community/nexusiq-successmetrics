@@ -1,0 +1,94 @@
+{
+    "applicationViolations": [
+        {
+            "application": {
+                "id": "21ff23ee28ff4ec995de4f1e5b02a2fb",
+                "publicId": "WebGoat",
+                "name": "WebGoat",
+                "organizationId": "df0d95dc5d0b483988beb90f20440d72",
+                "contactUserName": null
+            },
+            "policyViolations": [
+                {
+                    "policyId": "26c36821604541f8848a6ae6889956b7",
+                    "policyName": "MIT license",
+                    "policyViolationId": "82db9ee5a007433795585a5793cc0aac",
+                    "threatLevel": 7,
+                    "constraintViolations": [
+                        {
+                            "constraintId": "eec97815c2784006a2ece5cb65ea271a",
+                            "constraintName": "MIT License",
+                            "reasons": [
+                                {
+                                    "reason": "Found 'MIT' license",
+                                    "reference": null
+                                }
+                            ]
+                        }
+                    ],
+                    "stageId": "build",
+                    "reportId": "27840c6b986c451e8806e1d0b8ef2787",
+                    "reportUrl": "ui/links/application/WebGoat/report/27840c6b986c451e8806e1d0b8ef2787",
+                    "openTime": "2022-02-15T10:11:04.055+0000",
+                    "component": {
+                        "packageUrl": "pkg:maven/org.projectlombok/lombok@1.18.20?type=jar",
+                        "hash": "18bcea7d5df4d49227b4",
+                        "componentIdentifier": {
+                            "format": "maven",
+                            "coordinates": {
+                                "artifactId": "lombok",
+                                "classifier": "",
+                                "extension": "jar",
+                                "groupId": "org.projectlombok",
+                                "version": "1.18.20"
+                            }
+                        },
+                        "displayName": "org.projectlombok : lombok : 1.18.20",
+                        "proprietary": false
+                    }
+                },
+                {
+                    "policyId": "cb45df68438d46cabf4e641dd267b903",
+                    "policyName": "Security-Critical",
+                    "policyViolationId": "90a059dff40c4054853d9203697eff96",
+                    "threatLevel": 10,
+                    "constraintViolations": [
+                        {
+                            "constraintId": "b488fbdb844f4600a3adc1052aae781e",
+                            "constraintName": "Critical risk CVSS score",
+                            "reasons": [
+                                {
+                                    "reason": "Found security vulnerability CVE-2021-21346 with severity >= 9 (severity = 9.8)",
+                                    "reference": {
+                                        "type": "SECURITY_VULNERABILITY_REFID",
+                                        "value": "CVE-2021-21346"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "stageId": "build",
+                    "reportId": "27840c6b986c451e8806e1d0b8ef2787",
+                    "reportUrl": "ui/links/application/WebGoat/report/27840c6b986c451e8806e1d0b8ef2787",
+                    "openTime": "2022-02-14T15:00:33.236+0000",
+                    "component": {
+                        "packageUrl": "pkg:maven/com.thoughtworks.xstream/xstream@1.4.5?type=jar",
+                        "hash": "61c0a127b237182fdf2c",
+                        "componentIdentifier": {
+                            "format": "maven",
+                            "coordinates": {
+                                "artifactId": "xstream",
+                                "classifier": "",
+                                "extension": "jar",
+                                "groupId": "com.thoughtworks.xstream",
+                                "version": "1.4.5"
+                            }
+                        },
+                        "displayName": "com.thoughtworks.xstream : xstream : 1.4.5",
+                        "proprietary": false
+                    }
+                }
+           ]
+        }
+    ]
+}

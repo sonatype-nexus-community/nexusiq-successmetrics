@@ -37,9 +37,12 @@ success-metrics
 *.csv
 ./*.json
 bin/*
+view-metrics/bin/*
+get-metrics/bin/*
 datafiles
 *.json
 output/
+nexusiq-successmetrics-*/
 
 .DS_Store
 successmetrics-reports/
@@ -183,4 +186,5 @@ dmypy.json
 datafiles
 iqmetrics
 
-!src/test/resources/**
+!get-metrics/src/test/java/org/sonatype/cs/getmetrics/resources/**
+!view-metrics/src/test/resources

@@ -1,189 +1,193 @@
-![Coverage](.github/badges/jacoco.svg)
 # Success Metrics Application for IQ Server
 
-IQ Server has a number of REST APIs, one of which is the [Success Metrics REST API](https://help.sonatype.com/iqserver/automating/rest-apis/success-metrics-data-rest-api---v2) which retuns policy evaluation, violation and remediation data in csv or JSON format. The Customer Success team at Sonatype have created this Success Metrics Application to give a better visual representation of the aggregated data. This provides you with outcome-based metrics which can be measured over a period of time and help drive desired behvaiour change towards agreed goals.
+![Coverage](.github/badges/jacoco.svg)
+
+IQ Server has a number of REST APIs which can be used to extract policy evaluation, violation and remediation data. The Success Metrics get-metrics application extracts common metrics using this API and the view-metrics application aggregates the data into web or text reports.
 
 Using the Success Metrics application is a two step process:
-1. Extract metrics from IQ server via REST API
-2. Run the Success Metrics application against the success metrics csv
 
-# Installation
+1. Extract metrics from IQ server via REST API (get-metrics)
+2. Run the Success Metrics application against the success metrics csv (view-metrics)
 
-  * From the Releases pane on the right side of this page select the latest release
-  * Click on the *successmetrics-[releasenumber].zip* file on the assets page to download and save to your machine
-  * Unzip the contents into a directory of your choice
-  * Navigate to the *successmetrics-[releasenumber]* directory (this will be your working directory)
+## Installation
 
-```
-unzip successmetrics-[releasenumber].zip
-cd successmetrics-[releasenumber]
-```
+1. From the Releases pane on the right side of this page select the latest release
+1. Click on the *successmetrics-[releasenumber].zip* file on the assets page to download and save to your machine
+1. Unzip the contents into a directory of your choice
 
-# 1. Extract Metrics from the IQ Server REST API
+   ```bash
+   unzip successmetrics-[releasenumber].zip
+   ```
 
-To use the Success Metrics application you must first have an extract of raw success metric data from your IQ Server by using the [Success Metrics REST API](https://help.sonatype.com/iqserver/automating/rest-apis/success-metrics-data-rest-api---v2). To help with this we have included a **create-data** script in the root directory which will retrieve success metric data from your IQ Server.
+1. Navigate to the *successmetrics-[releasenumber]* directory (this will be the working directory for the rest of the commands given in this README)
 
-## Configure Metrics Extract Time Periods
+   ```bash
+   cd successmetrics-[releasenumber.zip]
+   ```
 
-The [Success Metrics REST API](https://help.sonatype.com/iqserver/automating/rest-apis/success-metrics-data-rest-api---v2) requires a JSON payload request body containing values related to the time period (weekly or monthly) and the start and end dates of the data you wish to extract. You will find two examples in the root *successmetrics-[releasenumber]* directory called *monthly.json* and *weekly.json*.
+## Fetch metrics from the IQ Server (get-metrics)
 
- * Edit either the included *monthly.json* or *weekly.json* file to adjust the firstTimePeriod (the week or month to start reporting from) and optionally add an end period
+The get-metrics script extract metrics from an IQ server and stores the result in the `./nexusiq` directory.
 
- Example: the following request body will fetch data for all organisations and applications between Jan 2020 and Sept 2021 on a monthly basis:
- ``` 
- {
-  "timePeriod": "MONTH",
-  "firstTimePeriod": "2020-01",
-  "lastTimePeriod": "2021-09",
-  "applicationIds": [],
-  "organizationIds": []
- }
- ```
+get-metrics can be executed using a [Java 1.8 jar](#running-get-metrics-using-java) or [Docker image](#running-get-metrics-using-docker).
 
-### Please Note:
+:warning: For large installations/datasets, the extract should be limited to a shorter period (e.g. previous 6 months or weeks) or subset of organisations and/or applications.
 
- * For large installations/datasets, we recommend limiting the extract to a smaller period (e.g. previous 6 months or weeks) or subset of organisations and/or applications. For information on how to include specific application or organization IDs please see the [Success Metrics REST API](https://help.sonatype.com/iqserver/automating/rest-apis/success-metrics-data-rest-api---v2) page for more details.
+### Get-Metrics Configuration
 
- * A minimum of three data points (weeks or months) are needed to display graphs in the Success Metrics web UI. 
- 
- * Only fully completed months (or weeks) are included in the data extract, so in the example above, the script will collect monthly data from January 2020 until September 2021 if the extract had been executed from October 2021 onwards.
+The configuration for get-metrics is stored in `./get-metrics/config/application.properties`.
 
-## Run the Metrics Extract
+#### Metrics
 
-The following **create-data** script will create a file called **successmetrics.csv** in the root *successmetrics-[releasenumber]* directory, this will be consumed by the success metrics application upon startup. We suggest opening the file to ensure it contains metrics data as expected once the script has completed.
+To fetch associated metrics from Nexus IQ the following properties may be set to true.
 
-```
-Windows: create-data.bat <iq-host-url> <iq-username> <iq-password> <time-period-json>
-Linux: create-data.sh <iq-host-url> <iq-username> <iq-password> <time-period-json>
-
-iq-host-url - your Nexus IQ URL (note: do not add a trailing forward slash)
-iq-username - your Nexus IQ user name (for data on all applications use an ID with the 'Policy Administrator' role)
-iq-password - your Nexus IQ password
-time-period-json - weekly.json or monthly.json (see the section above for more information)
-
-Example (Windows):  create-data.bat http://localhost:8070 admin admin123 monthly.json
+```text
+metrics.successmetrics
+metrics.applicationsevaluations
+metrics.waivers
+metrics.policyviolations
+metrics.firewall
 ```
 
-### (Optional) Additional Metrics
+:warning: success-metrics should always be set to true.
 
-For more advanced metrics on Quarantined components (Nexus Reposository v3 & Nexus Firewall required), Waivers and Application last scan dates we have Python scripts which utilise additional REST APIs to aggregate more data. The additional metrics can be created by executing the **create-data** script within the directory *successmetrics-[releasenumber]/reports2/*
+#### Nexus IQ server details
 
-Please note: Python3 is required
+These parameters should be updated with the details of the Nexus IQ instance.
 
-```
-cd reports2
-Windows: create-data.bat <iq-host-url> <iq-username> <iq-password>
-Linux: create-data.sh <iq-host-url> <iq-username> <iq-password>
-
-iq-host-url - your Nexus IQ URL (note: do not add a trailing forward slash)
-iq-username - your Nexus IQ user name (for data on all applications use an ID with the 'Policy Administrator' role)
-iq-password - your Nexus IQ password
-
-Example (Windows):  create-data.bat http://localhost:8070 admin admin123 monthly.json
+```bash
+iq.url
+iq.user
+iq.passwd
 ```
 
-The resulting data files will be created within the *successmetrics-[releasenumber]/reports2/* directory, these will be used by the success metrics application when it starts up.
+:warning: iq.url should have no trailing `/` character.
 
+:warning: If you are using the get-metrics Docker image on the Nexus IQ machine then you cannot use `127.0.0.1` in the iq.url. You should instead use `host.docker.internal`.
 
-# 2. Run the Success Metrics Application
+#### Time period for which data should be fetched
 
-The Success Metrics application is a Java application which can be run from the command line, via our shell wrapper script or inside a Docker Container using our Docker image. 
+Data may be collected in monthly or weekly periods by setting the `iq.api.sm.period` to either `month` or `week`.
 
-There are two modes to the application;
+The first period that we should collect data from is controlled by the `iq.api.sm.payload.timeperiod.first` parameter. *This is a mandatory parameter*. The format of this parameter is `2022-01` if `iq.api.sm.period` is set to month or `2022-W01` if `iq.api.sm.period` is set to `week`.
+
+The last period that we should collect data from is controlled by the `iq.api.sm.payload.timeperiod.last` parameter. This is an optional parameter. The format of this parameter is `2022-04` if `iq.api.sm.period` is set to month or `2022-W04` if `iq.api.sm.period` is set to `week`.
+
+#### Limit extracted data to given organisations or applications
+
+To limit data extraction by organisation set  `iq.api.sm.payload.organisation.name` to a  list of comma separated organisation names. This is an optional parameter.
+
+To limit data extraction by application set  `iq.api.sm.payload.application.name` to a  list of comma separated application names. This is an optional parameter.
+
+If neither of these parameters are set then all organisations and applications will be fetched from Nexus IQ.
+
+If both of these parameter are set then the organistaion setting will be used and application setting will be ignored.
+
+### Running get-metrics using Java
+
+#### Get-metrics using Java on Linux/Mac machines
+
+```bash
+cd get-metrics
+sh runapp.bat
+```
+
+#### Get-metrics using Java on Windows machines
+
+```dos
+cd get-metrics
+runapp.bat
+```
+
+### Running get-metrics using Docker
+
+:warning: You must be in the get-metrics directory for the runapp-docker script to work.
+
+#### Get-metrics using Docker on Linux/Mac machines
+
+```bash
+cd get-metrics
+sh runapp-docker.sh
+```
+
+#### Get-metrics using Docker on Windows machines
+
+```dos
+cd get-metrics
+runapp-docker.bat
+```
+
+## view-metrics
+
+There are two modes to the application.
+
 1. Web mode (interactive)
 2. Data extract mode (non-interactive)
 
-The application mode should be set in the `./successmetrics-[releasenumber]/application.properties`
+The view-metrics script processes metrics stored in the `./nexusiq` directory and presents them as detailed aggregated charts in a web view or in data files in the `./datafiles` directory.
 
-```
-spring.profiles.active=web
-```
-```
-spring.profiles.active=data
+:warning: There must be a `successmetrics.csv` in the `./iqmetrics` directory.
+
+:warning: In order to aggregate and process metrics a minimum of three data points (weeks or months) are needed.
+
+:warning: Only fully completed months (or weeks) are included in the data extract.
+
+### View-metrics configuration
+
+View-metrics configuration is stored in the `./successmetrics-[releasenumber]/view-metrics/application.properties` file.
+
+To configure which mode the view-metrics application should run in set the `spring.profiles.active` parameter to `web` for web (interactive) mode or `data` for data extract (non-interactive) mode.
+
+## Running the view-metrics application
+
+### Running view-metrics using Java
+
+#### View-metrics using Java on Linux/Mac machines
+
+```bash
+cd view-metrics
+sh runapp.bat
 ```
 
-### Web Mode
-This mode will start up the Web UI for the Success Metrics application on the localhost http://localhost:4040
+#### View-metrics using Java on Windows machines
 
-The Web UI will display the provided success metrics through various charts.
+```dos
+cd view-metrics
+runapp.bat
+```
 
-### Data Extract Mode
+### Running view-metrics using Docker
+
+:warning: You must be in the get-metrics directory for the runapp-docker script to work.
+
+#### View-metrics using Docker on Linux/Mac machines
+
+```bash
+cd view-metrics
+sh runapp-docker.sh
+```
+
+#### View-metrics using Docker on Windows machines
+
+```dos
+cd view-metrics
+runapp-docker.bat
+```
+
+### Web (interactive) mode
+
+When running in this mode a web UI for the Success Metrics application is available on the localhost <http://localhost:4040>
+
+### Produce high level reports based on the downloaded metrics data
+
 The Success Metrics application will perform calculations on the provided metrics, output files representing this and then close. Three output files can then be found in the `./successmetrics-[releasenumber]/output` directory.
-* Metrics Summary pdf
-* Insights csv
-* Data Extract csv
 
-### Prerequisites 
-When the Success Metrics application starts there must be a `successmetrics.csv` present containing the data you wish to process, see the previous section of this readme for more details on this.
+1. Metrics Summary pdf
+2. Insights csv
+3. Data Extract csv
 
-## OPTION A - Start using the shell wrapper script
+## The Fine Print
 
-Execute the `runapp.bat` script from the working directory `./successmetrics-[releasenumber]/`
-
-```
-Windows: runapp.bat
-Linux: sh runapp.bat
-```
-Depending on which run mode you selected you will then have either a webserver running or data extract output into the output directory.
-
-## OPTION B - Start using the Docker Image
-
-Set the following mandatory properties in the `./successmetrics-[releasenumber]/application.properties` file:
-```
-iq.sm.csvfile = true
-iq.url = your IQ server's IP address or URL:8070
-iq.user = username of account with access to data in scope
-iq.pwd = password of account with access to data in scope
-iq.sm.period = month or week (month is recommended for large time periods)
-iq.api.payload.timeperiod.first = yyyy-mm or yyyy-ww (eg. 2021-01 for the first month or week of 2021)
-```
-The following properties are optional:
-```
-iq.api.payload.timeperiod.last
-iq.api.payload.organisation.name
-iq.api.payload.application.name
-```
-To run the app, in the working directory
-
-```
-Windows: runapp-docker.bat
-Linux: sh runapp-docker.sh
-```
-
-
-# Development
-
-Should you wish to edit the source code:
-
-  * We strongly recommend the use of git flow http://danielkummer.github.io/git-flow-cheatsheet/ to make and manage any changes
-  * Clone the repository
-  * Branch
-  * Make your changes
-  * Build and Test
-  * Create a PR to merge changes back to the main
-
-```
-To test:
-./gradlew bootRun
-
-To build:
-gradle clean build
-
-To run:
-java -jar success-metrics-<version>.jar
-
-To scan with Nexus IQ:
- - first of all, edit the build.gradle file to configure your Nexus IQ url/username as well as your application name, then add the task to the build command above, or run on its own as below:
-
-gradle nexusIQScan
-
-To make a release (using Githib CLI):
-gh release create [releasenumber]
-```
-
-![image](https://user-images.githubusercontent.com/35227270/141003665-fb2fc00e-6784-4e56-af6f-6c75e2d9d397.png)
-
-# The Fine Print
 For large datasets we recommend running extracts for small periods of time and for sets of organisations instead of the full system.
 
 This application is NOT SUPPORTED by Sonatype, and is a contribution of ours to the open source community (read: you!)

@@ -1,0 +1,16 @@
+{
+    "policies": [
+        {
+            "id": "id1",
+            "name": "Security-Critical"
+        },
+        {
+            "id": "id2",
+            "name": "License-Banned"
+        },
+        {
+            "id": "id3",
+            "name": "Unknown"
+        }
+    ]
+}
