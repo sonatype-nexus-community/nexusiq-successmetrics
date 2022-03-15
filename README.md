@@ -61,8 +61,6 @@ iq.user
 iq.passwd
 ```
 
-:warning: iq.url should have no trailing `/` character.
-
 :warning: If you are using the get-metrics Docker image on the Nexus IQ machine then you cannot use `127.0.0.1` in the iq.url. You should instead use `host.docker.internal`.
 
 #### Time period for which data should be fetched

@@ -2,6 +2,7 @@ package org.sonatype.cs.getmetrics.util;
 
 import org.apache.http.HttpException;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.sonatype.cs.getmetrics.service.UtilService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +22,9 @@ public class NexusIqApiConnection {
             String user, String password, String url, String api, String endPoint)
             throws IOException {
         String encodedAuthString = createEncodedAuthString(user, password);
+        if ("/".equals(UtilService.lastChar(url))) {
+            url = UtilService.removeLastChar(url);
+        }
         String urlString = url + api + endPoint;
         return createUrlConnection(urlString, encodedAuthString);
     }
@@ -54,6 +58,9 @@ public class NexusIqApiConnection {
             int page,
             int pageSize)
             throws IOException {
+        if ("/".equals(UtilService.lastChar(url))) {
+            url = UtilService.removeLastChar(url);
+        }
         String urlString =
                 url + api + endPoint + "?" + "page=" + page + "&pageSize=" + pageSize + "&asc=true";
         String encodedAuthString = createEncodedAuthString(user, password);
@@ -68,6 +75,9 @@ public class NexusIqApiConnection {
             String endpoint,
             String apiPayload)
             throws IOException, HttpException {
+        if ("/".equals(UtilService.lastChar(url))) {
+            url = UtilService.removeLastChar(url);
+        }
         HttpURLConnection urlConnection =
                 prepareHttpURLPostForCSV(user, password, url, api, endpoint);
         return executeHttpURLPostForCSV(apiPayload, urlConnection);

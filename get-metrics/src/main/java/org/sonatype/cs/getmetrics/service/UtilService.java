@@ -18,6 +18,10 @@ public class UtilService {
         return (s == null || s.length() == 0) ? null : (s.substring(0, s.length() - 1));
     }
 
+    public static String lastChar(String s) {
+        return s.substring(s.length() - 1);
+    }
+
     public static void writeCsvFile(String filename, List<String[]> data) throws IOException {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filename))) {
             writeCsvDataToBufferedWriter(data, writer);
