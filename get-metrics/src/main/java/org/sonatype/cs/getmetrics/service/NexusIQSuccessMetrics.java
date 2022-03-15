@@ -149,7 +149,9 @@ public class NexusIQSuccessMetrics {
     }
 
     private String getIqData(String endpoint) throws IOException, HttpException {
-
+        if ("/".equals(UtilService.lastChar(iqUrl))) {
+            iqUrl = UtilService.removeLastChar(iqUrl);
+        }
         String url = iqUrl + endpoint;
         log.info("Fetching data from: {}", url);
 

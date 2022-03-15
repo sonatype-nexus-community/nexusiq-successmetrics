@@ -18,6 +18,10 @@ public class UtilServiceTest {
         Assertions.assertEquals(null, UtilService.removeLastChar(null));
     }
 
+    void testLastChar() {
+        Assertions.assertEquals("c", UtilService.lastChar("abc"));
+    }
+
     @Test
     void testWriteCsvDataToBufferedWriter() {
         StringWriter stringWriter = new StringWriter();
