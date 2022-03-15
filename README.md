@@ -178,13 +178,13 @@ runapp-docker.bat
 
 When running in this mode a web UI for the Success Metrics application is available on the localhost <http://localhost:4040>
 
-### Produce high level reports based on the downloaded metrics data
+### Data extract (non-interactive) mode
 
 The Success Metrics application will perform calculations on the provided metrics, output files representing this and then close. Three output files can then be found in the `./successmetrics-[releasenumber]/output` directory.
 
-1. Metrics Summary pdf
-2. Insights csv
-3. Data Extract csv
+1. Metrics Summary PDF
+2. Insights CSV
+3. Data Extract CSV
 
 ## The Fine Print
 
