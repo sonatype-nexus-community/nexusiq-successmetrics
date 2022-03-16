@@ -64,9 +64,9 @@ jobs:
           matrix:
             include:
               - dockerfile: ./get-metrics/Dockerfile
-                image: ghcr.io/richardpanman/nexusiq-successmetrics-get-metrics
+                image: ghcr.io/sonatype-nexus-community/nexusiq-successmetrics-get-metrics
               - dockerfile: ./view-metrics/Dockerfile
-                image: ghcr.io/richardpanman/nexusiq-successmetrics-view-metrics
+                image: ghcr.io/sonatype-nexus-community/nexusiq-successmetrics-view-metrics
         permissions:
           contents: read
           packages: write
