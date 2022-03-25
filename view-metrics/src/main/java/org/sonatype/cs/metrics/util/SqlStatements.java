@@ -327,6 +327,13 @@ public class SqlStatements {
                 + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_CRITICAL))/count(time_period_start)"
                 + " as pointA from <?> group by time_period_start order by 1";
 
+    public static final String RISKRATIOCOMPONENTS =
+            "select time_period_start as label,"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_CRITICAL) as pointA,"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_CRITICAL) as pointB,"
+                    + " count(time_period_start) as pointC "
+                    + " from <?> group by time_period_start order by 1";
+
     public static final String RISKRATIOANALYSIS =
             "select application_name as label,"
                 + " (sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_CRITICAL) +"

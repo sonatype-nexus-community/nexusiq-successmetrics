@@ -188,3 +188,4 @@ iqmetrics
 
 !get-metrics/src/test/java/org/sonatype/cs/getmetrics/resources/**
 !view-metrics/src/test/resources
+view-metrics/src/test/resources/org/sonatype/cs/metrics/*.received.txt

@@ -345,13 +345,13 @@
 
         <div id="riskRatioChart"></div>
         <script>
-            var points = [{"label":"2021-01-01","pointA":52,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-02-01","pointA":52,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-03-01","pointA":53,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-04-01","pointA":53,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-05-01","pointA":53,"pointB":0,"pointC":0,"pointD":0},{"label":"2021-06-01","pointA":53,"pointB":0,"pointC":0,"pointD":0}];
+            var points = [{"label":"2021-01-01","riskRatioValue":52.0},{"label":"2021-02-01","riskRatioValue":52.0},{"label":"2021-03-01","riskRatioValue":53.0},{"label":"2021-04-01","riskRatioValue":53.0},{"label":"2021-05-01","riskRatioValue":53.0},{"label":"2021-06-01","riskRatioValue":53.0}];
 	     	var pdata = [];
 	     	var labels = [];
 
 	     	points.forEach(entry => {
 	            var label = entry.label;
-	            var point = entry.pointA;
+	            var point = entry.riskRatioValue.toFixed(1);
 	            labels.push(label);
 	            pdata.push(point);
 	        });

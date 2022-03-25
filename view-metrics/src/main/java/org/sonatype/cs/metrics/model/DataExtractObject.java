@@ -4,8 +4,19 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvDate;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class DataExtractObject {
 
     @CsvDate(value = "yyyy-MM-dd")
@@ -27,7 +38,7 @@ public class DataExtractObject {
 
     @CsvBindByPosition(position = 4)
     @CsvBindByName(column = "RiskRatioOverall")
-    private int riskRatio;
+    private Double riskRatio;
 
     @CsvBindByPosition(position = 5)
     @CsvBindByName(column = "BacklogRateOverall")
@@ -67,7 +78,7 @@ public class DataExtractObject {
 
     @CsvBindByPosition(position = 14)
     @CsvBindByName(column = "SecurityRiskRatio")
-    private int securityRiskRatio;
+    private Double securityRiskRatio;
 
     @CsvBindByPosition(position = 15)
     @CsvBindByName(column = "SecurityBacklogRate")
@@ -95,7 +106,7 @@ public class DataExtractObject {
 
     @CsvBindByPosition(position = 21)
     @CsvBindByName(column = "LicenseRiskRatio")
-    private int licenseRiskRatio;
+    private Double licenseRiskRatio;
 
     @CsvBindByPosition(position = 22)
     @CsvBindByName(column = "LicenseBacklogRate")
@@ -123,7 +134,7 @@ public class DataExtractObject {
 
     @CsvBindByPosition(position = 28)
     @CsvBindByName(column = "SecurityCriticalRiskRatio")
-    private int securityCriticalRiskRatio;
+    private Double securityCriticalRiskRatio;
 
     @CsvBindByPosition(position = 29)
     @CsvBindByName(column = "SecurityCriticalBacklogRate")
@@ -151,7 +162,7 @@ public class DataExtractObject {
 
     @CsvBindByPosition(position = 35)
     @CsvBindByName(column = "LicenseCriticalRiskRatio")
-    private int licenseCriticalRiskRatio;
+    private Double licenseCriticalRiskRatio;
 
     @CsvBindByPosition(position = 36)
     @CsvBindByName(column = "LicenseCriticalBacklogRate")
@@ -179,7 +190,7 @@ public class DataExtractObject {
 
     @CsvBindByPosition(position = 42)
     @CsvBindByName(column = "SecuritySevereRiskRatio")
-    private int securitySevereRiskRatio;
+    private Double securitySevereRiskRatio;
 
     @CsvBindByPosition(position = 43)
     @CsvBindByName(column = "SecuritySevereBacklogRate")
@@ -207,7 +218,7 @@ public class DataExtractObject {
 
     @CsvBindByPosition(position = 49)
     @CsvBindByName(column = "LicenseSevereRiskRatio")
-    private int licenseSevereRiskRatio;
+    private Double licenseSevereRiskRatio;
 
     @CsvBindByPosition(position = 50)
     @CsvBindByName(column = "LicenseSevereBacklogRate")
@@ -235,7 +246,7 @@ public class DataExtractObject {
 
     @CsvBindByPosition(position = 56)
     @CsvBindByName(column = "SecurityModerateRiskRatio")
-    private int securityModerateRiskRatio;
+    private Double securityModerateRiskRatio;
 
     @CsvBindByPosition(position = 57)
     @CsvBindByName(column = "SecurityModerateBacklogRate")
@@ -263,7 +274,7 @@ public class DataExtractObject {
 
     @CsvBindByPosition(position = 63)
     @CsvBindByName(column = "LicenseModerateRiskRatio")
-    private int licenseModerateRiskRatio;
+    private Double licenseModerateRiskRatio;
 
     @CsvBindByPosition(position = 64)
     @CsvBindByName(column = "LicenseModerateBacklogRate")
@@ -288,564 +299,4 @@ public class DataExtractObject {
     @CsvBindByPosition(position = 69)
     @CsvBindByName(column = "LicenseModerateWaived")
     private int licenseModerateWaived;
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public int getTotalApplicationsOnboard() {
-        return totalApplicationsOnboard;
-    }
-
-    public void setTotalApplicationsOnboard(int totalApplicationsOnboard) {
-        this.totalApplicationsOnboard = totalApplicationsOnboard;
-    }
-
-    public int getTotalScans() {
-        return totalScans;
-    }
-
-    public void setTotalScans(int totalScans) {
-        this.totalScans = totalScans;
-    }
-
-    public int getTotalUniqueApplicationsScaned() {
-        return totalUniqueApplicationsScaned;
-    }
-
-    public void setTotalUniqueApplicationsScaned(int totalUniqueApplicationsScaned) {
-        this.totalUniqueApplicationsScaned = totalUniqueApplicationsScaned;
-    }
-
-    public int getRiskRatio() {
-        return riskRatio;
-    }
-
-    public void setRiskRatio(int riskRatio) {
-        this.riskRatio = riskRatio;
-    }
-
-    public int getBacklogRate() {
-        return backlogRate;
-    }
-
-    public void setBacklogRate(int backlogRate) {
-        this.backlogRate = backlogRate;
-    }
-
-    public float getDiscoveryRate() {
-        return discoveryRate;
-    }
-
-    public void setDiscoveryRate(float discoveryRate) {
-        this.discoveryRate = discoveryRate;
-    }
-
-    public int getAllDiscovered() {
-        return allDiscovered;
-    }
-
-    public void setAllDiscovered(int allDiscovered) {
-        this.allDiscovered = allDiscovered;
-    }
-
-    public int getAllOpen() {
-        return allOpen;
-    }
-
-    public void setAllOpen(int allOpen) {
-        this.allOpen = allOpen;
-    }
-
-    public int getAllFixed() {
-        return allFixed;
-    }
-
-    public void setAllFixed(int allFixed) {
-        this.allFixed = allFixed;
-    }
-
-    public int getAllWaived() {
-        return allWaived;
-    }
-
-    public void setAllWaived(int allWaived) {
-        this.allWaived = allWaived;
-    }
-
-    public int getMttrCritical() {
-        return mttrCritical;
-    }
-
-    public void setMttrCritical(int mttrCritical) {
-        this.mttrCritical = mttrCritical;
-    }
-
-    public int getMttrSevere() {
-        return mttrSevere;
-    }
-
-    public void setMttrSevere(int mttrSevere) {
-        this.mttrSevere = mttrSevere;
-    }
-
-    public int getMttrModerate() {
-        return mttrModerate;
-    }
-
-    public void setMttrModerate(int mttrModerate) {
-        this.mttrModerate = mttrModerate;
-    }
-
-    public int getSecurityRiskRatio() {
-        return securityRiskRatio;
-    }
-
-    public void setSecurityRiskRatio(int securityRiskRatio) {
-        this.securityRiskRatio = securityRiskRatio;
-    }
-
-    public int getSecurityBacklogRate() {
-        return securityBacklogRate;
-    }
-
-    public void setSecurityBacklogRate(int securityBacklogRate) {
-        this.securityBacklogRate = securityBacklogRate;
-    }
-
-    public float getSecurityDiscoveryRate() {
-        return securityDiscoveryRate;
-    }
-
-    public void setSecurityDiscoveryRate(float securityDiscoveryRate) {
-        this.securityDiscoveryRate = securityDiscoveryRate;
-    }
-
-    public int getSecurityDiscovered() {
-        return securityDiscovered;
-    }
-
-    public void setSecurityDiscovered(int securityDiscovered) {
-        this.securityDiscovered = securityDiscovered;
-    }
-
-    public int getSecurityOpen() {
-        return securityOpen;
-    }
-
-    public void setSecurityOpen(int securityOpen) {
-        this.securityOpen = securityOpen;
-    }
-
-    public int getSecurityFixed() {
-        return securityFixed;
-    }
-
-    public void setSecurityFixed(int securityFixed) {
-        this.securityFixed = securityFixed;
-    }
-
-    public int getSecurityWaived() {
-        return securityWaived;
-    }
-
-    public void setSecurityWaived(int securityWaived) {
-        this.securityWaived = securityWaived;
-    }
-
-    public int getLicenseRiskRatio() {
-        return licenseRiskRatio;
-    }
-
-    public void setLicenseRiskRatio(int licenseRiskRatio) {
-        this.licenseRiskRatio = licenseRiskRatio;
-    }
-
-    public int getLicenseBacklogRate() {
-        return licenseBacklogRate;
-    }
-
-    public void setLicenseBacklogRate(int licenseBacklogRate) {
-        this.licenseBacklogRate = licenseBacklogRate;
-    }
-
-    public float getLicenseDiscoveryRate() {
-        return licenseDiscoveryRate;
-    }
-
-    public void setLicenseDiscoveryRate(float licenseDiscoveryRate) {
-        this.licenseDiscoveryRate = licenseDiscoveryRate;
-    }
-
-    public int getLicenseDiscovered() {
-        return licenseDiscovered;
-    }
-
-    public void setLicenseDiscovered(int licenseDiscovered) {
-        this.licenseDiscovered = licenseDiscovered;
-    }
-
-    public int getLicenseOpen() {
-        return licenseOpen;
-    }
-
-    public void setLicenseOpen(int licenseOpen) {
-        this.licenseOpen = licenseOpen;
-    }
-
-    public int getLicenseFixed() {
-        return licenseFixed;
-    }
-
-    public void setLicenseFixed(int licenseFixed) {
-        this.licenseFixed = licenseFixed;
-    }
-
-    public int getLicenseWaived() {
-        return licenseWaived;
-    }
-
-    public void setLicenseWaived(int licenseWaived) {
-        this.licenseWaived = licenseWaived;
-    }
-
-    public int getSecurityCriticalRiskRatio() {
-        return securityCriticalRiskRatio;
-    }
-
-    public void setSecurityCriticalRiskRatio(int securityCriticalRiskRatio) {
-        this.securityCriticalRiskRatio = securityCriticalRiskRatio;
-    }
-
-    public int getSecurityCriticalBacklogRate() {
-        return securityCriticalBacklogRate;
-    }
-
-    public void setSecurityCriticalBacklogRate(int securityCriticalBacklogRate) {
-        this.securityCriticalBacklogRate = securityCriticalBacklogRate;
-    }
-
-    public float getSecurityCriticalDiscoveryRate() {
-        return securityCriticalDiscoveryRate;
-    }
-
-    public void setSecurityCriticalDiscoveryRate(float securityCriticalDiscoveryRate) {
-        this.securityCriticalDiscoveryRate = securityCriticalDiscoveryRate;
-    }
-
-    public int getSecurityCriticalDiscovered() {
-        return securityCriticalDiscovered;
-    }
-
-    public void setSecurityCriticalDiscovered(int securityCriticalDiscovered) {
-        this.securityCriticalDiscovered = securityCriticalDiscovered;
-    }
-
-    public int getSecurityCriticalOpen() {
-        return securityCriticalOpen;
-    }
-
-    public void setSecurityCriticalOpen(int securityCriticalOpen) {
-        this.securityCriticalOpen = securityCriticalOpen;
-    }
-
-    public int getSecurityCriticalFixed() {
-        return securityCriticalFixed;
-    }
-
-    public void setSecurityCriticalFixed(int securityCriticalFixed) {
-        this.securityCriticalFixed = securityCriticalFixed;
-    }
-
-    public int getSecurityCriticalWaived() {
-        return securityCriticalWaived;
-    }
-
-    public void setSecurityCriticalWaived(int securityCriticalWaived) {
-        this.securityCriticalWaived = securityCriticalWaived;
-    }
-
-    public int getLicenseCriticalRiskRatio() {
-        return licenseCriticalRiskRatio;
-    }
-
-    public void setLicenseCriticalRiskRatio(int licenseCriticalRiskRatio) {
-        this.licenseCriticalRiskRatio = licenseCriticalRiskRatio;
-    }
-
-    public int getLicenseCriticalBacklogRate() {
-        return licenseCriticalBacklogRate;
-    }
-
-    public void setLicenseCriticalBacklogRate(int licenseCriticalBacklogRate) {
-        this.licenseCriticalBacklogRate = licenseCriticalBacklogRate;
-    }
-
-    public float getLicenseCriticalDiscoveryRate() {
-        return licenseCriticalDiscoveryRate;
-    }
-
-    public void setLicenseCriticalDiscoveryRate(float licenseCriticalDiscoveryRate) {
-        this.licenseCriticalDiscoveryRate = licenseCriticalDiscoveryRate;
-    }
-
-    public int getLicenseCriticalDiscovered() {
-        return licenseCriticalDiscovered;
-    }
-
-    public void setLicenseCriticalDiscovered(int licenseCriticalDiscovered) {
-        this.licenseCriticalDiscovered = licenseCriticalDiscovered;
-    }
-
-    public int getLicenseCriticalOpen() {
-        return licenseCriticalOpen;
-    }
-
-    public void setLicenseCriticalOpen(int licenseCriticalOpen) {
-        this.licenseCriticalOpen = licenseCriticalOpen;
-    }
-
-    public int getLicenseCriticalFixed() {
-        return licenseCriticalFixed;
-    }
-
-    public void setLicenseCriticalFixed(int licenseCriticalFixed) {
-        this.licenseCriticalFixed = licenseCriticalFixed;
-    }
-
-    public int getLicenseCriticalWaived() {
-        return licenseCriticalWaived;
-    }
-
-    public void setLicenseCriticalWaived(int licenseCriticalWaived) {
-        this.licenseCriticalWaived = licenseCriticalWaived;
-    }
-
-    public int getSecuritySevereRiskRatio() {
-        return securitySevereRiskRatio;
-    }
-
-    public void setSecuritySevereRiskRatio(int securitySevereRiskRatio) {
-        this.securitySevereRiskRatio = securitySevereRiskRatio;
-    }
-
-    public int getSecuritySevereBacklogRate() {
-        return securitySevereBacklogRate;
-    }
-
-    public void setSecuritySevereBacklogRate(int securitySevereBacklogRate) {
-        this.securitySevereBacklogRate = securitySevereBacklogRate;
-    }
-
-    public float getSecuritySevereDiscoveryRate() {
-        return securitySevereDiscoveryRate;
-    }
-
-    public void setSecuritySevereDiscoveryRate(float securitySevereDiscoveryRate) {
-        this.securitySevereDiscoveryRate = securitySevereDiscoveryRate;
-    }
-
-    public int getSecuritySevereDiscovered() {
-        return securitySevereDiscovered;
-    }
-
-    public void setSecuritySevereDiscovered(int securitySevereDiscovered) {
-        this.securitySevereDiscovered = securitySevereDiscovered;
-    }
-
-    public int getSecuritySevereOpen() {
-        return securitySevereOpen;
-    }
-
-    public void setSecuritySevereOpen(int securitySevereOpen) {
-        this.securitySevereOpen = securitySevereOpen;
-    }
-
-    public int getSecuritySevereFixed() {
-        return securitySevereFixed;
-    }
-
-    public void setSecuritySevereFixed(int securitySevereFixed) {
-        this.securitySevereFixed = securitySevereFixed;
-    }
-
-    public int getSecuritySevereWaived() {
-        return securitySevereWaived;
-    }
-
-    public void setSecuritySevereWaived(int securitySevereWaived) {
-        this.securitySevereWaived = securitySevereWaived;
-    }
-
-    public int getLicenseSevereRiskRatio() {
-        return licenseSevereRiskRatio;
-    }
-
-    public void setLicenseSevereRiskRatio(int licenseSevereRiskRatio) {
-        this.licenseSevereRiskRatio = licenseSevereRiskRatio;
-    }
-
-    public int getLicenseSevereBacklogRate() {
-        return licenseSevereBacklogRate;
-    }
-
-    public void setLicenseSevereBacklogRate(int licenseSevereBacklogRate) {
-        this.licenseSevereBacklogRate = licenseSevereBacklogRate;
-    }
-
-    public float getLicenseSevereDiscoveryRate() {
-        return licenseSevereDiscoveryRate;
-    }
-
-    public void setLicenseSevereDiscoveryRate(float licenseSevereDiscoveryRate) {
-        this.licenseSevereDiscoveryRate = licenseSevereDiscoveryRate;
-    }
-
-    public int getLicenseSevereDiscovered() {
-        return licenseSevereDiscovered;
-    }
-
-    public void setLicenseSevereDiscovered(int licenseSevereDiscovered) {
-        this.licenseSevereDiscovered = licenseSevereDiscovered;
-    }
-
-    public int getLicenseSevereOpen() {
-        return licenseSevereOpen;
-    }
-
-    public void setLicenseSevereOpen(int licenseSevereOpen) {
-        this.licenseSevereOpen = licenseSevereOpen;
-    }
-
-    public int getLicenseSevereFixed() {
-        return licenseSevereFixed;
-    }
-
-    public void setLicenseSevereFixed(int licenseSevereFixed) {
-        this.licenseSevereFixed = licenseSevereFixed;
-    }
-
-    public int getLicenseSevereWaived() {
-        return licenseSevereWaived;
-    }
-
-    public void setLicenseSevereWaived(int licenseSevereWaived) {
-        this.licenseSevereWaived = licenseSevereWaived;
-    }
-
-    public int getSecurityModerateRiskRatio() {
-        return securityModerateRiskRatio;
-    }
-
-    public void setSecurityModerateRiskRatio(int securityModerateRiskRatio) {
-        this.securityModerateRiskRatio = securityModerateRiskRatio;
-    }
-
-    public int getSecurityModerateBacklogRate() {
-        return securityModerateBacklogRate;
-    }
-
-    public void setSecurityModerateBacklogRate(int securityModerateBacklogRate) {
-        this.securityModerateBacklogRate = securityModerateBacklogRate;
-    }
-
-    public float getSecurityModerateDiscoveryRate() {
-        return securityModerateDiscoveryRate;
-    }
-
-    public void setSecurityModerateDiscoveryRate(float securityModerateDiscoveryRate) {
-        this.securityModerateDiscoveryRate = securityModerateDiscoveryRate;
-    }
-
-    public int getSecurityModerateDiscovered() {
-        return securityModerateDiscovered;
-    }
-
-    public void setSecurityModerateDiscovered(int securityModerateDiscovered) {
-        this.securityModerateDiscovered = securityModerateDiscovered;
-    }
-
-    public int getSecurityModerateOpen() {
-        return securityModerateOpen;
-    }
-
-    public void setSecurityModerateOpen(int securityModerateOpen) {
-        this.securityModerateOpen = securityModerateOpen;
-    }
-
-    public int getSecurityModerateFixed() {
-        return securityModerateFixed;
-    }
-
-    public void setSecurityModerateFixed(int securityModerateFixed) {
-        this.securityModerateFixed = securityModerateFixed;
-    }
-
-    public int getSecurityModerateWaived() {
-        return securityModerateWaived;
-    }
-
-    public void setSecurityModerateWaived(int securityModerateWaived) {
-        this.securityModerateWaived = securityModerateWaived;
-    }
-
-    public int getLicenseModerateRiskRatio() {
-        return licenseModerateRiskRatio;
-    }
-
-    public void setLicenseModerateRiskRatio(int licenseModerateRiskRatio) {
-        this.licenseModerateRiskRatio = licenseModerateRiskRatio;
-    }
-
-    public int getLicenseModerateBacklogRate() {
-        return licenseModerateBacklogRate;
-    }
-
-    public void setLicenseModerateBacklogRate(int licenseModerateBacklogRate) {
-        this.licenseModerateBacklogRate = licenseModerateBacklogRate;
-    }
-
-    public float getLicenseModerateDiscoveryRate() {
-        return licenseModerateDiscoveryRate;
-    }
-
-    public void setLicenseModerateDiscoveryRate(float licenseModerateDiscoveryRate) {
-        this.licenseModerateDiscoveryRate = licenseModerateDiscoveryRate;
-    }
-
-    public int getLicenseModerateDiscovered() {
-        return licenseModerateDiscovered;
-    }
-
-    public void setLicenseModerateDiscovered(int licenseModerateDiscovered) {
-        this.licenseModerateDiscovered = licenseModerateDiscovered;
-    }
-
-    public int getLicenseModerateOpen() {
-        return licenseModerateOpen;
-    }
-
-    public void setLicenseModerateOpen(int licenseModerateOpen) {
-        this.licenseModerateOpen = licenseModerateOpen;
-    }
-
-    public int getLicenseModerateFixed() {
-        return licenseModerateFixed;
-    }
-
-    public void setLicenseModerateFixed(int licenseModerateFixed) {
-        this.licenseModerateFixed = licenseModerateFixed;
-    }
-
-    public int getLicenseModerateWaived() {
-        return licenseModerateWaived;
-    }
-
-    public void setLicenseModerateWaived(int licenseModerateWaived) {
-        this.licenseModerateWaived = licenseModerateWaived;
-    }
 }
