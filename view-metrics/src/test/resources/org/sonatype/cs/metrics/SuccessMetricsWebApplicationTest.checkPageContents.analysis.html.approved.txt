@@ -222,10 +222,10 @@
             <tr style="font-weight:bold">
                 <td>Scanning Rate (total scans per period)</td>
                 <td>237.00</td>
-                <td>148.00</td>
-                <td>-89.00</td>
-                <td>-37.55</td>
-                <td>0.62</td>
+                <td>148.33</td>
+                <td>-88.67</td>
+                <td>-37.41</td>
+                <td>0.63</td>
             </tr>
 
             <tr style="font-weight:bold">
@@ -233,25 +233,25 @@
                 <td>5.27</td>
                 <td>1.16</td>
                 <td>-4.11</td>
-                <td>-78.05</td>
+                <td>-78.00</td>
                 <td>0.22</td>
             </tr>
 
             <tr style="font-weight:bold">
                 <td>Discovery Rate Criticals (# of discovered Critical violations/period &amp; app)</td>
-                <td>11.51</td>
+                <td>11.52</td>
                 <td>3.93</td>
-                <td>-7.58</td>
-                <td>-65.86</td>
+                <td>-7.59</td>
+                <td>-65.88</td>
                 <td>0.34</td>
             </tr>
 
             <tr style="font-weight:bold">
                 <td>Fixing Rate Criticals (# of fixed Critical violations/period &amp; app)</td>
-                <td>2.91</td>
-                <td>0.57</td>
-                <td>-2.34</td>
-                <td>-80.41</td>
+                <td>2.93</td>
+                <td>0.58</td>
+                <td>-2.35</td>
+                <td>-80.33</td>
                 <td>0.20</td>
             </tr>
 
@@ -266,11 +266,11 @@
 
             <tr style="font-weight:bold">
                 <td>Risk Ratio (# of Critical violations / # of apps)</td>
-                <td>24.0</td>
-                <td>20.0</td>
-                <td>-4</td>
-                <td>-16.67</td>
-                <td>0.83</td>
+                <td>25.711111111111112</td>
+                <td>20.90625</td>
+                <td>-4.804861111111112137450618320144712924957275390625</td>
+                <td>-18.69</td>
+                <td>0.81</td>
             </tr>
 
             <tr style="font-weight:bold">

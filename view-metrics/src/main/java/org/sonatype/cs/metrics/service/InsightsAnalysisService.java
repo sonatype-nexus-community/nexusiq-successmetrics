@@ -3,6 +3,7 @@ package org.sonatype.cs.metrics.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.model.DbRow;
+import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,10 +81,10 @@ public class InsightsAnalysisService {
 
         float scanningRateAfter =
                 Integer.parseInt(String.valueOf(p2metrics.get(numberOfScansStr)))
-                        / p2numberOfPeriods;
+                        / (float) p2numberOfPeriods;
         float scanningRateBefore =
                 Integer.parseInt(String.valueOf(p1metrics.get(numberOfScansStr)))
-                        / p1numberOfPeriods;
+                        / (float) p1numberOfPeriods;
 
         float scanningRateAfterAvg = scanningRateAfter / onboardedAfter;
         float scanningRateBeforeAvg = scanningRateBefore / onboardedBefore;
@@ -94,10 +95,10 @@ public class InsightsAnalysisService {
                 (DbRow) p1metrics.get("discoveredSecurityViolationsTotal");
 
         float discoveryRateCriticalsBefore =
-                (float) (discoveredSecurityTotalBefore.getPointA() / p1numberOfPeriods)
+                ((float) discoveredSecurityTotalBefore.getPointA() / p1numberOfPeriods)
                         / onboardedBefore;
         float discoveryRateCriticalsAfter =
-                (float) (discoveredSecurityTotalAfter.getPointA() / p2numberOfPeriods)
+                ((float) discoveredSecurityTotalAfter.getPointA() / p2numberOfPeriods)
                         / onboardedAfter;
 
         DbRow fixedSecurityCriticalsTotalAfter =
@@ -106,10 +107,10 @@ public class InsightsAnalysisService {
                 (DbRow) p1metrics.get("fixedSecurityViolationsTotal");
 
         float fixedRateCriticalsBefore =
-                (float) (fixedSecurityCriticalsTotalBefore.getPointA() / p1numberOfPeriods)
+                ((float) fixedSecurityCriticalsTotalBefore.getPointA() / p1numberOfPeriods)
                         / onboardedBefore;
         float fixedRateCriticalsAfter =
-                (float) (fixedSecurityCriticalsTotalAfter.getPointA() / p2numberOfPeriods)
+                ((float) fixedSecurityCriticalsTotalAfter.getPointA() / p2numberOfPeriods)
                         / onboardedAfter;
 
         float backlogReductionCriticalsRateBefore =
@@ -119,7 +120,7 @@ public class InsightsAnalysisService {
 
         model.put("totalOnboardedBefore", onboardedBefore);
         model.put("totalOnboardedAfter", onboardedAfter);
-        model.put("totalOnboardedDiff", this.formatFloat(onboardedAfter - onboardedBefore));
+        model.put("totalOnboardedDiff", this.formatFloat((float) onboardedAfter - onboardedBefore));
         model.put("totalOnboarded", this.calculateChangePctg(onboardedBefore, onboardedAfter));
         model.put(
                 "totalOnboardedIncrease",
@@ -214,14 +215,12 @@ public class InsightsAnalysisService {
                 this.calculateChangeMultiple(
                         backlogReductionCriticalsRateBefore, backlogReductionCriticalsRateAfter));
 
-        float riskRatioBefore =
-                Integer.parseInt(String.valueOf(p1metrics.get("riskRatioAtStartPeriod")));
-        float riskRatioAfter =
-                Integer.parseInt(String.valueOf(p2metrics.get("riskRatioAtEndPeriod")));
+        Double riskRatioBefore = (Double) p1metrics.get("riskRatioAtStartPeriod");
+        Double riskRatioAfter = (Double) p2metrics.get("riskRatioAtEndPeriod");
 
         model.put("riskRatioBefore", riskRatioBefore);
         model.put("riskRatioAfter", riskRatioAfter);
-        model.put("riskRatioDiff", this.formatFloat(riskRatioAfter - riskRatioBefore));
+        model.put("riskRatioDiff", riskRatioAfter - riskRatioBefore);
         model.put("riskRatio", this.calculateChangePctg(riskRatioBefore, riskRatioAfter));
         model.put(
                 "riskRatioIncrease", this.calculateChangeMultiple(riskRatioBefore, riskRatioAfter));
@@ -234,7 +233,7 @@ public class InsightsAnalysisService {
         model.put(
                 "mttrCriticalsDiff",
                 this.formatFloat(
-                        Integer.parseInt(mttrCriticalsAfter[0])
+                        (float) Integer.parseInt(mttrCriticalsAfter[0])
                                 - Integer.parseInt(mttrCriticalsBefore[0])));
         model.put(
                 "mttrCriticals",
@@ -272,8 +271,28 @@ public class InsightsAnalysisService {
         return String.format("%.2f", result);
     }
 
+    private String calculateChangePctg(Double before, Double after) {
+        Double result = 0D;
+
+        if (after > 0 && before > 0) {
+            result = (((after - before) / before) * 100);
+        }
+
+        return String.format("%.2f", result);
+    }
+
     private String calculateChangeMultiple(float before, float after) {
         float result = 0;
+
+        if (after > 0 && before > 0) {
+            result = after / before;
+        }
+
+        return String.format("%.2f", result);
+    }
+
+    private String calculateChangeMultiple(Double before, Double after) {
+        Double result = 0D;
 
         if (after > 0 && before > 0) {
             result = after / before;
@@ -389,9 +408,15 @@ public class InsightsAnalysisService {
         data.add(
                 new String[] {
                     "Risk Ratio (# of Critical violations / # of apps)",
-                    String.valueOf(analysisData.get("riskRatioBefore")),
-                    String.valueOf(analysisData.get("riskRatioAfter")),
-                    String.valueOf(analysisData.get("riskRatioDiff")),
+                    String.valueOf(
+                            HelperService.roundDouble(
+                                    (Double) analysisData.get("riskRatioBefore"), 1)),
+                    String.valueOf(
+                            HelperService.roundDouble(
+                                    (Double) analysisData.get("riskRatioAfter"), 1)),
+                    String.valueOf(
+                            HelperService.roundDouble(
+                                    (Double) analysisData.get("riskRatioDiff"), 1)),
                     String.valueOf(analysisData.get("riskRatio")),
                     String.valueOf(analysisData.get("riskRatioIncrease"))
                 });

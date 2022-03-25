@@ -71,4 +71,22 @@ public class HelperService {
                 LocalDateTime.parse(str, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         return localDate.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
+
+    public static Double roundDouble(Double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
+    public static Float roundFloat(Float value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (float) tmp / factor;
+    }
 }
