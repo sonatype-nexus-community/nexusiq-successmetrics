@@ -1,5 +1,5 @@
 
-name: Build and Release nexusiq-view-metrics
+name: Create a release
 
 on:
   push:
@@ -8,8 +8,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: nexusiq-successmetrics-view-metrics
-  RELEASE_BRANCH: main
   RELEASE_VERSION: ${{ github.ref_name }}
 
 jobs:
