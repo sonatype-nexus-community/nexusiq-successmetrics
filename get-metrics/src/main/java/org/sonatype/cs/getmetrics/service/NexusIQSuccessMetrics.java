@@ -72,8 +72,10 @@ public class NexusIQSuccessMetrics {
     private String getPayload() throws IOException, JSONException, HttpException {
         log.info("Making api payload");
 
-        PayloadItem firstTimePeriod = new PayloadItem(iqApiFirstTimePeriod);
-        PayloadItem lastTimePeriod = new PayloadItem(iqApiLastTimePeriod);
+        PayloadItem firstTimePeriod =
+                new PayloadItem(UtilService.removeQuotesFromString(iqApiFirstTimePeriod));
+        PayloadItem lastTimePeriod =
+                new PayloadItem(UtilService.removeQuotesFromString(iqApiLastTimePeriod));
         PayloadItem organisationName = new PayloadItem(iqApiOrganisationName);
         PayloadItem applicationName = new PayloadItem(iqApiApplicationName);
 
@@ -83,7 +85,7 @@ public class NexusIQSuccessMetrics {
         }
 
         JSONObject ajson = new JSONObject();
-        ajson.put("timePeriod", iqSmPeriod.toUpperCase());
+        ajson.put("timePeriod", UtilService.removeQuotesFromString(iqSmPeriod.toUpperCase()));
         ajson.put("firstTimePeriod", firstTimePeriod.getItem());
 
         if (lastTimePeriod.isExists()) {
