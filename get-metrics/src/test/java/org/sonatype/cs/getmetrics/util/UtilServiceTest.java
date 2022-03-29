@@ -49,4 +49,14 @@ public class UtilServiceTest {
         Assertions.assertEquals(
                 "first,second,third\nfourth,fifth,sixth\n", stringWriter.toString());
     }
+
+    @Test
+    void testRemoveQuotesFromString() {
+        Assertions.assertEquals("abc", UtilService.removeQuotesFromString("\"abc\""));
+        Assertions.assertEquals("abc", UtilService.removeQuotesFromString("abc"));
+        Assertions.assertEquals("\"abc", UtilService.removeQuotesFromString("\"abc"));
+        Assertions.assertEquals("abc\"", UtilService.removeQuotesFromString("abc\""));
+        Assertions.assertEquals("", UtilService.removeQuotesFromString("\"\""));
+        Assertions.assertEquals(null, UtilService.removeQuotesFromString(null));
+    }
 }
