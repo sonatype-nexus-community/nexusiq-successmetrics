@@ -1,0 +1,34 @@
+name: Publish Document to Release
+
+on:
+  push:
+  release:
+    types: [published]
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
+jobs:
+  publish-and-release:
+    runs-on: ubuntu-latest
+    name: Publish Document to Release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Publish PDF Document
+        uses: shrink/actions-document-publish@v1
+        id: publish-document
+        with:
+          sources: './README.md'
+      - if: github.event_name == 'release' && github.event.action == 'published'
+        name: Get Release
+        id: release
+        uses: bruceadams/get-release@v1.2.0
+      - if: github.event_name == 'release' && github.event.action == 'published'
+        name: Attach PDF to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ${{ steps.publish-document.outputs.pdf }}
+          asset_name: 'README.pdf'
+          asset_content_type: application/pdf
