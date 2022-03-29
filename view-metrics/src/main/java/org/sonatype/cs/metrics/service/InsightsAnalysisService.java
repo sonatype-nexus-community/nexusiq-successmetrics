@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,11 +17,18 @@ import java.util.Map;
 public class InsightsAnalysisService {
     private static final Logger log = LoggerFactory.getLogger(InsightsAnalysisService.class);
 
-    @Autowired private MetricsService metricsService;
+    private MetricsService metricsService;
+    private PeriodsDataService periodsDataService;
+    private FileIoService fileIoService;
 
-    @Autowired private PeriodsDataService periodsDataService;
-
-    @Autowired private FileIoService fileIoService;
+    public InsightsAnalysisService(
+            MetricsService metricsService,
+            PeriodsDataService periodsDataService,
+            FileIoService fileIoService) {
+        this.metricsService = metricsService;
+        this.periodsDataService = periodsDataService;
+        this.fileIoService = fileIoService;
+    }
 
     public void writeInsightsAnalysisData(String timestamp) throws IOException {
         log.info("Writing insights data file");

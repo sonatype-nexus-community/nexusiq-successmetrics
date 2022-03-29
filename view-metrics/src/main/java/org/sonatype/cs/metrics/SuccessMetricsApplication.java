@@ -6,7 +6,6 @@ import org.sonatype.cs.metrics.service.DataExtractService;
 import org.sonatype.cs.metrics.service.InsightsAnalysisService;
 import org.sonatype.cs.metrics.service.LoaderService;
 import org.sonatype.cs.metrics.service.SummaryPdfService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -24,34 +23,41 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(SuccessMetricsApplication.class);
 
-    private boolean successMetricsFileLoaded = false;
+    private LoaderService loaderService;
+    private SummaryPdfService pdfService;
+    private InsightsAnalysisService analysisService;
+    private DataExtractService dataExtractService;
 
-    private String timestamp;
-
-    @Value("${spring.main.web-application-type}")
     private String runMode;
-
-    @Value("${spring.profiles.active}")
     private String activeProfile;
-
-    @Value("${pdf.htmltemplate}")
     private String pdfTemplate;
-
-    @Value("${server.port}")
     private String port;
-
-    @Value("${server.servlet.context-path:}")
     private String contextPath;
 
-    @Autowired private LoaderService loaderService;
-
-    @Autowired private SummaryPdfService pdfService;
-
-    @Autowired private InsightsAnalysisService analysisService;
-
-    @Autowired private DataExtractService dataExtractService;
-
     private boolean doAnalysis = true;
+    private boolean successMetricsFileLoaded = false;
+    private String timestamp;
+
+    public SuccessMetricsApplication(
+            LoaderService loaderService,
+            SummaryPdfService pdfService,
+            InsightsAnalysisService analysisService,
+            DataExtractService dataExtractService,
+            @Value("${spring.main.web-application-type}") String runMode,
+            @Value("${spring.profiles.active}") String activeProfile,
+            @Value("${pdf.htmltemplate}") String pdfTemplate,
+            @Value("${server.port}") String port,
+            @Value("${server.servlet.context-path:}") String contextPath) {
+        this.loaderService = loaderService;
+        this.pdfService = pdfService;
+        this.analysisService = analysisService;
+        this.dataExtractService = dataExtractService;
+        this.runMode = runMode;
+        this.activeProfile = activeProfile;
+        this.pdfTemplate = pdfTemplate;
+        this.port = port;
+        this.contextPath = contextPath;
+    }
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(SuccessMetricsApplication.class);

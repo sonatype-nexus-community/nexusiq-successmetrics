@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.getmetrics.model.PayloadItem;
 import org.sonatype.cs.getmetrics.util.NexusIqApiConnection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -27,37 +26,43 @@ import java.nio.charset.StandardCharsets;
 public class NexusIQSuccessMetrics {
     private static final Logger log = LoggerFactory.getLogger(NexusIQSuccessMetrics.class);
 
-    @Autowired private FileIoService fileIoService;
+    private FileIoService fileIoService;
 
-    @Value("${iq.url}")
     private String iqUrl;
-
-    @Value("${iq.user}")
     private String iqUser;
-
-    @Value("${iq.passwd}")
     private String iqPwd;
-
-    @Value("${iq.api.sm.period}")
     private String iqSmPeriod;
-
-    @Value("${iq.api.sm.payload.timeperiod.first}")
     private String iqApiFirstTimePeriod;
-
-    @Value("${iq.api.sm.payload.timeperiod.last}")
     private String iqApiLastTimePeriod;
-
-    @Value("${iq.api.sm.payload.application.name}")
     private String iqApiApplicationName;
-
-    @Value("${iq.api.sm.payload.organisation.name}")
     private String iqApiOrganisationName;
-
-    @Value("${iq.api}")
     private String iqApi;
-
-    @Value("${iq.api.reports}")
     private String iqReportsEndpoint;
+
+    public NexusIQSuccessMetrics(
+            FileIoService fileIoService,
+            @Value("${iq.url}") String iqUrl,
+            @Value("${iq.user}") String iqUser,
+            @Value("${iq.passwd}") String iqPwd,
+            @Value("${iq.api.sm.period}") String iqSmPeriod,
+            @Value("${iq.api.sm.payload.timeperiod.first}") String iqApiFirstTimePeriod,
+            @Value("${iq.api.sm.payload.timeperiod.last}") String iqApiLastTimePeriod,
+            @Value("${iq.api.sm.payload.application.name}") String iqApiApplicationName,
+            @Value("${iq.api.sm.payload.organisation.name}") String iqApiOrganisationName,
+            @Value("${iq.api}") String iqApi,
+            @Value("${iq.api.reports}") String iqReportsEndpoint) {
+        this.fileIoService = fileIoService;
+        this.iqUrl = iqUrl;
+        this.iqUser = iqUser;
+        this.iqPwd = iqPwd;
+        this.iqSmPeriod = iqSmPeriod;
+        this.iqApiFirstTimePeriod = iqApiFirstTimePeriod;
+        this.iqApiLastTimePeriod = iqApiLastTimePeriod;
+        this.iqApiApplicationName = iqApiApplicationName;
+        this.iqApiOrganisationName = iqApiOrganisationName;
+        this.iqApi = iqApi;
+        this.iqReportsEndpoint = iqReportsEndpoint;
+    }
 
     public void createSuccessMetricsCsvFile() throws IOException, JSONException, HttpException {
         String apiPayload = getPayload();

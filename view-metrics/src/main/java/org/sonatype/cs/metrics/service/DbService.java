@@ -3,7 +3,6 @@ package org.sonatype.cs.metrics.service;
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.model.DbRowStr;
 import org.sonatype.cs.metrics.model.Mttr;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,11 @@ import java.util.List;
 @Service
 public class DbService {
 
-    @Autowired private JdbcTemplate jtm;
+    private JdbcTemplate jtm;
+
+    public DbService(JdbcTemplate jtm) {
+        this.jtm = jtm;
+    }
 
     public void runSqlLoad(String stmt) {
         jtm.execute(stmt);

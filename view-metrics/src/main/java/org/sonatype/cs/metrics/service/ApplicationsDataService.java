@@ -5,7 +5,6 @@ import org.sonatype.cs.metrics.model.Mttr;
 import org.sonatype.cs.metrics.model.RiskRatio;
 import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,7 +14,11 @@ import java.util.Map;
 
 @Service
 public class ApplicationsDataService {
-    @Autowired private DbService dbService;
+    private DbService dbService;
+
+    public ApplicationsDataService(DbService dbService) {
+        this.dbService = dbService;
+    }
 
     public Map<String, Object> getApplicationData(
             String tableName, Map<String, Object> periodsData) {

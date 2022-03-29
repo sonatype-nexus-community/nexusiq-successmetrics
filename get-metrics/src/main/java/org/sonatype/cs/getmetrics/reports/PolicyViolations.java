@@ -8,7 +8,6 @@ import org.sonatype.cs.getmetrics.service.FileIoService;
 import org.sonatype.cs.getmetrics.service.PolicyIdsService;
 import org.sonatype.cs.getmetrics.service.UtilService;
 import org.sonatype.cs.getmetrics.util.FilenameInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,11 @@ import javax.json.JsonReader;
 public class PolicyViolations implements CsvFileService {
     private static final Logger log = LoggerFactory.getLogger(PolicyViolations.class);
 
-    @Autowired PolicyIdsService policyIdsService;
+    PolicyIdsService policyIdsService;
+
+    public PolicyViolations(PolicyIdsService policyIdsService) {
+        this.policyIdsService = policyIdsService;
+    }
 
     @Override
     public void makeCsvFile(FileIoService f, JsonReader reader) {
