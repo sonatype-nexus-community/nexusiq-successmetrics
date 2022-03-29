@@ -12,22 +12,22 @@ Using the Success Metrics application is a two step process:
 ## Installation
 
 1. From the Releases pane on the right side of this page select the latest release
-1. Click on the *successmetrics-[releasenumber].zip* file on the assets page to download and save to your machine
+1. Click on the *nexusiq-successmetrics-[releasenumber].zip* file on the assets page to download and save to your machine
 1. Unzip the contents into a directory of your choice
 
    ```bash
-   unzip successmetrics-[releasenumber].zip
+   unzip nexusiq-successmetrics-[releasenumber].zip
    ```
 
 1. Navigate to the *successmetrics-[releasenumber]* directory (this will be the working directory for the rest of the commands given in this README)
 
    ```bash
-   cd successmetrics-[releasenumber.zip]
+   cd nexusiq-successmetrics-[releasenumber.zip]
    ```
 
 ## Fetch metrics from the IQ Server (get-metrics)
 
-The get-metrics script extract metrics from an IQ server and stores the result in the `./nexusiq` directory.
+The get-metrics script extract metrics from an IQ server and stores the result in the `./iqmetrics` directory.
 
 get-metrics can be executed using a [Java 1.8 jar](#running-get-metrics-using-java) or [Docker image](#running-get-metrics-using-docker).
 
