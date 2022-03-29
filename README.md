@@ -1,7 +1,5 @@
 # Success Metrics Application for IQ Server
 
-![Coverage](.github/badges/jacoco.svg)
-
 IQ Server has a number of REST APIs which can be used to extract policy evaluation, violation and remediation data. The Success Metrics get-metrics application extracts common metrics using this API and the view-metrics application aggregates the data into web or text reports.
 
 Using the Success Metrics application is a two step process:
@@ -31,7 +29,7 @@ The get-metrics script extract metrics from an IQ server and stores the result i
 
 get-metrics can be executed using a [Java 1.8 jar](#running-get-metrics-using-java) or [Docker image](#running-get-metrics-using-docker).
 
-:warning: For large installations/datasets, the extract should be limited to a shorter period (e.g. previous 6 months or weeks) or subset of organisations and/or applications.
+&#9888; For large installations/datasets, the extract should be limited to a shorter period (e.g. previous 6 months or weeks) or subset of organisations and/or applications.
 
 ### Get-Metrics Configuration
 
@@ -49,7 +47,7 @@ metrics.policyviolations
 metrics.firewall
 ```
 
-:warning: success-metrics should always be set to true.
+&#9888; success-metrics should always be set to true.
 
 #### Nexus IQ server details
 
@@ -61,7 +59,7 @@ iq.user
 iq.passwd
 ```
 
-:warning: If you are using the get-metrics Docker image on the Nexus IQ machine then you cannot use `127.0.0.1` in the iq.url. You should instead use `host.docker.internal`.
+&#9888; If you are using the get-metrics Docker image on the Nexus IQ machine then you cannot use `127.0.0.1` in the iq.url. You should instead use `host.docker.internal`.
 
 #### Time period for which data should be fetched
 
@@ -99,7 +97,7 @@ runapp.bat
 
 ### Running get-metrics using Docker
 
-:warning: You must be in the get-metrics directory for the runapp-docker script to work.
+&#9888; You must be in the get-metrics directory for the runapp-docker script to work.
 
 #### Get-metrics using Docker on Linux/Mac machines
 
@@ -124,11 +122,11 @@ There are two modes to the application.
 
 The view-metrics script processes metrics stored in the `./nexusiq` directory and presents them as detailed aggregated charts in a web view or in data files in the `./datafiles` directory.
 
-:warning: There must be a `successmetrics.csv` in the `./iqmetrics` directory.
+&#9888; There must be a `successmetrics.csv` in the `./iqmetrics` directory.
 
-:warning: In order to aggregate and process metrics a minimum of three data points (weeks or months) are needed.
+&#9888; In order to aggregate and process metrics a minimum of three data points (weeks or months) are needed.
 
-:warning: Only fully completed months (or weeks) are included in the data extract.
+&#9888; Only fully completed months (or weeks) are included in the data extract.
 
 ### View-metrics configuration
 
@@ -156,7 +154,7 @@ runapp.bat
 
 ### Running view-metrics using Docker
 
-:warning: You must be in the get-metrics directory for the runapp-docker script to work.
+&#9888; You must be in the get-metrics directory for the runapp-docker script to work.
 
 #### View-metrics using Docker on Linux/Mac machines
 
