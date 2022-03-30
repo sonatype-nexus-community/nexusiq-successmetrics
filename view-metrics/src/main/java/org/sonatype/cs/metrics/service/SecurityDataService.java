@@ -2,7 +2,6 @@ package org.sonatype.cs.metrics.service;
 
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,7 +10,11 @@ import java.util.Map;
 
 @Service
 public class SecurityDataService {
-    @Autowired private DbService dbService;
+    private DbService dbService;
+
+    public SecurityDataService(DbService dbService) {
+        this.dbService = dbService;
+    }
 
     public Map<String, Object> getSecurityViolations(String tableName) {
         Map<String, Object> model = new HashMap<>();

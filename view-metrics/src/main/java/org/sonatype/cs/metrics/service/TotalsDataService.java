@@ -3,7 +3,6 @@ package org.sonatype.cs.metrics.service;
 import org.sonatype.cs.metrics.model.Mttr;
 import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,11 +13,18 @@ import java.util.Map;
 @Service
 public class TotalsDataService {
 
-    @Autowired private DbService dbService;
+    private DbService dbService;
+    private SecurityDataService securityViolationsDataService;
+    private LicenseDataService licenseViolationsDataService;
 
-    @Autowired private SecurityDataService securityViolationsDataService;
-
-    @Autowired private LicenseDataService licenseViolationsDataService;
+    public TotalsDataService(
+            DbService dbService,
+            SecurityDataService securityViolationsDataService,
+            LicenseDataService licenseViolationsDataService) {
+        this.dbService = dbService;
+        this.securityViolationsDataService = securityViolationsDataService;
+        this.licenseViolationsDataService = licenseViolationsDataService;
+    }
 
     public Map<String, Object> getSummaryData(String tableName) {
         Map<String, Object> model = new HashMap<>();

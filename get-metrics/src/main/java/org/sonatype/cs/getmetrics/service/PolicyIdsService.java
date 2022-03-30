@@ -2,7 +2,6 @@ package org.sonatype.cs.getmetrics.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -16,7 +15,11 @@ import javax.json.JsonObject;
 public class PolicyIdsService {
     private static final Logger log = LoggerFactory.getLogger(PolicyIdsService.class);
 
-    @Autowired private NexusIQApiDataService nexusIQDataService;
+    private NexusIQApiDataService nexusIQDataService;
+
+    public PolicyIdsService(NexusIQApiDataService nexusIQDataService) {
+        this.nexusIQDataService = nexusIQDataService;
+    }
 
     private static List<String> securityPolicies =
             Arrays.asList(

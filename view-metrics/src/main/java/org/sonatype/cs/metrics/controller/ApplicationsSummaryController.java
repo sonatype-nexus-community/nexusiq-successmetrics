@@ -7,7 +7,6 @@ import org.sonatype.cs.metrics.service.DbService;
 import org.sonatype.cs.metrics.service.MetricsService;
 import org.sonatype.cs.metrics.service.PeriodsDataService;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +18,21 @@ import java.util.Map;
 public class ApplicationsSummaryController {
     private static final Logger log = LoggerFactory.getLogger(ApplicationsSummaryController.class);
 
-    @Autowired private PeriodsDataService periodsDataService;
+    private PeriodsDataService periodsDataService;
+    private MetricsService metricsService;
+    private DbService dbService;
+    private ApplicationsDataService applicationsDataService;
 
-    @Autowired private MetricsService metricsService;
-
-    @Autowired private DbService dbService;
-
-    @Autowired private ApplicationsDataService applicationsDataService;
+    public ApplicationsSummaryController(
+            PeriodsDataService periodsDataService,
+            MetricsService metricsService,
+            DbService dbService,
+            ApplicationsDataService applicationsDataService) {
+        this.periodsDataService = periodsDataService;
+        this.metricsService = metricsService;
+        this.dbService = dbService;
+        this.applicationsDataService = applicationsDataService;
+    }
 
     @GetMapping({"/appsummary", "/appsummary.html"})
     public String application(

@@ -5,7 +5,6 @@ import com.lowagie.text.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -20,14 +19,21 @@ import java.util.Map;
 public class SummaryPdfService {
 
     private static final Logger log = LoggerFactory.getLogger(SummaryPdfService.class);
+    private FileIoService fileIoService;
+    private PeriodsDataService periodsDataService;
+    private MetricsService metricsService;
+    private InsightsAnalysisService analysisService;
 
-    @Autowired private FileIoService fileIoService;
-
-    @Autowired private PeriodsDataService periodsDataService;
-
-    @Autowired private MetricsService metricsService;
-
-    @Autowired private InsightsAnalysisService analysisService;
+    public SummaryPdfService(
+            FileIoService fileIoService,
+            PeriodsDataService periodsDataService,
+            MetricsService metricsService,
+            InsightsAnalysisService analysisService) {
+        this.fileIoService = fileIoService;
+        this.periodsDataService = periodsDataService;
+        this.metricsService = metricsService;
+        this.analysisService = analysisService;
+    }
 
     public String parsePdfTemplate(String htmlTemplate, boolean doAnalysis) throws ParseException {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();

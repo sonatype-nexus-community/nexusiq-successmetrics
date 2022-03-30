@@ -8,7 +8,6 @@ import org.sonatype.cs.metrics.model.Mttr;
 import org.sonatype.cs.metrics.model.RiskRatio;
 import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,11 +22,24 @@ import java.util.Map;
 public class DataExtractService {
     private static final Logger log = LoggerFactory.getLogger(DataExtractService.class);
 
-    @Autowired private SecurityDataService securityDataService;
-    @Autowired private LicenseDataService licenseDataService;
-    @Autowired private PeriodsDataService periodsDataService;
-    @Autowired private ApplicationsDataService applicationsDataService;
-    @Autowired private FileIoService fileIoService;
+    private SecurityDataService securityDataService;
+    private LicenseDataService licenseDataService;
+    private PeriodsDataService periodsDataService;
+    private ApplicationsDataService applicationsDataService;
+    private FileIoService fileIoService;
+
+    public DataExtractService(
+            SecurityDataService securityDataService,
+            LicenseDataService licenseDataService,
+            PeriodsDataService periodsDataService,
+            ApplicationsDataService applicationsDataService,
+            FileIoService fileIoService) {
+        this.securityDataService = securityDataService;
+        this.licenseDataService = licenseDataService;
+        this.periodsDataService = periodsDataService;
+        this.applicationsDataService = applicationsDataService;
+        this.fileIoService = fileIoService;
+    }
 
     public void writeDataExtract(String timestamp) throws IOException {
         log.info("Writing data extracts file");

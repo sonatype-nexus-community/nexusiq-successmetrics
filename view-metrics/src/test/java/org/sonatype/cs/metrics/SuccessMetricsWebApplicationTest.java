@@ -32,10 +32,9 @@ import java.util.List;
 public class SuccessMetricsWebApplicationTest {
 
     @Autowired private SuccessMetricsApplication controller;
-
-    @LocalServerPort private int port;
-
+    @Autowired private TestRestTemplate restTemplate;
     @Autowired private MockMvc mockMvc;
+    @LocalServerPort private int port;
 
     private String removeLine(String inputString, int lineToRemove) {
         List<String> lineArray =
@@ -50,8 +49,6 @@ public class SuccessMetricsWebApplicationTest {
     public void contextLoadsTest() throws Exception {
         assertNotNull(controller);
     }
-
-    @Autowired private TestRestTemplate restTemplate;
 
     @ParameterizedTest
     @ValueSource(

@@ -1,7 +1,6 @@
 package org.sonatype.cs.getmetrics.service;
 
 import org.sonatype.cs.getmetrics.util.NexusIqApiConnection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +14,24 @@ import javax.json.JsonReader;
 
 @Service
 public class NexusIQAPIPagingService {
-    @Autowired private FileIoService fileIoService;
-
-    @Value("${iq.url}")
+    private FileIoService fileIoService;
     private String iqUrl;
-
-    @Value("${iq.user}")
     private String iqUser;
-
-    @Value("${iq.passwd}")
     private String iqPasswd;
-
-    @Value("${iq.api}")
     private String iqApi;
+
+    public NexusIQAPIPagingService(
+            FileIoService fileIoService,
+            @Value("${iq.url}") String iqUrl,
+            @Value("${iq.user}") String iqUser,
+            @Value("${iq.passwd}") String iqPasswd,
+            @Value("${iq.api}") String iqApi) {
+        this.fileIoService = fileIoService;
+        this.iqUrl = iqUrl;
+        this.iqUser = iqUser;
+        this.iqPasswd = iqPasswd;
+        this.iqApi = iqApi;
+    }
 
     public void makeReport(CsvFileService cfs, String endPoint) throws IOException {
 

@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.model.DbRowStr;
 import org.sonatype.cs.metrics.service.DbService;
 import org.sonatype.cs.metrics.util.HelperService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,11 @@ import java.util.Map;
 public class PolicyViolationsAgeController {
     private static final Logger log = LoggerFactory.getLogger(PolicyViolationsAgeController.class);
 
-    @Autowired private DbService dbService;
+    private DbService dbService;
+
+    public PolicyViolationsAgeController(DbService dbService) {
+        this.dbService = dbService;
+    }
 
     @GetMapping({"/violationsage", "/violationsage.html"})
     public String policyViolationsAge(
