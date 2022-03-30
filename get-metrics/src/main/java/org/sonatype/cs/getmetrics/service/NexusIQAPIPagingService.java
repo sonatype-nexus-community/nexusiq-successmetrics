@@ -1,6 +1,5 @@
 package org.sonatype.cs.getmetrics.service;
 
-import org.sonatype.cs.getmetrics.util.NexusIqApiConnection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,7 @@ import javax.json.JsonReader;
 
 @Service
 public class NexusIQAPIPagingService {
+    private NexusIqApiConnectionService nexusIqApiConnectionService;
     private FileIoService fileIoService;
     private String iqUrl;
     private String iqUser;
@@ -21,11 +21,13 @@ public class NexusIQAPIPagingService {
     private String iqApi;
 
     public NexusIQAPIPagingService(
+            NexusIqApiConnectionService nexusIqApiConnectionService,
             FileIoService fileIoService,
             @Value("${iq.url}") String iqUrl,
             @Value("${iq.user}") String iqUser,
             @Value("${iq.passwd}") String iqPasswd,
             @Value("${iq.api}") String iqApi) {
+        this.nexusIqApiConnectionService = nexusIqApiConnectionService;
         this.fileIoService = fileIoService;
         this.iqUrl = iqUrl;
         this.iqUser = iqUser;
@@ -41,7 +43,7 @@ public class NexusIQAPIPagingService {
 
         do {
             URLConnection urlConnection =
-                    NexusIqApiConnection.createAuthorizedPagedUrlConnection(
+                    nexusIqApiConnectionService.createAuthorizedPagedUrlConnection(
                             iqUser, iqPasswd, iqUrl, iqApi, endPoint, page, pageSize);
             InputStream is = urlConnection.getInputStream();
             JsonReader reader = Json.createReader(is);
