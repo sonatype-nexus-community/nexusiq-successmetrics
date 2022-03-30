@@ -1,8 +1,8 @@
-package org.sonatype.cs.getmetrics.util;
+package org.sonatype.cs.getmetrics.service;
 
 import org.apache.http.HttpException;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.sonatype.cs.getmetrics.service.UtilService;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,15 +10,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
-public class NexusIqApiConnection {
-    private NexusIqApiConnection() {}
+@Service
+class NexusIqApiConnectionService {
+    NexusIqApiConnectionService() {}
 
-    public static HttpURLConnection createAuthorisedUrlConnection(
+    public HttpURLConnection createAuthorisedUrlConnection(
             String user, String password, String url, String api, String endPoint)
             throws IOException {
         String encodedAuthString = createEncodedAuthString(user, password);
@@ -29,13 +29,13 @@ public class NexusIqApiConnection {
         return createUrlConnection(urlString, encodedAuthString);
     }
 
-    public static HttpURLConnection createAuthorisedUrlConnection(
+    public HttpURLConnection createAuthorisedUrlConnection(
             String user, String password, String urlString) throws IOException {
         String encodedAuthString = createEncodedAuthString(user, password);
         return createUrlConnection(urlString, encodedAuthString);
     }
 
-    public static HttpURLConnection createUrlConnection(String urlString, String encodedAuthString)
+    public HttpURLConnection createUrlConnection(String urlString, String encodedAuthString)
             throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -43,13 +43,13 @@ public class NexusIqApiConnection {
         return urlConnection;
     }
 
-    public static String createEncodedAuthString(String user, String password) {
+    public String createEncodedAuthString(String user, String password) {
         String authString = user + ":" + password;
         byte[] encodedAuth = Base64.encodeBase64(authString.getBytes(StandardCharsets.ISO_8859_1));
         return "Basic " + new String(encodedAuth);
     }
 
-    public static HttpURLConnection createAuthorizedPagedUrlConnection(
+    public HttpURLConnection createAuthorizedPagedUrlConnection(
             String user,
             String password,
             String url,
@@ -67,7 +67,7 @@ public class NexusIqApiConnection {
         return createUrlConnection(urlString, encodedAuthString);
     }
 
-    public static String retrieveCsvBasedOnPayload(
+    public String retrieveCsvBasedOnPayload(
             String user,
             String password,
             String url,
@@ -83,7 +83,7 @@ public class NexusIqApiConnection {
         return executeHttpURLPostForCSV(apiPayload, urlConnection);
     }
 
-    static String executeHttpURLPostForCSV(String apiPayload, HttpURLConnection urlConnection)
+    public String executeHttpURLPostForCSV(String apiPayload, HttpURLConnection urlConnection)
             throws IOException, HttpException {
         try (OutputStream connectionOutputStream = urlConnection.getOutputStream()) {
             byte[] payloadBytes = apiPayload.getBytes();
@@ -117,9 +117,9 @@ public class NexusIqApiConnection {
         return response;
     }
 
-    static HttpURLConnection prepareHttpURLPostForCSV(
+    public HttpURLConnection prepareHttpURLPostForCSV(
             String user, String password, String url, String api, String endpoint)
-            throws IOException, ProtocolException {
+            throws IOException {
         String metricsUrl = url + api + endpoint;
         HttpURLConnection urlConnection = createAuthorisedUrlConnection(user, password, metricsUrl);
         urlConnection.setRequestProperty("Accept", "text/csv");

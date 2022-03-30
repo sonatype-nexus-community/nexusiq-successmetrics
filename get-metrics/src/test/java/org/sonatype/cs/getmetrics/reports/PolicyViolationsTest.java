@@ -99,7 +99,7 @@ public class PolicyViolationsTest {
     void testMakeCsvFile() {
         JsonObject jsonObject = null;
         NexusIQApiDataService nexusIQApiDataService =
-                new NexusIQApiDataService("URL", "USER", "PASSWORD", "API");
+                new NexusIQApiDataService(null, "URL", "USER", "PASSWORD", "API");
         PolicyIdsService policyIdsService = new PolicyIdsService(nexusIQApiDataService);
         PolicyViolations violations = new PolicyViolations(policyIdsService);
         Assertions.assertThrows(

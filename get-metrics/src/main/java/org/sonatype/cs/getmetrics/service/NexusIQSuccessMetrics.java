@@ -15,7 +15,6 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.getmetrics.model.PayloadItem;
-import org.sonatype.cs.getmetrics.util.NexusIqApiConnection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 public class NexusIQSuccessMetrics {
     private static final Logger log = LoggerFactory.getLogger(NexusIQSuccessMetrics.class);
 
+    private NexusIqApiConnectionService nexusIqApiConnectionService;
     private FileIoService fileIoService;
 
     private String iqUrl;
@@ -40,6 +40,7 @@ public class NexusIQSuccessMetrics {
     private String iqReportsEndpoint;
 
     public NexusIQSuccessMetrics(
+            NexusIqApiConnectionService nexusIqApiConnectionService,
             FileIoService fileIoService,
             @Value("${iq.url}") String iqUrl,
             @Value("${iq.user}") String iqUser,
@@ -51,6 +52,7 @@ public class NexusIQSuccessMetrics {
             @Value("${iq.api.sm.payload.organisation.name}") String iqApiOrganisationName,
             @Value("${iq.api}") String iqApi,
             @Value("${iq.api.reports}") String iqReportsEndpoint) {
+        this.nexusIqApiConnectionService = nexusIqApiConnectionService;
         this.fileIoService = fileIoService;
         this.iqUrl = iqUrl;
         this.iqUser = iqUser;
@@ -68,7 +70,7 @@ public class NexusIQSuccessMetrics {
         String apiPayload = getPayload();
 
         String content =
-                NexusIqApiConnection.retrieveCsvBasedOnPayload(
+                nexusIqApiConnectionService.retrieveCsvBasedOnPayload(
                         iqUser, iqPwd, iqUrl, iqApi, iqReportsEndpoint, apiPayload);
         fileIoService.writeSuccessMetricsFile(
                 IOUtils.toInputStream(content, StandardCharsets.UTF_8));

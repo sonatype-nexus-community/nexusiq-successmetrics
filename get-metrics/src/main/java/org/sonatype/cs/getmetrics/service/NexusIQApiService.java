@@ -1,7 +1,6 @@
 package org.sonatype.cs.getmetrics.service;
 
 import org.slf4j.Logger;
-import org.sonatype.cs.getmetrics.util.NexusIqApiConnection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +16,7 @@ public class NexusIQApiService {
 
     private static Logger logger = org.slf4j.LoggerFactory.getLogger(NexusIQApiService.class);
 
+    private NexusIqApiConnectionService nexusIqApiConnectionService;
     private FileIoService fileIoService;
     private String iqUrl;
     private String iqUser;
@@ -24,11 +24,13 @@ public class NexusIQApiService {
     private String iqApi;
 
     public NexusIQApiService(
+            NexusIqApiConnectionService nexusIqApiConnectionService,
             FileIoService fileIoService,
             @Value("${iq.url}") String iqUrl,
             @Value("${iq.user}") String iqUser,
             @Value("${iq.passwd}") String iqPasswd,
             @Value("${iq.api}") String iqApi) {
+        this.nexusIqApiConnectionService = nexusIqApiConnectionService;
         this.fileIoService = fileIoService;
         this.iqUrl = iqUrl;
         this.iqUser = iqUser;
@@ -38,7 +40,7 @@ public class NexusIQApiService {
 
     public void makeReport(CsvFileService cfs, String endPoint) throws IOException {
         HttpURLConnection urlConnection =
-                NexusIqApiConnection.createAuthorisedUrlConnection(
+                nexusIqApiConnectionService.createAuthorisedUrlConnection(
                         iqUser, iqPasswd, iqUrl, iqApi, endPoint);
         InputStream is;
         try {

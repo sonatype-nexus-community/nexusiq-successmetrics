@@ -1,6 +1,5 @@
 package org.sonatype.cs.getmetrics.service;
 
-import org.sonatype.cs.getmetrics.util.NexusIqApiConnection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +13,19 @@ import javax.json.JsonReader;
 
 @Service
 public class NexusIQApiDataService {
+    private NexusIqApiConnectionService nexusIqApiConnectionService;
     private String iqUrl;
     private String iqUser;
     private String iqPasswd;
     private String iqApi;
 
     public NexusIQApiDataService(
+            NexusIqApiConnectionService nexusIqApiConnectionService,
             @Value("${iq.url}") String iqUrl,
             @Value("${iq.user}") String iqUser,
             @Value("${iq.passwd}") String iqPasswd,
             @Value("${iq.api}") String iqApi) {
+        this.nexusIqApiConnectionService = nexusIqApiConnectionService;
         this.iqUrl = iqUrl;
         this.iqUser = iqUser;
         this.iqPasswd = iqPasswd;
@@ -32,7 +34,7 @@ public class NexusIQApiDataService {
 
     public JsonObject getData(String endPoint) throws IOException {
         HttpURLConnection urlConnection =
-                NexusIqApiConnection.createAuthorisedUrlConnection(
+                nexusIqApiConnectionService.createAuthorisedUrlConnection(
                         iqUser, iqPasswd, iqUrl, iqApi, endPoint);
 
         return getJsonReaderFromURLConnection(urlConnection);
