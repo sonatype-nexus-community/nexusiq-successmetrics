@@ -59,7 +59,6 @@ public class LoaderService {
         successMetricsFileLoaded = loadSuccessMetricsData();
 
         if (activeProfile.equalsIgnoreCase("web")) {
-
             setApplicationEvaluationsFileLoaded(
                     this.loadMetricsFile(
                             DataLoaderParams.AEDATAFILE,
