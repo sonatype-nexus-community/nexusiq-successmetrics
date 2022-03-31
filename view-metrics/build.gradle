@@ -17,8 +17,10 @@ dependencies {
     implementation ('org.springframework.boot:spring-boot-starter-data-jpa')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'com.h2database:h2:2.0.202'
+	implementation 'org.webjars:webjars-locator-core:0.50'
   	implementation 'org.webjars:jquery:3.5.1'
 	implementation 'org.webjars:bootstrap:4.5.0'
+	implementation 'org.webjars.npm:apexcharts:3.28.1'
 	implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
 	implementation 'org.xhtmlrenderer:flying-saucer-pdf-openpdf:9.1.20'
 	implementation 'org.apache.commons:commons-csv:1.5'
