@@ -1,4 +1,4 @@
-## Development
+# Development
 
 Should you wish to contribute to the project:
 
@@ -10,35 +10,41 @@ Should you wish to contribute to the project:
 - (Preferably) Squash all your commits in your forked repository
 - Submit a pull request to this project
 
-To run tests:
+## To run tests
 
-```
+```bash
 ./gradlew test
 ```
 
-To build:
+## To build
 
-```
+```bash
 ./gradlew clean build
 ```
 
-To run the application:
+## To run the applications individually
 
+```bash
+./gradlew get-metrics:bootRun
+./gradlew view-metrics:bootRun
 ```
-./gradlew bootRun
-```
 
-To run from the JAR file:
-java -jar success-metrics-<version>.jar
+## To scan with Nexus IQ
 
-To scan with Nexus IQ:
-
-```
-./gradlew nexusIQScan -Pusername=<username> -Ppassword=<password> -PserverUrl=<server url:port>
+```bash
+./gradlew nexusIQScan -PnexusIQ.username=<username> -PnexusIQ.password=<password> -PnexusIQ.serverUrl=<server url:port> -PnexusIQ.stage=build
 ```
 
 ... for example:
 
+```bash
+./gradlew nexusIQScan -PnexusIQ.username=admin -PnexusIQ.password=admin123 -PnexusIQ.serverUrl=http://localhost:8070 -PnexusIQ.stage=build
 ```
-./gradlew nexusIQScan -Pusername=admin -Ppassword=admin123 -PserverUrl=http://localhost:8070
-```
+
+Defaults are:
+| Parameter | Default |
+|-|-|
+| nexusIQ.username | admin |
+| nexusIQ.password | admin123 |
+| nexusIQ.serverUrl | <http://localhost:8070> |
+| nexusIQ.stage | build |
