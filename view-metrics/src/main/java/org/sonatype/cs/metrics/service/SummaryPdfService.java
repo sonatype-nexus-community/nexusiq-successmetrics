@@ -23,24 +23,25 @@ public class SummaryPdfService {
     private PeriodsDataService periodsDataService;
     private MetricsService metricsService;
     private InsightsAnalysisService analysisService;
+    private TemplateEngine templateEngine;
 
     public SummaryPdfService(
             FileIoService fileIoService,
             PeriodsDataService periodsDataService,
             MetricsService metricsService,
-            InsightsAnalysisService analysisService) {
+            InsightsAnalysisService analysisService,
+            TemplateEngine templateEngine) {
         this.fileIoService = fileIoService;
         this.periodsDataService = periodsDataService;
         this.metricsService = metricsService;
         this.analysisService = analysisService;
+        this.templateEngine = templateEngine;
     }
 
     public String parsePdfTemplate(String htmlTemplate, boolean doAnalysis) throws ParseException {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
-
-        TemplateEngine templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
 
         Map<String, Object> periodsData =

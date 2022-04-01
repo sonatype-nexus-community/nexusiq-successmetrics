@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.1'
+	id 'org.springframework.boot' version '2.6.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id "com.palantir.docker" version "0.22.1"
     id "io.freefair.lombok" version "6.3.0"
@@ -21,7 +21,6 @@ dependencies {
   	implementation 'org.webjars:jquery:3.5.1'
 	implementation 'org.webjars:bootstrap:4.5.0'
 	implementation 'org.webjars.npm:apexcharts:3.28.1'
-	implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
 	implementation 'org.xhtmlrenderer:flying-saucer-pdf-openpdf:9.1.20'
 	implementation 'org.apache.commons:commons-csv:1.5'
 	implementation 'org.apache.httpcomponents:httpclient:4.5.13'

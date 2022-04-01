@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.approvaltests.Approvals;
 import org.approvaltests.namer.NamedEnvironment;
 import org.approvaltests.namer.NamerFactory;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -106,10 +108,11 @@ public class SuccessMetricsWebApplicationTest {
             })
     public void checkPageContents(String page, String lineToRemove) throws Exception {
         try (NamedEnvironment en = NamerFactory.withParameters(page)) {
-            String pageContents =
-                    this.restTemplate.getForObject(
+            ResponseEntity<String> response =
+                    this.restTemplate.getForEntity(
                             "http://localhost:" + port + "/" + page, String.class);
-            pageContents = removeLine(pageContents, Integer.parseInt(lineToRemove));
+            Assert.assertEquals(200, response.getStatusCodeValue());
+            String pageContents = removeLine(response.getBody(), Integer.parseInt(lineToRemove));
             Approvals.verify(pageContents);
         }
     }
