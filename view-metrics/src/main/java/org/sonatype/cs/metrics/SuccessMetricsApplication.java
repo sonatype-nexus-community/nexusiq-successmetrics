@@ -110,14 +110,9 @@ public class SuccessMetricsApplication implements CommandLineRunner {
     }
 
     private void createDataFiles() throws IOException, ParseException {
-        // case "pdf":
         String html = pdfService.parsePdfTemplate(pdfTemplate, doAnalysis);
         pdfService.generatePdfFromHtml(html, gettimestamp());
-
-        // case "insights":
         analysisService.writeInsightsAnalysisData(gettimestamp());
-
-        // csv data extract
         dataExtractService.writeDataExtract(gettimestamp());
     }
 }
