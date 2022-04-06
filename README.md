@@ -85,7 +85,7 @@ If both of these parameter are set then the organistaion setting will be used an
 
 ```bash
 cd get-metrics
-sh runapp.bat
+sh runapp.sh
 ```
 
 #### Get-metrics using Java on Windows machines
@@ -142,7 +142,7 @@ To configure which mode the view-metrics application should run in set the `spri
 
 ```bash
 cd view-metrics
-sh runapp.bat
+sh runapp.sh
 ```
 
 #### View-metrics using Java on Windows machines
