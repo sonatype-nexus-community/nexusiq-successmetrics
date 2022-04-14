@@ -61,6 +61,16 @@ iq.passwd
 
 &#9888; If you are using the get-metrics Docker image on the Nexus IQ machine then you cannot use `127.0.0.1` in the iq.url. You should instead use `host.docker.internal`.
 
+##### Error validating the security certificate
+
+If you receive an error saying "There was a problem validating the security certificate provided by IQ. Aborting..." when running the script then there is an option to disable checking of the Nexus IQ security certificate by setting the `insecure.ssl` parameter to `true`. This setting will make the connection to the Nexus IQ server less secure by bypassing the following checks that the get-metrics script performs on every connection to the Nexus IQ server:
+
+- check that the server certificate is signed by a trusted authority
+- check that the server certificate contains the correct domain name of the Nexus IQ server
+- check that the server certificate has, and has not expired
+
+This option is provided for convenience. The more correct is to resolve the underlying issue, whether by adding the server certificate to your machine, using the servers name rather than IP address in the `iq.url` parameter or by confirming that the server certificate has not expired. How to perform these changes and checks is outside the scope of this application and varies by operating system.
+
 #### Time period for which data should be fetched
 
 Data may be collected in monthly or weekly periods by setting the `iq.api.sm.period` to either `month` or `week`.
