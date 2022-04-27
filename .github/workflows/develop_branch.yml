@@ -1,13 +1,13 @@
-name: test-report-coverage
+name: Develop branch workflow
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   pull_request:
-    branches: [main]
+    branches: [develop]
 
 jobs:
-  pre-commit:
+  enforce-commit-standards:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,8 +31,8 @@ jobs:
           default_author: github_actions
           message: "Pipeline pre-commit update"
 
-  build:
-    needs: pre-commit
+  check-test-coverage:
+    needs: enforce-commit-standards
     runs-on: ubuntu-latest
 
     steps:
@@ -51,7 +51,7 @@ jobs:
 
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          ./gradlew -Prelversion=$VERSION clean build test codeCoverageReport --info
+          ./gradlew -Prelversion=$VERSION clean build test codeCoverageReport --info --stacktrace
 
       - name: Generate JaCoCo Badge
         id: jacoco

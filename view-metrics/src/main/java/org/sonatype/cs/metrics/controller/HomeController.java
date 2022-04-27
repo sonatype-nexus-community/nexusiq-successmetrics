@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.SuccessMetricsApplication;
 import org.sonatype.cs.metrics.service.LoaderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +14,18 @@ public class HomeController {
 
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
-    @Autowired private LoaderService loaderService;
-
-    @Autowired private SuccessMetricsApplication successMetricsApplication;
-
-    @Value("${sm.database}")
+    private LoaderService loaderService;
+    private SuccessMetricsApplication successMetricsApplication;
     private String smdatabase;
+
+    public HomeController(
+            LoaderService loaderService,
+            SuccessMetricsApplication successMetricsApplication,
+            @Value("${sm.database}") String smdatabase) {
+        this.loaderService = loaderService;
+        this.successMetricsApplication = successMetricsApplication;
+        this.smdatabase = smdatabase;
+    }
 
     @GetMapping({"/", "/home", "/home.html"})
     public String home(Model model) {

@@ -1,2 +1,2 @@
 
-java -jar view-metrics-@APPVER@.jar
+java -jar view-metrics-@APPVER@.jar %*

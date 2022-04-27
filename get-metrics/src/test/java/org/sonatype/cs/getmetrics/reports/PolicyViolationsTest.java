@@ -3,6 +3,8 @@ package org.sonatype.cs.getmetrics.reports;
 import org.apache.commons.lang3.NotImplementedException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.sonatype.cs.getmetrics.service.NexusIQApiDataService;
+import org.sonatype.cs.getmetrics.service.PolicyIdsService;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -96,7 +98,10 @@ public class PolicyViolationsTest {
     @Test
     void testMakeCsvFile() {
         JsonObject jsonObject = null;
-        PolicyViolations violations = new PolicyViolations();
+        NexusIQApiDataService nexusIQApiDataService =
+                new NexusIQApiDataService(null, "URL", "USER", "PASSWORD", "API");
+        PolicyIdsService policyIdsService = new PolicyIdsService(nexusIQApiDataService);
+        PolicyViolations violations = new PolicyViolations(policyIdsService);
         Assertions.assertThrows(
                 NotImplementedException.class, () -> violations.makeCsvFile(null, jsonObject));
     }

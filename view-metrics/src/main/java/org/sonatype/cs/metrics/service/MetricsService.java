@@ -1,6 +1,5 @@
 package org.sonatype.cs.metrics.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -9,13 +8,21 @@ import java.util.Map;
 @Service
 public class MetricsService {
 
-    @Autowired private SecurityDataService securityDataService;
+    private SecurityDataService securityDataService;
+    private LicenseDataService licenseDataService;
+    private ApplicationsDataService applicationsDataService;
+    private TotalsDataService totalsDataService;
 
-    @Autowired private LicenseDataService licenseDataService;
-
-    @Autowired private ApplicationsDataService applicationsDataService;
-
-    @Autowired private TotalsDataService totalsDataService;
+    public MetricsService(
+            SecurityDataService securityDataService,
+            LicenseDataService licenseDataService,
+            ApplicationsDataService applicationsDataService,
+            TotalsDataService totalsDataService) {
+        this.securityDataService = securityDataService;
+        this.licenseDataService = licenseDataService;
+        this.applicationsDataService = applicationsDataService;
+        this.totalsDataService = totalsDataService;
+    }
 
     public Map<String, Object> getMetrics(String tableName, Map<String, Object> periodsData) {
 

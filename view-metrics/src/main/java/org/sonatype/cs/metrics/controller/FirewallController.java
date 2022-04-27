@@ -8,7 +8,6 @@ import org.sonatype.cs.metrics.service.FileIoService;
 import org.sonatype.cs.metrics.service.LoaderService;
 import org.sonatype.cs.metrics.util.DataLoaderParams;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +21,18 @@ import java.util.List;
 public class FirewallController {
     private static final Logger log = LoggerFactory.getLogger(FirewallController.class);
 
-    @Autowired private DbService dbService;
-
-    @Autowired private LoaderService loaderService;
-
-    @Value("${metrics.dir}")
+    private DbService dbService;
+    private LoaderService loaderService;
     private String metricsDir;
+
+    public FirewallController(
+            DbService dbService,
+            LoaderService loaderService,
+            @Value("${metrics.dir}") String metricsDir) {
+        this.dbService = dbService;
+        this.loaderService = loaderService;
+        this.metricsDir = metricsDir;
+    }
 
     @GetMapping({"/firewall", "/firewall.html"})
     public String firewall(Model model) throws IOException {

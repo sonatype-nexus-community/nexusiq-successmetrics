@@ -6,7 +6,6 @@ import org.sonatype.cs.metrics.SuccessMetricsApplication;
 import org.sonatype.cs.metrics.service.MetricsService;
 import org.sonatype.cs.metrics.service.PeriodsDataService;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +16,18 @@ import java.util.Map;
 public class SummaryController {
     private static final Logger log = LoggerFactory.getLogger(SummaryController.class);
 
-    @Autowired private PeriodsDataService periodsDataService;
+    private PeriodsDataService periodsDataService;
+    private MetricsService metricsService;
+    private SuccessMetricsApplication successMetricsApplication;
 
-    @Autowired private MetricsService metricsService;
-
-    @Autowired private SuccessMetricsApplication successMetricsApplication;
+    public SummaryController(
+            PeriodsDataService periodsDataService,
+            MetricsService metricsService,
+            SuccessMetricsApplication successMetricsApplication) {
+        this.periodsDataService = periodsDataService;
+        this.metricsService = metricsService;
+        this.successMetricsApplication = successMetricsApplication;
+    }
 
     @GetMapping({"/summary", "/summary.html"})
     public String applications(Model model) {

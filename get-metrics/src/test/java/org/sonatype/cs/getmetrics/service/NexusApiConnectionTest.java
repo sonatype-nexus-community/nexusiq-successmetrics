@@ -1,4 +1,4 @@
-package org.sonatype.cs.getmetrics.util;
+package org.sonatype.cs.getmetrics.service;
 
 import static org.mockito.Mockito.*;
 
@@ -14,18 +14,21 @@ import java.net.ProtocolException;
 import java.net.URLConnection;
 
 public class NexusApiConnectionTest {
+    private NexusIqApiConnectionService nexusIqApiConnectionService =
+            new NexusIqApiConnectionService();
+
     @Test
     void testCreateEncodedAuthString() {
         Assertions.assertEquals(
                 "Basic dXNlcjpwYXNzd29yZA==",
-                NexusIqApiConnection.createEncodedAuthString("user", "password"));
+                nexusIqApiConnectionService.createEncodedAuthString("user", "password"));
     }
 
     @Test
     void testCreateUrlConnection() {
         try {
             URLConnection urlConnection =
-                    NexusIqApiConnection.createUrlConnection(
+                    nexusIqApiConnectionService.createUrlConnection(
                             "http://test.com/api/v2/test", "Basic dXNlcjpwYXNzd29yZA==");
             Assertions.assertEquals(
                     "http://test.com/api/v2/test", urlConnection.getURL().toString());
@@ -36,7 +39,7 @@ public class NexusApiConnectionTest {
         Assertions.assertThrows(
                 IOException.class,
                 () -> {
-                    NexusIqApiConnection.createUrlConnection(
+                    nexusIqApiConnectionService.createUrlConnection(
                             "http123://test.com/api/v2/test", "Basic dXNlcjpwYXNzd29yZA==");
                 });
     }
@@ -45,7 +48,7 @@ public class NexusApiConnectionTest {
     void testCreateAuthorisedUrlConnection() {
         try {
             URLConnection urlConnection =
-                    NexusIqApiConnection.createAuthorisedUrlConnection(
+                    nexusIqApiConnectionService.createAuthorisedUrlConnection(
                             "user", "password", "http://test.com", "/api/v2", "/test");
             Assertions.assertEquals(
                     "http://test.com/api/v2/test", urlConnection.getURL().toString());
@@ -58,7 +61,7 @@ public class NexusApiConnectionTest {
     void testCreateAuthorizedPagedUrlConnection() {
         try {
             URLConnection urlConnection =
-                    NexusIqApiConnection.createAuthorizedPagedUrlConnection(
+                    nexusIqApiConnectionService.createAuthorizedPagedUrlConnection(
                             "user", "password", "http://test.com", "/api/v2", "/test", 1, 50);
             Assertions.assertEquals(
                     "http://test.com/api/v2/test?page=1&pageSize=50&asc=true",
@@ -79,7 +82,8 @@ public class NexusApiConnectionTest {
         Assertions.assertThrows(
                 HttpException.class,
                 () -> {
-                    NexusIqApiConnection.executeHttpURLPostForCSV(apiPayload, mockedUrlConnection);
+                    nexusIqApiConnectionService.executeHttpURLPostForCSV(
+                            apiPayload, mockedUrlConnection);
                 });
 
         when(mockedUrlConnection.getOutputStream()).thenReturn(new ByteArrayOutputStream());
@@ -89,7 +93,8 @@ public class NexusApiConnectionTest {
         try {
             Assertions.assertEquals(
                     "{'1': '2'}",
-                    NexusIqApiConnection.executeHttpURLPostForCSV(apiPayload, mockedUrlConnection));
+                    nexusIqApiConnectionService.executeHttpURLPostForCSV(
+                            apiPayload, mockedUrlConnection));
         } catch (HttpException e) {
             Assertions.fail();
         }
@@ -100,7 +105,7 @@ public class NexusApiConnectionTest {
         HttpURLConnection urlConnection;
         try {
             urlConnection =
-                    NexusIqApiConnection.prepareHttpURLPostForCSV(
+                    nexusIqApiConnectionService.prepareHttpURLPostForCSV(
                             "user", "password", "http://test.com", "/api/v2", "/test");
             Assertions.assertEquals(
                     "http://test.com/api/v2/test", urlConnection.getURL().toString());

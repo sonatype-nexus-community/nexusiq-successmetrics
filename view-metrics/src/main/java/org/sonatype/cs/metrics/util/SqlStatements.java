@@ -300,17 +300,17 @@ public class SqlStatements {
 
     public static final String POLICYVIOLATIONSTABLES =
             "DROP TABLE IF EXISTS POLICY_VIOLATION;CREATE TABLE POLICY_VIOLATION (  policy_name"
-                    + " VARCHAR(250) NOT NULL,  reason VARCHAR(250) NOT NULL,  application_name"
-                    + " VARCHAR(250) NOT NULL,  open_time VARCHAR(250) DEFAULT NULL,  component"
-                    + " VARCHAR(250) DEFAULT NULL,  stage VARCHAR(250) DEFAULT NULL)  AS SELECT"
-                    + " policyname, reason, applicationname, parsedatetime(opentime, 'yyyy-MM-dd',"
-                    + " 'en'), component, stage FROM CSVREAD ";
+                + " VARCHAR(250) NOT NULL,  reason VARCHAR(250) NOT NULL,  application_name"
+                + " VARCHAR(250) NOT NULL,  open_time VARCHAR(250) DEFAULT NULL,  component"
+                + " VARCHAR(250) DEFAULT NULL,  stage VARCHAR(250) DEFAULT NULL)  AS SELECT"
+                + " policyname, reason, applicationname, LEFT(opentime, 10), component, stage FROM"
+                + " CSVREAD ";
 
     public static final String APPLICATIONEVALUATIONSTABLE =
             "DROP TABLE IF EXISTS APPLICATION_EVALUATION;CREATE TABLE APPLICATION_EVALUATION ( "
                 + " application_name VARCHAR(250) NOT NULL,  evaluation_date VARCHAR(250) DEFAULT"
                 + " NULL,  stage VARCHAR(250) DEFAULT NULL)  AS SELECT applicationname,"
-                + " parsedatetime(evaluationdate, 'yyyy-MM-dd', 'en'), stage FROM CSVREAD ";
+                + " left(evaluationdate, 10), stage FROM CSVREAD ";
 
     public static final String COMPONENTWAIVERSTABLE =
             "DROP TABLE IF EXISTS COMPONENT_WAIVER;CREATE TABLE COMPONENT_WAIVER ( "
@@ -326,6 +326,13 @@ public class SqlStatements {
                 + " (sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_CRITICAL) +"
                 + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_CRITICAL))/count(time_period_start)"
                 + " as pointA from <?> group by time_period_start order by 1";
+
+    public static final String RISKRATIOCOMPONENTS =
+            "select time_period_start as label,"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_CRITICAL) as pointA,"
+                    + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_CRITICAL) as pointB,"
+                    + " count(time_period_start) as pointC "
+                    + " from <?> group by time_period_start order by 1";
 
     public static final String RISKRATIOANALYSIS =
             "select application_name as label,"

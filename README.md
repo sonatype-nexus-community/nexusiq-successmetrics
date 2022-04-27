@@ -1,7 +1,5 @@
 # Success Metrics Application for IQ Server
 
-![Coverage](.github/badges/jacoco.svg)
-
 IQ Server has a number of REST APIs which can be used to extract policy evaluation, violation and remediation data. The Success Metrics get-metrics application extracts common metrics using this API and the view-metrics application aggregates the data into web or text reports.
 
 Using the Success Metrics application is a two step process:
@@ -12,26 +10,26 @@ Using the Success Metrics application is a two step process:
 ## Installation
 
 1. From the Releases pane on the right side of this page select the latest release
-1. Click on the *successmetrics-[releasenumber].zip* file on the assets page to download and save to your machine
+1. Click on the *nexusiq-successmetrics-[releasenumber].zip* file on the assets page to download and save to your machine
 1. Unzip the contents into a directory of your choice
 
    ```bash
-   unzip successmetrics-[releasenumber].zip
+   unzip nexusiq-successmetrics-[releasenumber].zip
    ```
 
 1. Navigate to the *successmetrics-[releasenumber]* directory (this will be the working directory for the rest of the commands given in this README)
 
    ```bash
-   cd successmetrics-[releasenumber.zip]
+   cd nexusiq-successmetrics-[releasenumber.zip]
    ```
 
 ## Fetch metrics from the IQ Server (get-metrics)
 
-The get-metrics script extract metrics from an IQ server and stores the result in the `./nexusiq` directory.
+The get-metrics script extract metrics from an IQ server and stores the result in the `./iqmetrics` directory.
 
 get-metrics can be executed using a [Java 1.8 jar](#running-get-metrics-using-java) or [Docker image](#running-get-metrics-using-docker).
 
-:warning: For large installations/datasets, the extract should be limited to a shorter period (e.g. previous 6 months or weeks) or subset of organisations and/or applications.
+&#9888; For large installations/datasets, the extract should be limited to a shorter period (e.g. previous 6 months or weeks) or subset of organisations and/or applications.
 
 ### Get-Metrics Configuration
 
@@ -49,7 +47,7 @@ metrics.policyviolations
 metrics.firewall
 ```
 
-:warning: success-metrics should always be set to true.
+&#9888; success-metrics should always be set to true.
 
 #### Nexus IQ server details
 
@@ -61,7 +59,17 @@ iq.user
 iq.passwd
 ```
 
-:warning: If you are using the get-metrics Docker image on the Nexus IQ machine then you cannot use `127.0.0.1` in the iq.url. You should instead use `host.docker.internal`.
+&#9888; If you are using the get-metrics Docker image on the Nexus IQ machine then you cannot use `127.0.0.1` in the iq.url. You should instead use `host.docker.internal`.
+
+##### Error validating the security certificate
+
+If you receive an error saying "There was a problem validating the security certificate provided by IQ. Aborting..." when running the script then there is an option to disable checking of the Nexus IQ security certificate by setting the `insecure.ssl` parameter to `true`. This setting will make the connection to the Nexus IQ server less secure by bypassing the following checks that the get-metrics script performs on every connection to the Nexus IQ server:
+
+- check that the server certificate is signed by a trusted authority
+- check that the server certificate contains the correct domain name of the Nexus IQ server
+- check that the server certificate has, and has not expired
+
+This option is provided for convenience. The more correct is to resolve the underlying issue, whether by adding the server certificate to your machine, using the servers name rather than IP address in the `iq.url` parameter or by confirming that the server certificate has not expired. How to perform these changes and checks is outside the scope of this application and varies by operating system.
 
 #### Time period for which data should be fetched
 
@@ -87,7 +95,7 @@ If both of these parameter are set then the organistaion setting will be used an
 
 ```bash
 cd get-metrics
-sh runapp.bat
+sh runapp.sh
 ```
 
 #### Get-metrics using Java on Windows machines
@@ -99,7 +107,7 @@ runapp.bat
 
 ### Running get-metrics using Docker
 
-:warning: You must be in the get-metrics directory for the runapp-docker script to work.
+&#9888; You must be in the get-metrics directory for the runapp-docker script to work.
 
 #### Get-metrics using Docker on Linux/Mac machines
 
@@ -124,11 +132,11 @@ There are two modes to the application.
 
 The view-metrics script processes metrics stored in the `./nexusiq` directory and presents them as detailed aggregated charts in a web view or in data files in the `./datafiles` directory.
 
-:warning: There must be a `successmetrics.csv` in the `./iqmetrics` directory.
+&#9888; There must be a `successmetrics.csv` in the `./iqmetrics` directory.
 
-:warning: In order to aggregate and process metrics a minimum of three data points (weeks or months) are needed.
+&#9888; In order to aggregate and process metrics a minimum of three data points (weeks or months) are needed.
 
-:warning: Only fully completed months (or weeks) are included in the data extract.
+&#9888; Only fully completed months (or weeks) are included in the data extract.
 
 ### View-metrics configuration
 
@@ -144,7 +152,7 @@ To configure which mode the view-metrics application should run in set the `spri
 
 ```bash
 cd view-metrics
-sh runapp.bat
+sh runapp.sh
 ```
 
 #### View-metrics using Java on Windows machines
@@ -156,7 +164,7 @@ runapp.bat
 
 ### Running view-metrics using Docker
 
-:warning: You must be in the get-metrics directory for the runapp-docker script to work.
+&#9888; You must be in the get-metrics directory for the runapp-docker script to work.
 
 #### View-metrics using Docker on Linux/Mac machines
 

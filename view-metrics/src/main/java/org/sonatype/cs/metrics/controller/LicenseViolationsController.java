@@ -6,7 +6,6 @@ import org.sonatype.cs.metrics.service.ApplicationsDataService;
 import org.sonatype.cs.metrics.service.LicenseDataService;
 import org.sonatype.cs.metrics.service.PeriodsDataService;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +16,18 @@ import java.util.Map;
 public class LicenseViolationsController {
     private static final Logger log = LoggerFactory.getLogger(LicenseViolationsController.class);
 
-    @Autowired private LicenseDataService licenseDataService;
+    private LicenseDataService licenseDataService;
+    private PeriodsDataService periodsDataService;
+    private ApplicationsDataService applicationsDataService;
 
-    @Autowired private PeriodsDataService periodsDataService;
-
-    @Autowired private ApplicationsDataService applicationsDataService;
+    public LicenseViolationsController(
+            LicenseDataService licenseDataService,
+            PeriodsDataService periodsDataService,
+            ApplicationsDataService applicationsDataService) {
+        this.licenseDataService = licenseDataService;
+        this.periodsDataService = periodsDataService;
+        this.applicationsDataService = applicationsDataService;
+    }
 
     @GetMapping({"/licenseviolations", "/licenseviolations.html"})
     public String licenseViolations(Model model) {

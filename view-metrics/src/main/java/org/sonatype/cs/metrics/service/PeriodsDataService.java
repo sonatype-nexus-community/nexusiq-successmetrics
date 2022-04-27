@@ -3,7 +3,6 @@ package org.sonatype.cs.metrics.service;
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -12,9 +11,14 @@ import java.util.Map;
 
 @Service
 public class PeriodsDataService {
-    @Autowired private DbService dbService;
+
+    private DbService dbService;
 
     private static long oneMonthMs = 2629800000L;
+
+    public PeriodsDataService(DbService dbService) {
+        this.dbService = dbService;
+    }
 
     public Map<String, Object> getPeriodData(String tableName) {
         Map<String, Object> model = new HashMap<>();

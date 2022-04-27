@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.util.DataLoaderParams;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,35 +20,45 @@ import java.util.Map;
 public class LoaderService {
     private static final Logger log = LoggerFactory.getLogger(LoaderService.class);
 
-    @Autowired private DbService dbService;
-
-    @Autowired private PeriodsDataService periodsDataService;
-
-    @Value("${metrics.dir}")
+    private DbService dbService;
+    private PeriodsDataService periodsDataService;
     private String metricsDir;
-
-    @Value("${data.includelatestperiod}")
     private boolean includelatestperiod;
-
-    @Value("${data.loadInsightsMetrics}")
     private boolean loadInsightsMetrics;
-
-    @Value("${data.successmetrics}")
     private String successmetricsFile;
+    private boolean successMetricsFileLoaded;
+    private boolean applicationEvaluationsFileLoaded;
+    private boolean policyViolationsDataLoaded;
+    private boolean componentWaiversLoaded;
+    private boolean autoreleasedFromQuarantineComponentsLoaded;
+    private boolean quarantinedComponentsLoaded;
 
-    private boolean successMetricsFileLoaded = false;
-    private boolean applicationEvaluationsFileLoaded = false;
-    private boolean policyViolationsDataLoaded = false;
-    private boolean componentWaiversLoaded = false;
-    private boolean autoreleasedFromQuarantineComponentsLoaded = false;
-    private boolean quarantinedComponentsLoaded = false;
+    public LoaderService(
+            DbService dbService,
+            PeriodsDataService periodsDataService,
+            @Value("${metrics.dir}") String metricsDir,
+            @Value("${data.includelatestperiod}") boolean includelatestperiod,
+            @Value("${data.loadInsightsMetrics}") boolean loadInsightsMetrics,
+            @Value("${data.successmetrics}") String successmetricsFile) {
+        this.dbService = dbService;
+        this.periodsDataService = periodsDataService;
+        this.metricsDir = metricsDir;
+        this.includelatestperiod = includelatestperiod;
+        this.loadInsightsMetrics = loadInsightsMetrics;
+        this.successmetricsFile = successmetricsFile;
+        this.successMetricsFileLoaded = false;
+        this.applicationEvaluationsFileLoaded = false;
+        this.policyViolationsDataLoaded = false;
+        this.componentWaiversLoaded = false;
+        this.autoreleasedFromQuarantineComponentsLoaded = false;
+        this.quarantinedComponentsLoaded = false;
+    }
 
     public boolean loadAllMetrics(String activeProfile) throws IOException {
 
         successMetricsFileLoaded = loadSuccessMetricsData();
 
         if (activeProfile.equalsIgnoreCase("web")) {
-
             setApplicationEvaluationsFileLoaded(
                     this.loadMetricsFile(
                             DataLoaderParams.AEDATAFILE,
@@ -94,8 +103,8 @@ public class LoaderService {
             if (doAnalysis) {
                 if (!includelatestperiod) {
                     String endPeriod = periods.get("endPeriod").toString();
-                    filterOutLatestPeriod(
-                            endPeriod); // it is likely incomplete and only where we know multiple
+                    filterOutLatestPeriod(endPeriod); // it is likely incomplete and only where we
+                    // know multiple
                     // periods available
                     log.info("Removing incomplete data for current month {}", endPeriod);
                 }

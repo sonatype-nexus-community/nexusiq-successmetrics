@@ -35,4 +35,14 @@ public class UtilService {
             writer.newLine();
         }
     }
+
+    public static String removeQuotesFromString(String inputString) {
+        if (inputString == null) {
+            return null;
+        }
+        if (inputString.startsWith("\"") && inputString.endsWith("\"")) {
+            return inputString.substring(1, inputString.length() - 1);
+        }
+        return inputString;
+    }
 }

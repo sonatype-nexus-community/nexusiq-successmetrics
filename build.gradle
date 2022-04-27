@@ -23,11 +23,11 @@ subprojects{
     }
 
     nexusIQScan {
-        username = 'admin'
-        password = 'admin123'
-        serverUrl = 'http://localhost:8070'
-        applicationId = 'successmetrics'
-        stage = 'build'
+        username = project.hasProperty('nexusIQ.username') ? project.property('nexusIQ.username') : 'admin'
+        password = project.hasProperty('nexusIQ.password') ? project.property('nexusIQ.password'): "admin123"
+        serverUrl = project.hasProperty('nexusIQ.serverUrl') ? project.property("nexusIQ.serverUrl") : "http://localhost:8070"
+        applicationId = project.hasProperty('nexusIQ.applicationId') ? project.property("nexusIQ.applicationId") : "success_metrics"
+        stage = project.hasProperty('nexusIQ.stage') ? project.property("nexusIQ.stage") : "build"
         allConfigurations = true
     }
 
@@ -37,6 +37,7 @@ subprojects{
         events "passed", "skipped", "failed"
       }
     }
+
 
   jacocoTestReport {
     reports{

@@ -5,8 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.model.DataExtractObject;
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.model.Mttr;
+import org.sonatype.cs.metrics.model.RiskRatio;
+import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,11 +22,24 @@ import java.util.Map;
 public class DataExtractService {
     private static final Logger log = LoggerFactory.getLogger(DataExtractService.class);
 
-    @Autowired private SecurityDataService securityDataService;
-    @Autowired private LicenseDataService licenseDataService;
-    @Autowired private PeriodsDataService periodsDataService;
-    @Autowired private ApplicationsDataService applicationsDataService;
-    @Autowired private FileIoService fileIoService;
+    private SecurityDataService securityDataService;
+    private LicenseDataService licenseDataService;
+    private PeriodsDataService periodsDataService;
+    private ApplicationsDataService applicationsDataService;
+    private FileIoService fileIoService;
+
+    public DataExtractService(
+            SecurityDataService securityDataService,
+            LicenseDataService licenseDataService,
+            PeriodsDataService periodsDataService,
+            ApplicationsDataService applicationsDataService,
+            FileIoService fileIoService) {
+        this.securityDataService = securityDataService;
+        this.licenseDataService = licenseDataService;
+        this.periodsDataService = periodsDataService;
+        this.applicationsDataService = applicationsDataService;
+        this.fileIoService = fileIoService;
+    }
 
     public void writeDataExtract(String timestamp) throws IOException {
         log.info("Writing data extracts file");
@@ -47,7 +61,7 @@ public class DataExtractService {
                 (List<DbRow>) applicationData.get("applicationsOnboardedChart");
         List<DbRow> totalNumberOfScansList =
                 (List<DbRow>) applicationData.get("numberOfScansChart");
-        List<DbRow> riskRatioList = (List<DbRow>) applicationData.get("riskRatioChart");
+        List<RiskRatio> riskRatioList = (List<RiskRatio>) applicationData.get("riskRatioChart");
         List<Mttr> mttrList = (List<Mttr>) applicationData.get("mttrChart");
         List<DbRow> securityViolationTotals =
                 (List<DbRow>) securityData.get("securityViolationsChart");
@@ -66,7 +80,7 @@ public class DataExtractService {
         List<DbRow> fixedLicenseList = (List<DbRow>) licenseData.get("fixedLicenseViolations");
         List<DbRow> waivedLicenseList = (List<DbRow>) licenseData.get("waivedLicenseViolations");
 
-        List<DataExtractObject> deoList = new ArrayList<DataExtractObject>();
+        List<DataExtractObject> deoList = new ArrayList<>();
 
         for (DbRow i : timePeriods) {
 
@@ -90,7 +104,7 @@ public class DataExtractService {
 
             riskRatioList.stream()
                     .filter(o -> o.getLabel().equals(timePeriod))
-                    .forEach(o -> deo.setRiskRatio(o.getPointA()));
+                    .forEach(o -> deo.setRiskRatio(o.getRiskRatioValue()));
 
             mttrList.stream()
                     .filter(o -> o.getLabel().equals(timePeriod))
@@ -287,8 +301,8 @@ public class DataExtractService {
         log.info("Created data extract file {}", csvFilename);
     }
 
-    private int calculateRiskRatio(int applications, int openViolations) {
-        return Math.round((float) openViolations / applications);
+    private Double calculateRiskRatio(int applications, int openViolations) {
+        return HelperService.roundDouble(Double.valueOf(openViolations) / applications, 1);
     }
 
     private int calculateBacklogRate(int discovered, int fixed) {
@@ -296,7 +310,8 @@ public class DataExtractService {
     }
 
     private float calculateDiscoveryRate(int applications, int discovered) {
-        // discovered violations / number of applications = discovery rate to two decimal places
+        // discovered violations / number of applications = discovery rate to two decimal
+        // places
         // (rounded up)
         BigDecimal riskRatio =
                 BigDecimal.valueOf(discovered)

@@ -7,11 +7,11 @@
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
 
-    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
-    <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="webjars/jquery/jquery.min.js"></script>
+    <link href="webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="webjars/bootstrap/js/bootstrap.min.js"></script>
 
-    <script src="/js/apexcharts.min.js"></script>
+    <script src="/webjars/apexcharts/3.28.1/dist/apexcharts.min.js"></script>
     <link rel="stylesheet" href="/css/apexcharts.css"/>
 
     <link href="/css/main.css" rel="stylesheet"/>
@@ -214,87 +214,87 @@
         <tbody>
         <tr>
             <td>App1</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>build</td>
         </tr>
         <tr>
             <td>Grandpa</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>build</td>
         </tr>
         <tr>
             <td>Reports</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>build</td>
         </tr>
         <tr>
             <td>SecretSauce</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>build</td>
         </tr>
         <tr>
             <td>Success_Metrics</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>build</td>
         </tr>
         <tr>
             <td>Successmetrics</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>build</td>
         </tr>
         <tr>
             <td>TechEnablement</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>build</td>
         </tr>
         <tr>
             <td>TradingApp</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>build</td>
         </tr>
         <tr>
             <td>Webgoat-legacy</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>build</td>
         </tr>
         <tr>
             <td>chesscom__cmorenoserrano</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>source</td>
         </tr>
         <tr>
             <td>iq-config-as-code__cmorenoserrano</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>source</td>
         </tr>
         <tr>
             <td>iq-recommendations__cmorenoserrano</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>source</td>
         </tr>
         <tr>
             <td>se-scripts__cmorenoserrano</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>source</td>
         </tr>
         <tr>
             <td>success-metrics__cmorenoserrano</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>source</td>
         </tr>
         <tr>
             <td>vol-node-cpp__cryptogogue</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>source</td>
         </tr>
         <tr>
             <td>vol-wallet-js__cryptogogue</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>source</td>
         </tr>
         <tr>
             <td>volition__cmorenoserrano</td>
-            <td>2021-10-05 00:00:00</td>
+            <td>2021-10-05</td>
             <td>source</td>
         </tr>
         </tbody>
@@ -325,17 +325,17 @@
         <tbody>
         <tr>
             <td>Reports</td>
-            <td>2021-08-23 00:00:00</td>
+            <td>2021-08-23</td>
             <td>stage-release</td>
         </tr>
         <tr>
             <td>Success_Metrics</td>
-            <td>2021-08-23 00:00:00</td>
+            <td>2021-08-23</td>
             <td>release</td>
         </tr>
         <tr>
             <td>Webgoat-legacy</td>
-            <td>2021-08-23 00:00:00</td>
+            <td>2021-08-23</td>
             <td>release</td>
         </tr>
         </tbody>

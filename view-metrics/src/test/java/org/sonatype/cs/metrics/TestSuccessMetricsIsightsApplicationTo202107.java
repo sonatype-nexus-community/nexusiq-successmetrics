@@ -7,7 +7,6 @@ import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -19,8 +18,7 @@ import java.nio.file.Paths;
             "metrics.dir=src/test/resources",
             "spring.profiles.active=data",
             "data.successmetrics=successmetrics-2021-01-01-to-2021-07-01.csv"
-        },
-        webEnvironment = WebEnvironment.RANDOM_PORT)
+        })
 public class TestSuccessMetricsIsightsApplicationTo202107 {
 
     @Autowired private SuccessMetricsApplication controller;

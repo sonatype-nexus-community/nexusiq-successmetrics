@@ -23,8 +23,11 @@ import java.util.List;
 public class FileIoService {
     private static final Logger log = LoggerFactory.getLogger(FileIoService.class);
 
-    @Value("${metricsDir}")
     private String metricsDir;
+
+    public FileIoService(@Value("${metricsDir}") String metricsDir) {
+        this.metricsDir = metricsDir;
+    }
 
     public void writeCsvFile(String filename, List<String[]> data) {
 

@@ -2,18 +2,23 @@ package org.sonatype.cs.metrics.service;
 
 import org.sonatype.cs.metrics.model.DbRow;
 import org.sonatype.cs.metrics.model.Mttr;
+import org.sonatype.cs.metrics.model.RiskRatio;
 import org.sonatype.cs.metrics.util.HelperService;
 import org.sonatype.cs.metrics.util.SqlStatements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class ApplicationsDataService {
-    @Autowired private DbService dbService;
+    private DbService dbService;
+
+    public ApplicationsDataService(DbService dbService) {
+        this.dbService = dbService;
+    }
 
     public Map<String, Object> getApplicationData(
             String tableName, Map<String, Object> periodsData) {
@@ -114,10 +119,24 @@ public class ApplicationsDataService {
                     dbService.runSql(tableName, SqlStatements.MOSTSCANNEDAPPLICATIONS));
         }
 
-        List<DbRow> riskRatio = dbService.runSql(tableName, SqlStatements.RISKRATIO);
-        model.put("riskRatioChart", riskRatio);
-        model.put("riskRatioAtEndPeriod", riskRatio.get(riskRatio.size() - 1).getPointA());
-        model.put("riskRatioAtStartPeriod", riskRatio.get(0).getPointA());
+        List<RiskRatio> riskRatios = new ArrayList<>();
+        dbService
+                .runSql(tableName, SqlStatements.RISKRATIOCOMPONENTS)
+                .forEach(
+                        timePeriod -> {
+                            Double riskRatioValue =
+                                    (Double.valueOf(timePeriod.getPointA())
+                                                    + Double.valueOf(timePeriod.getPointB()))
+                                            / Double.valueOf(timePeriod.getPointC());
+
+                            riskRatios.add(new RiskRatio(timePeriod.getLabel(), riskRatioValue));
+                        });
+        model.put("riskRatioChart", riskRatios);
+        model.put(
+                "riskRatioAtEndPeriod", riskRatios.get(riskRatios.size() - 1).getRiskRatioValue());
+        model.put(
+                "riskRatioAtStartPeriod",
+                riskRatios.get(riskRatios.size() - 1).getRiskRatioValue());
 
         return model;
     }
