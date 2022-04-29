@@ -95,11 +95,12 @@ public class PolicyViolations implements CsvFileService {
 
     static String getCVE(JsonArray reasons) {
         List<String> cves = new ArrayList<>();
-
         for (JsonObject reason : reasons.getValuesAs(JsonObject.class)) {
-            JsonObject reference = reason.getJsonObject("reference");
-            String cve = reference.getString("value");
-
+            String cve = "";
+            if (!reason.isNull("reference")) {
+                JsonObject reference = reason.getJsonObject("reference");
+                cve = reference.getString("value");
+            }
             if (!cves.contains(cve)) {
                 cves.add(cve);
             }

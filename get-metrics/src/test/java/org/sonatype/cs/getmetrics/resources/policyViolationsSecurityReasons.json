@@ -20,6 +20,11 @@
                 "type": "SECURITY_VULNERABILITY_REFID",
                 "value": "CVE-2016-1000027"
             }
+        },
+        {
+            "reason": "Found component older than 1 years",
+            "reference": null
         }
+
     ]
 }

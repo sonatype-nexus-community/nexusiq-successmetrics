@@ -26,7 +26,7 @@ public class PolicyViolationsTest {
                             .readObject()
                             .getJsonArray("reasons");
             Assertions.assertEquals(
-                    "CVE-2021-43466:CVE-2016-1000027", PolicyViolations.getCVE(reasons));
+                    "CVE-2021-43466:CVE-2016-1000027:", PolicyViolations.getCVE(reasons));
         } catch (FileNotFoundException e) {
             Assertions.fail();
         }
