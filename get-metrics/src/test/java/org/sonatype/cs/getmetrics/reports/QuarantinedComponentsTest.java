@@ -39,7 +39,7 @@ public class QuarantinedComponentsTest {
                     new String[] {
                         "npm_proxy",
                         "2021-03-29T14:43:51.477+0000",
-                        "N/A",
+                        "",
                         "add-fedops:0.0.0",
                         "npm",
                         "true",

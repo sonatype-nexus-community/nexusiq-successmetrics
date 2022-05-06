@@ -11,6 +11,7 @@ import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -19,6 +20,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @SpringBootApplication
+@EnableJpaRepositories
 public class SuccessMetricsApplication implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(SuccessMetricsApplication.class);

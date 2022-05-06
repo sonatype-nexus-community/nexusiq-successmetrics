@@ -2,6 +2,10 @@ package org.sonatype.cs.metrics.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.cs.metrics.model.AutoReleasedFromQuarantineComponent;
+import org.sonatype.cs.metrics.model.QuarantinedComponent;
+import org.sonatype.cs.metrics.repository.AutoReleasedFromQuarantinedComponentRepository;
+import org.sonatype.cs.metrics.repository.QuarantinedComponentRepository;
 import org.sonatype.cs.metrics.util.DataLoaderParams;
 import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +26,10 @@ public class LoaderService {
 
     private DbService dbService;
     private PeriodsDataService periodsDataService;
+    private CsvToRepositoryService csvToRepositoryService;
+    private QuarantinedComponentRepository quarantinedComponentRepository;
+    private AutoReleasedFromQuarantinedComponentRepository
+            autoReleasedFromQuarantinedComponentRepository;
     private String metricsDir;
     private boolean includelatestperiod;
     private boolean loadInsightsMetrics;
@@ -36,12 +44,20 @@ public class LoaderService {
     public LoaderService(
             DbService dbService,
             PeriodsDataService periodsDataService,
+            CsvToRepositoryService csvToRepositoryService,
+            QuarantinedComponentRepository quarantinedComponentRepository,
+            AutoReleasedFromQuarantinedComponentRepository
+                    autoReleasedFromQuarantinedComponentRepository,
             @Value("${metrics.dir}") String metricsDir,
             @Value("${data.includelatestperiod}") boolean includelatestperiod,
             @Value("${data.loadInsightsMetrics}") boolean loadInsightsMetrics,
             @Value("${data.successmetrics}") String successmetricsFile) {
         this.dbService = dbService;
         this.periodsDataService = periodsDataService;
+        this.quarantinedComponentRepository = quarantinedComponentRepository;
+        this.csvToRepositoryService = csvToRepositoryService;
+        this.autoReleasedFromQuarantinedComponentRepository =
+                autoReleasedFromQuarantinedComponentRepository;
         this.metricsDir = metricsDir;
         this.includelatestperiod = includelatestperiod;
         this.loadInsightsMetrics = loadInsightsMetrics;
@@ -74,16 +90,18 @@ public class LoaderService {
                             DataLoaderParams.CWDATAFILE,
                             DataLoaderParams.CWFILEHEADER,
                             SqlStatements.COMPONENTWAIVERSTABLE));
+
             setQuarantinedComponentsLoaded(
-                    this.loadMetricsFile(
-                            DataLoaderParams.QCDATAFILE,
-                            DataLoaderParams.QCHEADER,
-                            SqlStatements.QUARANTINEDCOMPONENTSTABLE));
+                    csvToRepositoryService.load(
+                            metricsDir + "/" + DataLoaderParams.QCDATAFILE,
+                            quarantinedComponentRepository,
+                            QuarantinedComponent.class));
+
             setAutoreleasedFromQuarantineComponentsLoaded(
-                    this.loadMetricsFile(
-                            DataLoaderParams.AFQCDATAFILE,
-                            DataLoaderParams.AFQCHEADER,
-                            SqlStatements.AUTORELEASEDFROMQUARANTINEDCOMPONENTSTABLE));
+                    csvToRepositoryService.load(
+                            metricsDir + "/" + DataLoaderParams.AFQCDATAFILE,
+                            autoReleasedFromQuarantinedComponentRepository,
+                            AutoReleasedFromQuarantineComponent.class));
         }
 
         return successMetricsFileLoaded;
