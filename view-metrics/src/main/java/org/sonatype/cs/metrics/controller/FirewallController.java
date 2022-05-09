@@ -2,12 +2,13 @@ package org.sonatype.cs.metrics.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.cs.metrics.model.DbRowStr;
-import org.sonatype.cs.metrics.service.DbService;
+import org.sonatype.cs.metrics.model.AutoReleasedFromQuarantineComponent;
+import org.sonatype.cs.metrics.model.QuarantinedComponent;
+import org.sonatype.cs.metrics.repository.AutoReleasedFromQuarantinedComponentRepository;
+import org.sonatype.cs.metrics.repository.QuarantinedComponentRepository;
 import org.sonatype.cs.metrics.service.FileIoService;
 import org.sonatype.cs.metrics.service.LoaderService;
 import org.sonatype.cs.metrics.util.DataLoaderParams;
-import org.sonatype.cs.metrics.util.SqlStatements;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,16 +22,22 @@ import java.util.List;
 public class FirewallController {
     private static final Logger log = LoggerFactory.getLogger(FirewallController.class);
 
-    private DbService dbService;
+    private QuarantinedComponentRepository quarantinedComponentRepository;
+    private AutoReleasedFromQuarantinedComponentRepository
+            autoReleasedFromQuarantineComponentRepository;
     private LoaderService loaderService;
     private String metricsDir;
 
     public FirewallController(
-            DbService dbService,
             LoaderService loaderService,
+            QuarantinedComponentRepository quarantinedComponentRepository,
+            AutoReleasedFromQuarantinedComponentRepository
+                    autoReleasedFromQuarantineComponentRepository,
             @Value("${metrics.dir}") String metricsDir) {
-        this.dbService = dbService;
         this.loaderService = loaderService;
+        this.quarantinedComponentRepository = quarantinedComponentRepository;
+        this.autoReleasedFromQuarantineComponentRepository =
+                autoReleasedFromQuarantineComponentRepository;
         this.metricsDir = metricsDir;
     }
 
@@ -40,15 +47,15 @@ public class FirewallController {
 
         /* Firewall list reports (loaded at startup) */
         if (loaderService.isQuarantinedComponentsLoaded()) {
-            List<DbRowStr> quarantinedComponents =
-                    dbService.runSqlStr(SqlStatements.QUARANTINEDCOMPONENTS);
+            List<QuarantinedComponent> quarantinedComponents =
+                    quarantinedComponentRepository.findAll();
             model.addAttribute("quarantinedComponents", quarantinedComponents);
             model.addAttribute("quarantinedComponentsData", !quarantinedComponents.isEmpty());
         }
 
         if (loaderService.isAutoreleasedFromQuarantineComponentsLoaded()) {
-            List<DbRowStr> autoReleasedFromQuarantinedComponents =
-                    dbService.runSqlStr(SqlStatements.AUTORELEASEDFROMQUARANTINEDCOMPONENTS);
+            List<AutoReleasedFromQuarantineComponent> autoReleasedFromQuarantinedComponents =
+                    autoReleasedFromQuarantineComponentRepository.findAll();
             model.addAttribute(
                     "autoReleasedFromQuarantinedComponents", autoReleasedFromQuarantinedComponents);
 

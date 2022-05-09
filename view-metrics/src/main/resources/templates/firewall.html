@@ -98,15 +98,15 @@
             </thead>
             <tbody>
             <tr th:each="dp : ${quarantinedComponents}">
-                <td th:text="${dp.pointA}"></td>
-                <td th:text="${dp.pointB}"></td>
-                <td th:text="${dp.pointC}"></td>
-                <td th:text="${dp.pointD}"></td>
-                <td th:text="${dp.pointE}"></td>
-                <td th:text="${dp.pointF}"></td>
-                <td th:text="${dp.pointG}"></td>
-                <td th:text="${dp.pointH}"></td>
-                <td th:text="${dp.pointI}"></td>
+                <td th:text="${dp.repository}"></td>
+                <td th:text="${dp.quarantineDate}"></td>
+                <td th:text="${dp.dateCleared} ?: 'N/A'"></td>
+                <td th:text="${dp.displayName}"></td>
+                <td th:text="${dp.format}"></td>
+                <td th:text="${dp.quarantined}"></td>
+                <td th:text="${dp.policyName}"></td>
+                <td th:text="${dp.threatLevel}"></td>
+                <td th:text="${dp.reason}"></td>
 
             </tr>
             </tbody>
@@ -143,15 +143,15 @@
             </thead>
             <tbody>
             <tr th:each="dp : ${autoReleasedFromQuarantinedComponents}">
-                <td th:text="${dp.pointA}"></td>
-                <td th:text="${dp.pointB}"></td>
-                <td th:text="${dp.pointC}"></td>
-                <td th:text="${dp.pointD}"></td>
-                <td th:text="${dp.pointE}"></td>
-                <td th:text="${dp.pointF}"></td>
-                <td th:text="${dp.pointG}"></td>
-                <td th:text="${dp.pointH}"></td>
-                <td th:text="${dp.pointI}"></td>
+                <td th:text="${dp.repository}"></td>
+                <td th:text="${dp.quarantineDate}"></td>
+                <td th:text="${dp.dateCleared}"></td>
+                <td th:text="${dp.displayName}"></td>
+                <td th:text="${dp.format}"></td>
+                <td th:text="${dp.quarantined}"></td>
+                <td th:text="${dp.policyName}"></td>
+                <td th:text="${dp.threatLevel}"></td>
+                <td th:text="${dp.reason}"></td>
 
             </tr>
             </tbody>

@@ -241,7 +241,7 @@
             <tbody>
             <tr>
                 <td>maven-central-fw</td>
-                <td>2021-10-13T11:11:43.500+0000</td>
+                <td>2021-10-13 11:11:43.5</td>
                 <td>N/A</td>
                 <td>com.sonatype.clm:clm-maven-plugin:2.19.0-01</td>
                 <td>maven</td>
@@ -253,7 +253,7 @@
             </tr>
             <tr>
                 <td>maven-central-fw</td>
-                <td>2021-10-13T11:11:43.500+0000</td>
+                <td>2021-10-13 11:11:43.5</td>
                 <td>N/A</td>
                 <td>com.sonatype.clm:clm-maven-plugin:2.19.0-01</td>
                 <td>maven</td>
@@ -265,7 +265,7 @@
             </tr>
             <tr>
                 <td>maven-central-fw</td>
-                <td>2021-10-13T11:11:46.325+0000</td>
+                <td>2021-10-13 11:11:46.325</td>
                 <td>N/A</td>
                 <td>com.sonatype.clm:clm-maven-plugin:2.18.0-01</td>
                 <td>maven</td>
@@ -277,7 +277,7 @@
             </tr>
             <tr>
                 <td>maven-central-fw</td>
-                <td>2021-10-13T11:11:46.325+0000</td>
+                <td>2021-10-13 11:11:46.325</td>
                 <td>N/A</td>
                 <td>com.sonatype.clm:clm-maven-plugin:2.18.0-01</td>
                 <td>maven</td>
@@ -289,7 +289,7 @@
             </tr>
             <tr>
                 <td>maven-central-fw</td>
-                <td>2021-11-18T17:40:38.953+0000</td>
+                <td>2021-11-18 17:40:38.953</td>
                 <td>N/A</td>
                 <td>org.apache.maven.plugins:maven-jar-plugin:2.4</td>
                 <td>maven</td>
@@ -334,11 +334,11 @@
             <tbody>
             <tr>
                 <td>test_repo</td>
-                <td>2022-01-01</td>
-                <td>2022-01-02</td>
+                <td>2021-10-13 11:11:43.5</td>
+                <td>2021-10-13 11:11:43.5</td>
                 <td>test_display</td>
                 <td>test_format</td>
-                <td>test_quarantined</td>
+                <td>true</td>
                 <td>test_policy</td>
                 <td>10</td>
                 <td>test_reason</td>

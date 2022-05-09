@@ -43,7 +43,7 @@ public class QuarantinedComponents implements CsvFileService {
             displayName = displayName.replace(" ", "");
             String repository = result.getString("repository");
             String quarantineDate = result.getString("quarantineDate");
-            String dateCleared = result.getString("dateCleared", "N/A");
+            String dateCleared = result.getString("dateCleared", "");
             boolean quarantined = result.getBoolean("quarantined");
 
             JsonObject componentIdentifier = result.getJsonObject("componentIdentifier");
