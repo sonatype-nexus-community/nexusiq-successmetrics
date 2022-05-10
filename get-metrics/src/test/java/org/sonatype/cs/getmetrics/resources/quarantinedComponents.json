@@ -41,6 +41,28 @@
             "matchState": "exact",
             "repositoryId": "298bf707fd4f4323b7a0200b8dddd201",
             "quarantined": true
+        },
+        {
+            "displayName": "commons-collections : commons-collections : 3.1",
+            "repository": "maven-central",
+            "quarantineDate": "2022-03-16T14:11:09.146+0000",
+            "dateCleared": null,
+            "quarantinePolicyViolations": [],
+            "componentIdentifier": {
+                "format": "maven",
+                "coordinates": {
+                    "artifactId": "commons-collections",
+                    "classifier": "",
+                    "extension": "jar",
+                    "groupId": "commons-collections",
+                    "version": "3.1"
+                }
+            },
+            "pathname": "commons-collections/commons-collections/3.1/commons-collections-3.1.jar",
+            "hash": "40fb048097caeacdb11d",
+            "matchState": "exact",
+            "repositoryId": "4a7b99f9a0294d3682632b525b807156",
+            "quarantined": true
         }
     ]
 }
