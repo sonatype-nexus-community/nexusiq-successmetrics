@@ -47,11 +47,24 @@ public class QuarantinedComponentsTest {
                         "9",
                         "Integrity-Rating"
                     };
+            String[] dataRow2 =
+                    new String[] {
+                        "maven-central",
+                        "2022-03-16T14:11:09.146+0000",
+                        "",
+                        "commons-collections:commons-collections:3.1",
+                        "maven",
+                        "true",
+                        "None",
+                        "0",
+                        ""
+                    };
             List<String[]> data =
                     QuarantinedComponents.getQuarentinedComponentsFromData(jsonObject);
-            Assertions.assertEquals(2, data.size());
+            Assertions.assertEquals(3, data.size());
             Assertions.assertArrayEquals(headerRow, data.get(0));
             Assertions.assertArrayEquals(dataRow1, data.get(1));
+            Assertions.assertArrayEquals(dataRow2, data.get(2));
         } catch (FileNotFoundException e) {
             Assertions.fail();
         }
