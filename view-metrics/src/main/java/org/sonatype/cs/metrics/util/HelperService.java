@@ -89,4 +89,14 @@ public class HelperService {
         long tmp = Math.round(value);
         return (float) tmp / factor;
     }
+
+    public static LocalDateTime latestDate(LocalDateTime value1, LocalDateTime value2) {
+        if (value1 == null) {
+            return value2;
+        }
+        if (value2 == null) {
+            return value1;
+        }
+        return value1.isAfter(value2) ? value1 : value2;
+    }
 }

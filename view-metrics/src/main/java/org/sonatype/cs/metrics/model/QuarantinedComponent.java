@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,11 +28,11 @@ public class QuarantinedComponent {
 
     private String repository;
 
-    @CsvDate(value = "yyyy-MM-dd'T'HH:mm:ss.SSS", writeFormat = "yyyy-MM-dd HH:mm:ss.SSS")
-    private Timestamp quarantineDate;
+    @CsvDate(value = "yyyy-MM-dd'T'HH:mm:ss.SSSX", writeFormat = "yyyy-MM-dd HH:mm")
+    private LocalDateTime quarantineDate;
 
-    @CsvDate(value = "yyyy-MM-dd'T'HH:mm:ss.SSS", writeFormat = "yyyy-MM-dd HH:mm:ss.SSS")
-    private Timestamp dateCleared;
+    @CsvDate(value = "yyyy-MM-dd'T'HH:mm:ss.SSSX", writeFormat = "yyyy-MM-dd HH:mm")
+    private LocalDateTime dateCleared;
 
     private String displayName;
     private String format;
