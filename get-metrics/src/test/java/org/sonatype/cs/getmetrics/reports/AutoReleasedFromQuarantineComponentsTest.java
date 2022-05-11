@@ -58,12 +58,25 @@ public class AutoReleasedFromQuarantineComponentsTest {
                     "9",
                     "Integrity-Rating"
                 };
+        String[] dataRow3 =
+                new String[] {
+                    "npm_proxy",
+                    "2021-03-24T14:45:02.567+0000",
+                    "2021-03-24T18:53:46.115+0000",
+                    "rc-util:5.9.6",
+                    "npm",
+                    "false",
+                    "None",
+                    "0",
+                    ""
+                };
         List<String[]> data =
                 AutoReleasedFromQuarantineComponents.getQuarantinedComponentsFromData(jsonObject);
-        Assertions.assertEquals(3, data.size());
+        Assertions.assertEquals(4, data.size());
         Assertions.assertArrayEquals(headerRow, data.get(0));
         Assertions.assertArrayEquals(dataRow1, data.get(1));
         Assertions.assertArrayEquals(dataRow2, data.get(2));
+        Assertions.assertArrayEquals(dataRow3, data.get(3));
     }
 
     @Test

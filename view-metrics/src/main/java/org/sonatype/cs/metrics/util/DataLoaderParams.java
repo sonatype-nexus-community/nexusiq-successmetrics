@@ -21,16 +21,12 @@ public class DataLoaderParams {
             "policyName,reason,applicationName,openTime,component,stage,threatLevel";
 
     public static final String QCDATAFILE = "quarantined_components.csv";
-    public static final String QCHEADER =
-            "repository,quarantineDate,dateCleared,displayName,format,quarantined,policyName,threatLevel,reason";
 
     public static final String QCSDATAFILE = "quarantined_components_summary.csv";
     public static final String QCSHEADER =
             "repositoryCount,quarantineEnabledCount,quarantineenabled,totalComponentCount,quarantinedComponentCount";
 
     public static final String AFQCDATAFILE = "autoreleased_from_quarantine_components.csv";
-    public static final String AFQCHEADER =
-            "repository,quarantineDate,dateCleared,displayName,format,quarantined,policyName,threatLevel,reason";
 
     public static final String AFQCSDATAFILE =
             "autoreleased_from_quarantine_components_summary.csv";

@@ -43,7 +43,7 @@ public class QuarantinedComponents implements CsvFileService {
             displayName = displayName.replace(" ", "");
             String repository = result.getString("repository");
             String quarantineDate = result.getString("quarantineDate");
-            String dateCleared = result.getString("dateCleared", "N/A");
+            String dateCleared = result.getString("dateCleared", "");
             boolean quarantined = result.getBoolean("quarantined");
 
             JsonObject componentIdentifier = result.getJsonObject("componentIdentifier");
@@ -51,30 +51,45 @@ public class QuarantinedComponents implements CsvFileService {
 
             JsonArray quarantinePolicyViolations =
                     result.getJsonArray("quarantinePolicyViolations");
-            for (JsonObject quarantinePolicyViolation :
-                    quarantinePolicyViolations.getValuesAs(JsonObject.class)) {
-                String policyName = quarantinePolicyViolation.getString("policyName");
-                int threatLevel = quarantinePolicyViolation.getInt("threatLevel");
+            if (quarantinePolicyViolations.getValuesAs(JsonObject.class).isEmpty()) {
+                String[] line = {
+                    repository,
+                    quarantineDate,
+                    dateCleared,
+                    displayName,
+                    format,
+                    String.valueOf(quarantined),
+                    "None",
+                    "0",
+                    ""
+                };
+                data.add(line);
+            } else {
+                for (JsonObject quarantinePolicyViolation :
+                        quarantinePolicyViolations.getValuesAs(JsonObject.class)) {
+                    String policyName = quarantinePolicyViolation.getString("policyName");
+                    int threatLevel = quarantinePolicyViolation.getInt("threatLevel");
 
-                JsonArray constraintViolations =
-                        quarantinePolicyViolation.getJsonArray("constraintViolations");
-                for (JsonObject constraintViolation :
-                        constraintViolations.getValuesAs(JsonObject.class)) {
-                    JsonArray reasons = constraintViolation.getJsonArray("reasons");
-                    String reason = ParseReasons.getReason(policyName, reasons);
+                    JsonArray constraintViolations =
+                            quarantinePolicyViolation.getJsonArray("constraintViolations");
+                    for (JsonObject constraintViolation :
+                            constraintViolations.getValuesAs(JsonObject.class)) {
+                        JsonArray reasons = constraintViolation.getJsonArray("reasons");
+                        String reason = ParseReasons.getReason(policyName, reasons);
 
-                    String[] line = {
-                        repository,
-                        quarantineDate,
-                        dateCleared,
-                        displayName,
-                        format,
-                        String.valueOf(quarantined),
-                        policyName,
-                        String.valueOf(threatLevel),
-                        reason
-                    };
-                    data.add(line);
+                        String[] line = {
+                            repository,
+                            quarantineDate,
+                            dateCleared,
+                            displayName,
+                            format,
+                            String.valueOf(quarantined),
+                            policyName,
+                            String.valueOf(threatLevel),
+                            reason
+                        };
+                        data.add(line);
+                    }
                 }
             }
         }
