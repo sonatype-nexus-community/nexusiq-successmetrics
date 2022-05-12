@@ -83,12 +83,21 @@ public class PolicyViolationsTest {
                 "build",
                 "10"
             };
-            // TODO integrity test is currently not in the input JSON
+            String[] row3 = {
+                "License-None",
+                "Non-license string for testing",
+                "WebGoat",
+                "2022-02-15T10:11:04.055+0000",
+                "\"pkg:maven/org.projectlombok/lombok@1.18.20?type=jar\"",
+                "build",
+                "7"
+            };
 
-            Assertions.assertEquals(3, policyViolations.size());
+            Assertions.assertEquals(4, policyViolations.size());
             Assertions.assertArrayEquals(header, policyViolations.get(0));
             Assertions.assertArrayEquals(row1, policyViolations.get(1));
             Assertions.assertArrayEquals(row2, policyViolations.get(2));
+            Assertions.assertArrayEquals(row3, policyViolations.get(3));
 
         } catch (FileNotFoundException e) {
             Assertions.fail();
