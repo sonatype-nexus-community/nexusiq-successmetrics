@@ -123,11 +123,12 @@ public class PolicyViolations implements CsvFileService {
 
             Pattern pattern = Pattern.compile("^.+\'(.+)\'");
             Matcher matcher = pattern.matcher(licenseFound);
-            matcher.find();
-            String license = matcher.group(1);
+            if (matcher.find()) {
+                licenseFound = matcher.group(1);
+            }
 
-            if (!licenses.contains(license)) {
-                licenses.add(license);
+            if (!licenses.contains(licenseFound)) {
+                licenses.add(licenseFound);
             }
         }
 

@@ -87,6 +87,44 @@
                         "displayName": "com.thoughtworks.xstream : xstream : 1.4.5",
                         "proprietary": false
                     }
+                },
+                {
+                    "policyId": "26c36821604541f8848a6ae6889956b7",
+                    "policyName": "License-None",
+                    "policyViolationId": "82db9ee5a007433795585a5793cc0aac",
+                    "threatLevel": 7,
+                    "constraintViolations": [
+                        {
+                            "constraintId": "eec97815c2784006a2ece5cb65ea271a",
+                            "constraintName": "MIT License",
+                            "reasons": [
+                                {
+                                    "reason": "Non-license string for testing",
+                                    "reference": null
+                                }
+                            ]
+                        }
+                    ],
+                    "stageId": "build",
+                    "reportId": "27840c6b986c451e8806e1d0b8ef2787",
+                    "reportUrl": "ui/links/application/WebGoat/report/27840c6b986c451e8806e1d0b8ef2787",
+                    "openTime": "2022-02-15T10:11:04.055+0000",
+                    "component": {
+                        "packageUrl": "pkg:maven/org.projectlombok/lombok@1.18.20?type=jar",
+                        "hash": "18bcea7d5df4d49227b4",
+                        "componentIdentifier": {
+                            "format": "maven",
+                            "coordinates": {
+                                "artifactId": "lombok",
+                                "classifier": "",
+                                "extension": "jar",
+                                "groupId": "org.projectlombok",
+                                "version": "1.18.20"
+                            }
+                        },
+                        "displayName": "org.projectlombok : lombok : 1.18.20",
+                        "proprietary": false
+                    }
                 }
            ]
         }
