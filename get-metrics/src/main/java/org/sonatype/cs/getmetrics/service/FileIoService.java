@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class FileIoService {
@@ -65,5 +66,21 @@ public class FileIoService {
         java.nio.file.Files.copy(content, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         IOUtils.closeQuietly(content);
         log.info("Created file: {}", outputFile.toPath());
+        Stream<String> stream = null;
+        try {
+            stream = java.nio.file.Files.lines(outputFile.toPath());
+            if (stream.count() <= 1) {
+                log.warn(
+                        "The file {} contains no data, either there is no data to fetch or the user"
+                                + " doesn't have the appropriate permissions to fetch it.",
+                        outputFile.toPath());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (stream != null) {
+                stream.close();
+            }
+        }
     }
 }
