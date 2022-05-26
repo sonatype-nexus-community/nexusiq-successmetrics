@@ -146,6 +146,13 @@ public class LoaderService {
         Map<String, Object> periods =
                 periodsDataService.getPeriodData(SqlStatements.METRICTABLENAME);
 
+        if (periods == null || periods.isEmpty() || periods.get("midPeriod") == null) {
+            log.error(
+                    "Not enough periods were found in the successmetrics.csv data. At least three"
+                            + " full months or weeks of data are needed");
+            throw new IllegalStateException("");
+        }
+
         String midPeriod = periods.get("midPeriod").toString();
 
         log.info("Mid period: {}", midPeriod);
