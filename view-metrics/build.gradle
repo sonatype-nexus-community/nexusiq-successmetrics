@@ -35,3 +35,7 @@ dependencies {
 	testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
 	testImplementation("com.approvaltests:approvaltests:12.4.1")
 }
+
+test {
+	forkEvery = 1
+}
