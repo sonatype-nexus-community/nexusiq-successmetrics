@@ -98,7 +98,7 @@ public class SuccessMetricsWebApplicationTest {
                 "applications.html, 23",
                 "securityviolations.html, 23",
                 "licenseviolations.html, 23",
-                "firewall.html, 24",
+                "firewall.html, 23",
                 "violationsage.html?date=2022-03-01, 24",
                 "evaluations.html?date=2021-11-01, 23",
                 "analysis.html, 23",

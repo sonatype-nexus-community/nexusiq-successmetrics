@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
-
-<head>
-<div><div>
+  <head>
+    <title>Firewall report</title>
+    <div><div>
 
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
@@ -146,212 +145,304 @@
     </script>
 
 </div></div>
-</head>
+  </head>
 
-   <body>
+  <body>
+    <div class="jumbotron">
+      <h4>Firewall Report</h4>
+    </div>
 
-        <div class="jumbotron">
-        <h4>Firewall Report</h4>
-        </div>
-
-        <div class="container">
-        <div class="row">
+    <div class="container">
+      <div class="row">
         <div class="col-xl mx-auto w-auto bg-white rounded">
+          <h5>Quarantined Components Summary Report</h5>
 
-        <h5>Quarantined Components Summary Report</h5>
-
-        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-        <thead class="tablecolumncolor">
-            <tr>
+          <table class="table table-striped table-bordered table-sm">
+            <caption>
+              Summary information about Firewall usage
+            </caption>
+            <thead class="tablecolumncolor">
+              <tr>
                 <th class="th-sm">Repository Count</th>
                 <th class="th-sm">Quarantine Enabled RepositoryCount</th>
                 <th class="th-sm">Quarantine Enabled</th>
                 <th class="th-sm">Total Component Count</th>
                 <th class="th-sm">Quarantined Component Count</th>
-            </tr>
+              </tr>
             </thead>
             <tbody>
-            <tr>
+              <tr>
                 <td>8</td>
                 <td>4</td>
                 <td>true</td>
                 <td>94</td>
                 <td>23</td>
-            </tr>
+              </tr>
             </tbody>
-        </table>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br /><br />
 
-        </div>
-        </div>
-        </div>
-        </div>
-
-        <br><br>
-
-        <div class="container">
-        <div class="row">
+    <div class="container">
+      <div class="row">
         <div class="col-xl mx-auto w-auto bg-white rounded">
+          <h5>Autoreleased Quarantined Components Summary Report</h5>
 
-        <h5>Autoreleased Quarantined Components Summary Report</h5>
-
-        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-        <thead class="tablecolumncolor">
-            <tr>
+          <table class="table table-striped table-bordered table-sm">
+            <caption>
+              Summary of autoreleased components
+            </caption>
+            <thead class="tablecolumncolor">
+              <tr>
                 <th class="th-sm">AutoRelease Quarantine Count (MTD)</th>
                 <th class="th-sm">AutoRelease Quarantine Count (YTD)</th>
-            </tr>
+              </tr>
             </thead>
             <tbody>
-            <tr>
+              <tr>
                 <td>2</td>
                 <td>2</td>
-            </tr>
+              </tr>
             </tbody>
-        </table>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br /><br />
 
-        </div>
-        </div>
-        </div>
-        </div>
-
-        <br><br>
-
-        <div class="container">
-        <div class="row">
+    <div class="container">
+      <div class="row">
         <div class="col-xl mx-auto w-auto bg-white rounded">
-        <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+          <h5>Quarantined Threat Level By Format</h5>
 
-        <h5>Quarantined Components Report</h5>
-
-        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-        <thead class="tablecolumncolor">
-            <tr>
-                <th class="th-sm">Repository</th>
-                <th class="th-sm">Quarantine Date</th>
-                <th class="th-sm">Date Cleared</th>
-                <th class="th-sm">Package Name</th>
+          <table class="table table-striped table-bordered table-sm">
+            <caption>
+              The number of quarantined violations by threat level sorted by format of the package with the violation.
+            </caption>
+            <thead class="tablecolumncolor">
+              <tr>
                 <th class="th-sm">Format</th>
-                <th class="th-sm">Quarantined</th>
-                <th class="th-sm">Policy Name</th>
-                <th class="th-sm">Threat Level</th>
-                <th class="th-sm">Reason</th>
-
-            </tr>
+                <th class="th-sm">Threat 10</th>
+                <th class="th-sm">Threat 9</th>
+                <th class="th-sm">Threat 8</th>
+                <th class="th-sm">Threat 7</th>
+                <th class="th-sm">Threat 6</th>
+                <th class="th-sm">Threat 5</th>
+                <th class="th-sm">Threat 4</th>
+                <th class="th-sm">Threat 3</th>
+                <th class="th-sm">Threat 2</th>
+                <th class="th-sm">Threat 1</th>
+                <th class="th-sm">Threat 0</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>maven-central-fw</td>
-                <td>2021-10-13 11:11:43.5</td>
-                <td>N/A</td>
-                <td>com.sonatype.clm:clm-maven-plugin:2.19.0-01</td>
+              <tr>
                 <td>maven</td>
-                <td>true</td>
-                <td>License-Not-Provided</td>
-                <td>9</td>
-                <td></td>
-
-            </tr>
-            <tr>
-                <td>maven-central-fw</td>
-                <td>2021-10-13 11:11:43.5</td>
-                <td>N/A</td>
-                <td>com.sonatype.clm:clm-maven-plugin:2.19.0-01</td>
-                <td>maven</td>
-                <td>true</td>
-                <td>License-Banned</td>
-                <td>10</td>
-                <td>Proprietary-Clause</td>
-
-            </tr>
-            <tr>
-                <td>maven-central-fw</td>
-                <td>2021-10-13 11:11:46.325</td>
-                <td>N/A</td>
-                <td>com.sonatype.clm:clm-maven-plugin:2.18.0-01</td>
-                <td>maven</td>
-                <td>true</td>
-                <td>License-Not-Provided</td>
-                <td>9</td>
-                <td></td>
-
-            </tr>
-            <tr>
-                <td>maven-central-fw</td>
-                <td>2021-10-13 11:11:46.325</td>
-                <td>N/A</td>
-                <td>com.sonatype.clm:clm-maven-plugin:2.18.0-01</td>
-                <td>maven</td>
-                <td>true</td>
-                <td>License-Banned</td>
-                <td>10</td>
-                <td>Proprietary-Clause</td>
-
-            </tr>
-            <tr>
-                <td>maven-central-fw</td>
-                <td>2021-11-18 17:40:38.953</td>
-                <td>N/A</td>
-                <td>org.apache.maven.plugins:maven-jar-plugin:2.4</td>
-                <td>maven</td>
-                <td>true</td>
-                <td>License-Banned</td>
-                <td>10</td>
-                <td>Apache-2.0</td>
-
-            </tr>
+                <td>3</td>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
             </tbody>
-        </table>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br /><br />
 
-        </div>
-        </div>
-        </div>
-        </div>
-
-        <br><br>
-
-        <div class="container">
-        <div class="row">
+    <div class="container">
+      <div class="row">
         <div class="col-xl mx-auto w-auto bg-white rounded">
-        <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+          <h5>Quarantined Threat Level By Month Raised</h5>
 
-        <h5>Autoreleased from Quarantined Components Report</h5>
-
-        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-        <thead class="tablecolumncolor">
-            <tr>
-                <th class="th-sm">Repository</th>
-                <th class="th-sm">Quarantine Date</th>
-                <th class="th-sm">Date Cleared</th>
-                <th class="th-sm">Package Name</th>
-                <th class="th-sm">Format</th>
-                <th class="th-sm">Quarantined</th>
-                <th class="th-sm">Policy Name</th>
-                <th class="th-sm">Threat Level</th>
-                <th class="th-sm">Reason</th>
-
-            </tr>
+          <table class="table table-striped table-bordered table-sm">
+            <caption>
+              The number of quarantined violations by threat level sorted by month the packages was put in quarantine.
+            </caption>
+            <thead class="tablecolumncolor">
+              <tr>
+                <th class="th-sm">Month</th>
+                <th class="th-sm">Threat 10</th>
+                <th class="th-sm">Threat 9</th>
+                <th class="th-sm">Threat 8</th>
+                <th class="th-sm">Threat 7</th>
+                <th class="th-sm">Threat 6</th>
+                <th class="th-sm">Threat 5</th>
+                <th class="th-sm">Threat 4</th>
+                <th class="th-sm">Threat 3</th>
+                <th class="th-sm">Threat 2</th>
+                <th class="th-sm">Threat 1</th>
+                <th class="th-sm">Threat 0</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>test_repo</td>
-                <td>2021-10-13 11:11:43.5</td>
-                <td>2021-10-13 11:11:43.5</td>
-                <td>test_display</td>
-                <td>test_format</td>
-                <td>true</td>
-                <td>test_policy</td>
-                <td>10</td>
-                <td>test_reason</td>
-
-            </tr>
+              <tr>
+                <td>2021-11</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>2021-10</td>
+                <td>2</td>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
             </tbody>
-        </table>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br /><br />
 
+    <div class="container">
+      <div class="row">
+        <div class="col-xl mx-auto w-auto bg-white rounded">
+            <h5>Quarantined Components Report</h5>
+            <table class="table table-striped table-bordered table-sm">
+              <caption>
+                The list of quarantined components
+              </caption>
+              <thead class="tablecolumncolor">
+                <tr>
+                  <th class="th-sm">Repository</th>
+                  <th class="th-sm">Quarantine Date</th>
+                  <th class="th-sm">Date Cleared</th>
+                  <th class="th-sm">Package Name</th>
+                  <th class="th-sm">Format</th>
+                  <th class="th-sm">Quarantined</th>
+                  <th class="th-sm">Policy Name</th>
+                  <th class="th-sm">Threat Level</th>
+                  <th class="th-sm">Reason</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>maven-central-fw</td>
+                  <td>2021-10-13T11:11:43.500</td>
+                  <td>N/A</td>
+                  <td>com.sonatype.clm:clm-maven-plugin:2.19.0-01</td>
+                  <td>maven</td>
+                  <td>true</td>
+                  <td>License-Not-Provided</td>
+                  <td>9</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>maven-central-fw</td>
+                  <td>2021-10-13T11:11:43.500</td>
+                  <td>N/A</td>
+                  <td>com.sonatype.clm:clm-maven-plugin:2.19.0-01</td>
+                  <td>maven</td>
+                  <td>true</td>
+                  <td>License-Banned</td>
+                  <td>10</td>
+                  <td>Proprietary-Clause</td>
+                </tr>
+                <tr>
+                  <td>maven-central-fw</td>
+                  <td>2021-10-13T11:11:46.325</td>
+                  <td>N/A</td>
+                  <td>com.sonatype.clm:clm-maven-plugin:2.18.0-01</td>
+                  <td>maven</td>
+                  <td>true</td>
+                  <td>License-Not-Provided</td>
+                  <td>9</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>maven-central-fw</td>
+                  <td>2021-10-13T11:11:46.325</td>
+                  <td>N/A</td>
+                  <td>com.sonatype.clm:clm-maven-plugin:2.18.0-01</td>
+                  <td>maven</td>
+                  <td>true</td>
+                  <td>License-Banned</td>
+                  <td>10</td>
+                  <td>Proprietary-Clause</td>
+                </tr>
+                <tr>
+                  <td>maven-central-fw</td>
+                  <td>2021-11-18T17:40:38.953</td>
+                  <td>N/A</td>
+                  <td>org.apache.maven.plugins:maven-jar-plugin:2.4</td>
+                  <td>maven</td>
+                  <td>true</td>
+                  <td>License-Banned</td>
+                  <td>10</td>
+                  <td>Apache-2.0</td>
+                </tr>
+              </tbody>
+            </table>
         </div>
-        </div>
-        </div>
-        </div>
+      </div>
+    </div>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-xl mx-auto w-auto bg-white rounded">
+          <div class="table-responsive table-wrapper-scroll-y custom-scrollbar">
+            <h5>Autoreleased from Quarantined Components Report</h5>
 
-    </body>
+            <table class="table table-striped table-bordered table-sm">
+              <caption>
+                The list of components which have been autoreleased from quarantine
+              </caption>
+              <thead class="tablecolumncolor">
+                <tr>
+                  <th class="th-sm">Repository</th>
+                  <th class="th-sm">Quarantine Date</th>
+                  <th class="th-sm">Date Cleared</th>
+                  <th class="th-sm">Package Name</th>
+                  <th class="th-sm">Format</th>
+                  <th class="th-sm">Quarantined</th>
+                  <th class="th-sm">Policy Name</th>
+                  <th class="th-sm">Threat Level</th>
+                  <th class="th-sm">Reason</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>test_repo</td>
+                  <td>2021-10-13T11:11:43.500</td>
+                  <td>2021-10-13T11:11:43.500</td>
+                  <td>test_display</td>
+                  <td>test_format</td>
+                  <td>true</td>
+                  <td>test_policy</td>
+                  <td>10</td>
+                  <td>test_reason</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
