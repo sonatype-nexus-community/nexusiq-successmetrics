@@ -34,6 +34,7 @@ public class SuccessMetricsApplication implements CommandLineRunner {
     private String activeProfile;
     private String pdfTemplate;
     private String port;
+    private String server_address;
     private String contextPath;
 
     private boolean doAnalysis = true;
@@ -49,6 +50,7 @@ public class SuccessMetricsApplication implements CommandLineRunner {
             @Value("${spring.profiles.active}") String activeProfile,
             @Value("${pdf.htmltemplate}") String pdfTemplate,
             @Value("${server.port}") String port,
+            @Value("${server.address:localhost}") String server_address,
             @Value("${server.servlet.context-path:}") String contextPath) {
         this.loaderService = loaderService;
         this.pdfService = pdfService;
@@ -58,6 +60,7 @@ public class SuccessMetricsApplication implements CommandLineRunner {
         this.activeProfile = activeProfile;
         this.pdfTemplate = pdfTemplate;
         this.port = port;
+        this.server_address = server_address;
         this.contextPath = contextPath;
     }
 
@@ -102,7 +105,8 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 
     private void startUp() {
         log.info(
-                "Ready for viewing at http://localhost:{}{}",
+                "Ready for viewing at http://{}:{}{}",
+                server_address,
                 port,
                 contextPath != null ? contextPath : "");
     }
