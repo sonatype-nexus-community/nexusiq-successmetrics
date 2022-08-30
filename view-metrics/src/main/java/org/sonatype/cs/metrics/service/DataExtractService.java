@@ -306,7 +306,7 @@ public class DataExtractService {
     }
 
     private int calculateBacklogRate(int discovered, int fixed) {
-        return Math.round(((float) discovered / fixed) * 100);
+        return Math.round(((float) fixed / discovered) * 100);
     }
 
     private float calculateDiscoveryRate(int applications, int discovered) {
