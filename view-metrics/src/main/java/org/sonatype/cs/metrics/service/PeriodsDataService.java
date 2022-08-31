@@ -26,6 +26,7 @@ public class PeriodsDataService {
 
         List<DbRow> timePeriods = dbService.runSql(tableName, SqlStatements.TIMEPERIODS);
         model.put("timePeriodsList", timePeriods);
+        model.put("timePeriodsListSize", timePeriods.size());
 
         int numberOfPeriods = timePeriods.size();
 
