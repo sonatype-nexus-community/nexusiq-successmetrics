@@ -15,6 +15,8 @@ import javax.net.ssl.X509TrustManager;
 
 public class InsecureSSL {
 
+    private static final X509Certificate[] NO_CERTIFICATES = {};
+
     private InsecureSSL() {}
 
     public static void makeSSLConnectionsInsecure()
@@ -25,7 +27,7 @@ public class InsecureSSL {
                 new TrustManager[] {
                     new X509TrustManager() {
                         public X509Certificate[] getAcceptedIssuers() {
-                            return new X509Certificate[0];
+                            return NO_CERTIFICATES;
                         }
 
                         @Override
