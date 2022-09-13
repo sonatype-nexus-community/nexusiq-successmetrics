@@ -125,6 +125,9 @@ public class LoaderService {
                     // know multiple
                     // periods available
                     log.info("Removing incomplete data for current month {}", endPeriod);
+                    periods.put(
+                            "timePeriodsListSize",
+                            (Integer) periods.get("timePeriodsListSize") - 1);
                 }
 
                 if (loadInsightsMetrics) {
@@ -146,11 +149,12 @@ public class LoaderService {
         Map<String, Object> periods =
                 periodsDataService.getPeriodData(SqlStatements.METRICTABLENAME);
 
-        if (periods == null || periods.isEmpty() || periods.get("midPeriod") == null) {
+        if ((Integer) periods.get("timePeriodsListSize") < 3) {
             log.error(
-                    "Not enough periods were found in the successmetrics.csv data. At least three"
-                            + " full months or weeks of data are needed");
-            throw new IllegalStateException("");
+                    "It is not possible to generate the data view because the successmetrics.csv"
+                            + " file doesn't contain at least 3 periods (months or weeks) worth of"
+                            + " data");
+            System.exit(1);
         }
 
         String midPeriod = periods.get("midPeriod").toString();
