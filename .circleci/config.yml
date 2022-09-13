@@ -33,16 +33,15 @@ jobs:
           name: Run pre-commit on all files
           command: pre-commit run --all-files || true
       - run:
-          name: Print git changes
-          command: git status
-      - run:
           name: Commit changes back to GitHub
           command: |
-            git config --global user.email "rpanman@sonatype.com"
-            git config --global user.name "CircleCI"
-            git add *
-            git commit -m "Updated after pre-commit checks by CircleCI [skip ci]"
-            git push
+            if git status; then
+              git config --global user.email "rpanman@sonatype.com"
+              git config --global user.name "CircleCI"
+              git add *
+              git commit -m "Updated after pre-commit checks by CircleCI [skip ci]"
+              git push
+            fi
 
   test-with-gradle:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
