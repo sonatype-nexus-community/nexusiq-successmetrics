@@ -16,13 +16,13 @@ jobs:
             sudo apt update
             sudo apt install software-properties-common
             sudo add-apt-repository -y ppa:deadsnakes/ppa
-            sudo apt install python3.9
+            sudo apt install python3.9 python3-pip
       - run:
           name: "Print Python version"
           command: python3 -V
       - run:
           name: Install pre-commit-checks
-          command: python3 -m pip install pre-commit==2.16.0
+          command: pip3 install pre-commit==2.16.0
       - run:
           name: Run pre-commit on all files
           command: pre-commit run --all-files || true
