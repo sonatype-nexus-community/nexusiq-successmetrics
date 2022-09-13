@@ -69,4 +69,4 @@ workflows:
       equal: ['circleci-project-setup', << pipeline.git.branch >>]
     jobs:
       - enforce-commit-standards
-      - test-with-gradle
+      # - test-with-gradle
