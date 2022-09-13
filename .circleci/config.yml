@@ -7,7 +7,7 @@ version: 2.1
 jobs:
   enforce-commit-standards:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/base:2022.09
     steps:
       - checkout
       - run:
