@@ -11,6 +11,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Install Python"
+          command: |
+            apt update
+            apt install python3.9
+      - run:
           name: "Print Python version"
           command: python -V
       - run:
