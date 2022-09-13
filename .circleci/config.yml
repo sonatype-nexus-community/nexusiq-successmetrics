@@ -19,7 +19,7 @@ jobs:
             sudo apt install python3.9
       - run:
           name: "Print Python version"
-          command: python -V
+          command: python3 -V
       - run:
           name: Install pre-commit-checks
           command: pip install pre-commit==2.16.0
