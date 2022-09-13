@@ -9,6 +9,9 @@ jobs:
     docker:
       - image: cimg/base:2022.09
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "55:47:0b:af:ad:97:89:06:19:4e:5c:34:06:50:f8:16"
       - checkout
       - run:
           name: "Install Python and Java"
@@ -32,12 +35,12 @@ jobs:
       - run:
           name: Print git changes
           command: git status
-        # - uses: EndBug/add-and-commit@v7
-        #   continue-on-error: true
-        #   with:
-        #     default_author: github_actions
-        #     message: "Pipeline pre-commit update"
-
+      - run:
+          name: Commit changes back to GitHub
+          command: |
+            git add *
+            git commit -m "Updated after pre-commit checks by CircleCI [skip ci]"
+            git push
 
   test-with-gradle:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
