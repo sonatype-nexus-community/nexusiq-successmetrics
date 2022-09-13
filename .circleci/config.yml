@@ -38,6 +38,8 @@ jobs:
       - run:
           name: Commit changes back to GitHub
           command: |
+            git config --global user.email "rpanman@sonatype.com"
+            git config --global user.name "CircleCI"
             git add *
             git commit -m "Updated after pre-commit checks by CircleCI [skip ci]"
             git push
