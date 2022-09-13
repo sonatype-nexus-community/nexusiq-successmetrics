@@ -5,7 +5,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build-with-gradle:
+  test-with-gradle:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -19,10 +19,14 @@ jobs:
           command: |
             java --version
             ./gradlew test
+      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/collect-test-data/
+          path: build/test-results/test
+      - store_artifacts: # Upload test results for display in Artifacts: https://circleci.com/docs/artifacts/
+          path: build/test-results/test
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   develop-branch-workflow:
     jobs:
-      - build-with-gradle
+      - test-with-gradle
