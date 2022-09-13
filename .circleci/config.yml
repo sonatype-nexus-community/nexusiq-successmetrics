@@ -22,7 +22,7 @@ jobs:
           command: python3 -V
       - run:
           name: Install pre-commit-checks
-          command: pip3 install pre-commit==2.16.0
+          command: python3 -m pip install pre-commit==2.16.0
       - run:
           name: Run pre-commit on all files
           command: pre-commit run --all-files || true
