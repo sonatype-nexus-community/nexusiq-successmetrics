@@ -34,5 +34,7 @@ jobs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   develop-branch-workflow:
+    when:
+      equal: ['circleci-project-setup', << pipeline.git.branch >>]
     jobs:
       - test-with-gradle
