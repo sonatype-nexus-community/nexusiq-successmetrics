@@ -2,13 +2,6 @@ package org.sonatype.cs.getmetrics.service;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpException;
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 
 @Service
@@ -164,29 +158,9 @@ public class NexusIQSuccessMetrics {
         String url = iqUrl + endpoint;
         log.info("Fetching data from: {}", url);
 
-        HttpGet request = new HttpGet(url);
-
-        String auth = iqUser + ":" + iqPwd;
-        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.ISO_8859_1));
-        String authHeader = "Basic " + new String(encodedAuth, StandardCharsets.ISO_8859_1);
-
-        request.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
-        request.addHeader("Content-Type", "application/json");
-
-        HttpClient client = HttpClientBuilder.create().build();
-        HttpResponse response = client.execute(request);
-
-        int statusCode = response.getStatusLine().getStatusCode();
-
-        if (statusCode != 200) {
-            throw new HttpException(
-                    "Failed with HTTP error code : "
-                            + statusCode
-                            + " ["
-                            + response.getStatusLine().getReasonPhrase()
-                            + "]");
-        }
-
-        return EntityUtils.toString(response.getEntity());
+        HttpURLConnection urlConnection =
+                nexusIqApiConnectionService.prepareHttpURLGetForJSON(
+                        iqUser, iqPwd, iqUrl, endpoint);
+        return nexusIqApiConnectionService.executeHttpURLGetForJson(urlConnection);
     }
 }
