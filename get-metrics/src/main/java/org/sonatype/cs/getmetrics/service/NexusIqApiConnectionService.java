@@ -117,6 +117,36 @@ class NexusIqApiConnectionService {
         return response;
     }
 
+    public String executeHttpURLGetForJson(HttpURLConnection urlConnection)
+            throws IOException, HttpException {
+        if (urlConnection.getResponseCode() != 200) {
+            throw new HttpException(
+                    "Failed with HTTP error code : "
+                            + urlConnection.getResponseCode()
+                            + " ["
+                            + urlConnection.getResponseMessage()
+                            + "]");
+        }
+
+        BufferedReader bufferedReader =
+                new BufferedReader(
+                        new InputStreamReader(
+                                (InputStream) urlConnection.getContent(), StandardCharsets.UTF_8));
+        String response = bufferedReader.lines().collect(Collectors.joining("\n"));
+        int statusCode = urlConnection.getResponseCode();
+        urlConnection.disconnect();
+
+        if (statusCode != 200) {
+            throw new HttpException(
+                    "Failed with HTTP error code : "
+                            + statusCode
+                            + " ["
+                            + urlConnection.getResponseMessage()
+                            + "]");
+        }
+        return response;
+    }
+
     public HttpURLConnection prepareHttpURLPostForCSV(
             String user, String password, String url, String api, String endpoint)
             throws IOException {
@@ -125,6 +155,16 @@ class NexusIqApiConnectionService {
         urlConnection.setRequestProperty("Accept", "text/csv");
         urlConnection.setRequestProperty("Content-Type", "application/json");
         urlConnection.setRequestMethod("POST");
+        urlConnection.setDoOutput(true);
+        return urlConnection;
+    }
+
+    public HttpURLConnection prepareHttpURLGetForJSON(
+            String user, String password, String url, String endpoint) throws IOException {
+        String metricsUrl = url + endpoint;
+        HttpURLConnection urlConnection = createAuthorisedUrlConnection(user, password, metricsUrl);
+        urlConnection.setRequestProperty("Content-Type", "application/json");
+        urlConnection.setRequestMethod("GET");
         urlConnection.setDoOutput(true);
         return urlConnection;
     }
