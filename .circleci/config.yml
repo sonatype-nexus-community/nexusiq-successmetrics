@@ -18,17 +18,7 @@ jobs:
           name: "Run tests"
           command: |
             java --version
-            cd src/test/java
-            # Get list of classnames of tests that should run on this node
-            CLASSNAMES=$(circleci tests glob "**/*.java" \
-              | cut -c 1- | sed 's@/@.@g' \
-              | sed 's/.\{5\}$//' \
-              | circleci tests split --split-by=timings --timings-type=classname)
-            cd ../../..
-            # Format the arguments to "./gradlew test"
-            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
-            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
-            ./gradlew test $GRADLE_ARGS
+            ./gradlew codeCoverageReport
       - save_cache:
           paths:
             - ~/.gradle/wrapper
@@ -37,10 +27,8 @@ jobs:
           paths:
             - ~/.gradle/caches
           key: v1-gradle-cache-{{ checksum "build.gradle" }}
-      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/collect-test-data/
-          path: build/test-results/test
       - store_artifacts: # Upload test results for display in Artifacts: https://circleci.com/docs/artifacts/
-          path: build/test-results/test
+          path: build/reports/jacoco/codeCoverageReport/html
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
