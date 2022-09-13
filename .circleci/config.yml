@@ -13,8 +13,8 @@ jobs:
       - run:
           name: "Install Python"
           command: |
-            apt update
-            apt install python3.9
+            sudo apt update
+            sudo apt install python3.9
       - run:
           name: "Print Python version"
           command: python -V
