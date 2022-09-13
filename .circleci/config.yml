@@ -5,6 +5,30 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
+  enforce-commit-standards:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: "Print Python version"
+          command: python -V
+      - run:
+          name: Install pre-commit-checks
+          command: pip install pre-commit==2.16.0
+      - run:
+          name: Run pre-commit on all files
+          command: pre-commit run --all-files || true
+      - run:
+          name: Print git changes
+          command: git status
+        # - uses: EndBug/add-and-commit@v7
+        #   continue-on-error: true
+        #   with:
+        #     default_author: github_actions
+        #     message: "Pipeline pre-commit update"
+
+
   test-with-gradle:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -37,4 +61,5 @@ workflows:
     when:
       equal: ['circleci-project-setup', << pipeline.git.branch >>]
     jobs:
+      - enforce-commit-standards
       - test-with-gradle
