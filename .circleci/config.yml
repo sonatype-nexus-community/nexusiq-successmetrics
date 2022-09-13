@@ -11,15 +11,18 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Install Python"
+          name: "Install Python and Java"
           command: |
             sudo apt update
             sudo apt install software-properties-common
             sudo add-apt-repository -y ppa:deadsnakes/ppa
-            sudo apt install python3.9 python3-pip
+            sudo apt install python3.9 python3-pip openjdk-8-jdk
       - run:
-          name: "Print Python version"
-          command: python3 -V
+          name: "Print Python and Java versions"
+          command: |
+            python3 -V
+            pip3 --version
+            java -version
       - run:
           name: Install pre-commit-checks
           command: pip3 install pre-commit==2.16.0
