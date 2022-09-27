@@ -72,8 +72,14 @@ jobs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   develop-branch-workflow:
-    when:
-      equal: ['develop', << pipeline.git.branch >>]
     jobs:
-      - enforce-commit-standards
-      # - test-with-gradle
+      - enforce-commit-standards:
+          filters:
+            branches:
+              only:
+                - develop
+      - test-with-gradle:
+          filters:
+            branches:
+              only:
+                - develop
