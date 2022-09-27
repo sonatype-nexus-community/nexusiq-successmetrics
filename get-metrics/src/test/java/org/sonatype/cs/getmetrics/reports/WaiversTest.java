@@ -33,10 +33,10 @@ public class WaiversTest {
                         "pkg:pypi/flask@2.0.2?extension=tar.gz",
                         "Security-Medium",
                         "7",
-                        "\"This has been mitigated in"
-                                + " https://github.com/example/application/pull/5\"",
-                        "\"2022-01-25T10:55:55.444+0000\"",
-                        "\"2022-01-26T10:55:55.444+0000\""
+                        "This has been mitigated in"
+                                + " https://github.com/example/application/pull/5",
+                        "2022-01-25T10:55:55.444+0000",
+                        "2022-01-26T10:55:55.444+0000"
                     },
                     data.get(0));
             Assertions.assertArrayEquals(
@@ -46,9 +46,9 @@ public class WaiversTest {
                         "pkg:pypi/flask@2.0.2?extension=tar.gz",
                         "Security-Medium",
                         "7",
-                        "\"This has been mitigated in"
-                                + " https://github.com/example/application/pull/5\"",
-                        "\"2022-01-25T10:55:55.444+0000\"",
+                        "This has been mitigated in"
+                                + " https://github.com/example/application/pull/5",
+                        "2022-01-25T10:55:55.444+0000",
                         ""
                     },
                     data.get(1));
@@ -112,10 +112,10 @@ public class WaiversTest {
                         "pkg:pypi/flask@2.0.2?extension=tar.gz",
                         "Security-Medium",
                         "7",
-                        "\"This has been mitigated in"
-                                + " https://github.com/example/application/pull/5\"",
-                        "\"2022-01-25T10:55:55.444+0000\"",
-                        "\"2022-01-26T10:55:55.444+0000\""
+                        "This has been mitigated in"
+                                + " https://github.com/example/application/pull/5",
+                        "2022-01-25T10:55:55.444+0000",
+                        "2022-01-26T10:55:55.444+0000"
                     },
                     data.get(1));
             Assertions.assertArrayEquals(
@@ -125,9 +125,9 @@ public class WaiversTest {
                         "pkg:pypi/flask@2.0.2?extension=tar.gz",
                         "Security-Medium",
                         "7",
-                        "\"This has been mitigated in"
-                                + " https://github.com/example/application/pull/5\"",
-                        "\"2022-01-25T10:55:55.444+0000\"",
+                        "This has been mitigated in"
+                                + " https://github.com/example/application/pull/5",
+                        "2022-01-25T10:55:55.444+0000",
                         ""
                     },
                     data.get(2));
