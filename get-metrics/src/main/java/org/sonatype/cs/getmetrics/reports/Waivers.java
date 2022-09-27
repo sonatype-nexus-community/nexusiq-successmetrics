@@ -71,7 +71,7 @@ public class Waivers implements CsvFileService {
                 for (JsonObject componentViolation :
                         componentViolations.getValuesAs(JsonObject.class)) {
                     JsonObject component = componentViolation.getJsonObject("component");
-                    String packageUrl = component.getString("packageUrl");
+                    String packageUrl = getFieldStringFromJsonObject(component, "packageUrl");
                     JsonArray waivedPolicyViolations =
                             componentViolation.getJsonArray("waivedPolicyViolations");
 
@@ -111,6 +111,6 @@ public class Waivers implements CsvFileService {
         if (policyWaiver.get(field) == null) {
             return "";
         }
-        return String.valueOf(policyWaiver.get(field));
+        return String.valueOf(policyWaiver.getString(field));
     }
 }
