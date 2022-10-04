@@ -1,4 +1,4 @@
-applicationName,stage,packageUrl,policyName,threatLevel,comment,createDate,expiryTime
+"applicationName","stage","packageUrl","policyName","threatLevel","comment","createDate","expiryTime"
 wbg11,source,pkg:maven/axis/axis@1.2?type=jar,Security-High,9,"","2022-01-27T09:49:12.863+0000","2022-02-26T23:59:59.999+0000"
 wbg20,source,pkg:maven/axis/axis@1.2?type=jar,Security-High,9,"","2022-01-27T09:49:12.863+0000","2022-02-26T23:59:59.999+0000"
 webg2,source,pkg:maven/axis/axis@1.2?type=jar,Security-High,9,"","2022-01-27T09:49:12.863+0000","2022-02-26T23:59:59.999+0000"

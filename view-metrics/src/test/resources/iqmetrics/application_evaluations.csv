@@ -1,4 +1,4 @@
-applicationName,evaluationDate,stage
+"applicationName","evaluationDate","stage"
 TradingApp,2021-10-05T00:11:58.057+01:00,build
 Successmetrics,2021-10-05T00:10:54.301+01:00,build
 SecretSauce,2021-10-05T00:09:51.617+01:00,build

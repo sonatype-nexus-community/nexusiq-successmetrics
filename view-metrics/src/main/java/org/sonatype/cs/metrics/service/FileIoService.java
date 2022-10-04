@@ -114,10 +114,6 @@ public class FileIoService {
         IOUtils.closeQuietly(content);
     }
 
-    public static List<String> fileToStringList(String filename) throws IOException {
-        return Files.readAllLines(Paths.get(filename));
-    }
-
     public void writeDataExtractCsvFile(String csvFilename, List<DataExtractObject> deoList) {
 
         try {

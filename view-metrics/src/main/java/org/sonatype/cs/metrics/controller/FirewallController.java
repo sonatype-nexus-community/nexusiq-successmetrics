@@ -1,12 +1,16 @@
 package org.sonatype.cs.metrics.controller;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
+
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.metrics.model.AutoReleasedFromQuarantineComponent;
 import org.sonatype.cs.metrics.model.QuarantinedComponent;
 import org.sonatype.cs.metrics.repository.AutoReleasedFromQuarantinedComponentRepository;
 import org.sonatype.cs.metrics.repository.QuarantinedComponentRepository;
-import org.sonatype.cs.metrics.service.FileIoService;
 import org.sonatype.cs.metrics.service.LoaderService;
 import org.sonatype.cs.metrics.util.DataLoaderParams;
 import org.sonatype.cs.metrics.util.HelperService;
@@ -15,13 +19,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeMap;
@@ -50,7 +58,7 @@ public class FirewallController {
     }
 
     @GetMapping({"/firewall", "/firewall.html"})
-    public String firewall(Model model) throws IOException {
+    public String firewall(Model model) throws IOException, CsvValidationException {
         log.info("In FirewallController");
 
         /* Firewall list reports (loaded at startup) */
@@ -91,15 +99,12 @@ public class FirewallController {
         }
 
         /* Firewall summary reports (read the files in here directly) */
-        List<String> quarantinedComponentsSummary = loadFile(DataLoaderParams.QCSDATAFILE);
-        List<String> autoReleasedFromQuarantinedComponentsSummary =
-                loadFile(DataLoaderParams.AFQCSDATAFILE);
-
-        String[] qcs = quarantinedComponentsSummary.get(1).split(",");
-        String[] afqc = autoReleasedFromQuarantinedComponentsSummary.get(1).split(",");
-
-        model.addAttribute("quarantinedComponentsSummary", qcs);
-        model.addAttribute("autoReleasedFromQuarantinedComponentsSummary", afqc);
+        model.addAttribute(
+                "quarantinedComponentsSummary",
+                loadFirstDataFromFile(DataLoaderParams.QCSDATAFILE));
+        model.addAttribute(
+                "autoReleasedFromQuarantinedComponentsSummary",
+                loadFirstDataFromFile(DataLoaderParams.AFQCSDATAFILE));
 
         return "firewall";
     }
@@ -161,18 +166,18 @@ public class FirewallController {
         return earliestDate.with(TemporalAdjusters.firstDayOfMonth()).with(LocalTime.MIN);
     }
 
-    private List<String> loadFile(String filename) throws IOException {
+    private List<String> loadFirstDataFromFile(String filename)
+            throws IOException, CsvValidationException {
 
-        String filepath =
-                Paths.get(System.getProperty("user.dir"))
-                        .resolve(Paths.get(metricsDir).resolve(filename))
-                        .toString();
+        File csvFile = new File(metricsDir, FilenameUtils.getName(filename));
+        log.info("Loading file: {}", csvFile.getAbsolutePath());
+        InputStreamReader filereader =
+                new InputStreamReader(new FileInputStream(csvFile), Charset.defaultCharset());
+        CSVReader csvReader = new CSVReaderBuilder(filereader).withSkipLines(1).build();
+        List<String> summary = Arrays.asList(csvReader.readNext());
+        csvReader.close();
 
-        log.info("Loading file: {}", filepath);
-
-        List<String> summary = FileIoService.fileToStringList(filepath);
-
-        log.info("Loaded file: {}", filepath);
+        log.info("Loaded file: {}", csvFile.getAbsolutePath());
 
         return summary;
     }
