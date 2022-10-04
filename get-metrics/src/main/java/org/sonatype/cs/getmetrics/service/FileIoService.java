@@ -1,5 +1,7 @@
 package org.sonatype.cs.getmetrics.service;
 
+import com.opencsv.CSVWriter;
+
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -16,7 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -35,10 +36,10 @@ public class FileIoService {
         String metricsFile = metricsDir + "/" + filename;
 
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(metricsFile))) {
-            for (String[] array : data) {
-                writer.write(String.join(",", Arrays.asList(array)));
-                writer.newLine();
-            }
+            CSVWriter csvWriter = new CSVWriter(writer);
+            csvWriter.writeAll(data);
+            csvWriter.flush();
+            csvWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

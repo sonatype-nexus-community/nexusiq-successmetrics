@@ -1,4 +1,4 @@
-policyName,reason,applicationName,openTime,component,stage,threatLevel
+"policyName","reason","applicationName","openTime","component","stage","threatLevel"
 Security-Medium,CVE-2021-22060,nexusiq-successmetrics__sonatype-nexus-community,2022-01-28T13:45:32.492+0000,"pkg:maven/org.springframework/spring-webflux@5.3.12?type=jar",develop,7
 Security-Medium,CVE-2018-14335,nexusiq-successmetrics__sonatype-nexus-community,2022-01-28T13:45:32.492+0000,"pkg:maven/com.h2database/h2@2.0.202?type=jar",develop,7
 Security-Medium,sonatype-2021-1446,nexusiq-successmetrics__sonatype-nexus-community,2022-01-28T13:45:32.492+0000,"pkg:maven/ch.qos.logback/logback-core@1.2.6?type=jar",develop,7
