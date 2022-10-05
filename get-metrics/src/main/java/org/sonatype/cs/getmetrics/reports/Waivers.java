@@ -31,7 +31,17 @@ public class Waivers implements CsvFileService {
 
     static List<String[]> getWaiversInformationFromData(JsonReader reader) {
         List<String[]> data = new ArrayList<>();
-        data.add(FilenameInfo.waiversFileHeader);
+        data.add(
+                new String[] {
+                    "applicationName",
+                    "stage",
+                    "packageUrl",
+                    "policyName",
+                    "threatLevel",
+                    "comment",
+                    "createDate",
+                    "expiryTime"
+                });
 
         JsonObject obj = reader.readObject();
 

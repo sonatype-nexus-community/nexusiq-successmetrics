@@ -29,7 +29,7 @@ public class AutoReleasedFromQuarantineConfig implements CsvFileService {
 
     static List<String[]> getQuarantinedConfigFromData(JsonReader reader) {
         List<String[]> data = new ArrayList<>();
-        data.add(FilenameInfo.autoReleasedFromQuarantineConfigFileHeader);
+        data.add(new String[] {"id", "name", "autoReleaseQuarantineEnabled"});
 
         JsonArray results = reader.readArray();
 

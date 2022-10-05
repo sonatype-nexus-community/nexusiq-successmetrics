@@ -27,14 +27,10 @@ public class TestFileIoServiceTestShould {
 
     @DisplayName("return a string containing the contents of a JSON file")
     @Test
-    void testReadJsonAsString() {
-        try {
-            Assertions.assertEquals(
-                    "{\"Title\": \"This is a title\"}\n",
-                    FileIoService.readJsonAsString("src/test/resources/test.json"));
-        } catch (Exception e) {
-            Assertions.fail();
-        }
+    void testReadJsonAsString() throws IOException {
+        Assertions.assertEquals(
+                "{\"Title\": \"This is a title\"}\n",
+                FileIoService.readJsonAsString("src/test/resources/test.json"));
     }
 
     @DisplayName("return a string containing the contents of a JSON file")

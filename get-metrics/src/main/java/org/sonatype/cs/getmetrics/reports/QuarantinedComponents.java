@@ -34,7 +34,18 @@ public class QuarantinedComponents implements CsvFileService {
 
     static List<String[]> getQuarentinedComponentsFromData(JsonObject dataObject) {
         List<String[]> data = new ArrayList<>();
-        data.add(FilenameInfo.quarantinedComponentsFileHeader);
+        data.add(
+                new String[] {
+                    "repository",
+                    "quarantineDate",
+                    "dateCleared",
+                    "displayName",
+                    "format",
+                    "quarantined",
+                    "policyName",
+                    "threatLevel",
+                    "reason"
+                });
 
         JsonArray results = dataObject.getJsonArray("results");
 
