@@ -38,7 +38,16 @@ public class PolicyViolations implements CsvFileService {
 
     static List<String[]> getPolicyViolationsFromData(JsonReader reader) {
         List<String[]> data = new ArrayList<>();
-        data.add(FilenameInfo.policyViolationsFileHeader);
+        data.add(
+                new String[] {
+                    "policyName",
+                    "reason",
+                    "applicationName",
+                    "openTime",
+                    "component",
+                    "stage",
+                    "threatLevel"
+                });
 
         JsonObject obj = reader.readObject();
         JsonArray results = obj.getJsonArray("applicationViolations");

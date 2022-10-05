@@ -115,7 +115,8 @@ public class NexusIQSuccessMetrics {
         String apiEndpoint = iqApi + "/" + endPointName;
         String content = getIqData(apiEndpoint);
 
-        String[] names = namesStr.split(",");
+        @SuppressWarnings("StringSplitter")
+        String[] names = namesStr.split(",", -1);
         String[] ids = new String[names.length];
 
         for (int i = 0; i < names.length; i++) {

@@ -110,7 +110,7 @@ public class GetMetricsApplication implements CommandLineRunner {
             log.info(
                     "To disable security certificate checking please specify"
                             + " '--insecure.ssl=true'");
-            throw (e);
+            throw e;
         }
     }
 }

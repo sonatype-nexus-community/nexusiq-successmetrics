@@ -5,6 +5,7 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +36,6 @@ public class FileIoService {
 
     @Value("${reports.outputdir}")
     private String outputdir;
-
-    @Value("${metrics.dir}")
-    private String metricsDir;
 
     @Value("${data.successmetrics}")
     private String successmetricsFile;
@@ -92,15 +90,14 @@ public class FileIoService {
 
     public static String readJsonAsString(String filename) throws IOException {
 
-        String jsonString = null;
-
         if (!fileExists(filename)) {
             throw new IOException("Failed to find file : " + filename);
         }
-        jsonString =
-                new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.ISO_8859_1);
-
-        return jsonString;
+        File jsonFile =
+                new File(FilenameUtils.getFullPath(filename), FilenameUtils.getName(filename));
+        return new String(
+                Files.readAllBytes(Paths.get(jsonFile.getAbsolutePath())),
+                StandardCharsets.ISO_8859_1);
     }
 
     public static boolean fileExists(String filename) {

@@ -27,14 +27,15 @@ public class ApplicationEvaluations implements CsvFileService {
 
     static List<String[]> getApplicationInfoFromData(JsonReader reader) {
         List<String[]> data = new ArrayList<>();
-        data.add(FilenameInfo.applicationEvaluationsFileHeader);
+        data.add(new String[] {"applicationName", "evaluationDate", "stage"});
         JsonArray results = reader.readArray();
 
         for (JsonObject result : results.getValuesAs(JsonObject.class)) {
             String stage = result.getString("stage");
             String evaluationDate = result.getString("evaluationDate");
             String reportDataUrl = result.getString("reportDataUrl");
-            String applicationName = reportDataUrl.split("/")[3];
+            @SuppressWarnings("StringSplitter")
+            String applicationName = reportDataUrl.split("/", -1)[3];
 
             String[] line = {applicationName, evaluationDate, stage};
             data.add(line);
