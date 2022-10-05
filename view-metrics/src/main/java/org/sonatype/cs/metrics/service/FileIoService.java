@@ -20,7 +20,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,9 +34,6 @@ public class FileIoService {
 
     @Value("${reports.outputdir}")
     private String outputdir;
-
-    @Value("${metrics.dir}")
-    private String metricsDir;
 
     @Value("${data.successmetrics}")
     private String successmetricsFile;
@@ -90,19 +86,6 @@ public class FileIoService {
         return reportsdir + File.separator + filename;
     }
 
-    public static String readJsonAsString(String filename) throws IOException {
-
-        String jsonString = null;
-
-        if (!fileExists(filename)) {
-            throw new IOException("Failed to find file : " + filename);
-        }
-        jsonString =
-                new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.ISO_8859_1);
-
-        return jsonString;
-    }
-
     public static boolean fileExists(String filename) {
         File f = new File(filename);
         return (f.exists() && f.length() > 0);
@@ -112,10 +95,6 @@ public class FileIoService {
         File outputFile = new File(outputdir + File.separator + successmetricsFile);
         java.nio.file.Files.copy(content, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         IOUtils.closeQuietly(content);
-    }
-
-    public static List<String> fileToStringList(String filename) throws IOException {
-        return Files.readAllLines(Paths.get(filename));
     }
 
     public void writeDataExtractCsvFile(String csvFilename, List<DataExtractObject> deoList) {

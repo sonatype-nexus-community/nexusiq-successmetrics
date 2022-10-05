@@ -13,6 +13,9 @@ import java.util.List;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonString;
+import javax.json.JsonStructure;
+import javax.json.JsonValue;
 
 public class Waivers implements CsvFileService {
     private static final Logger log = LoggerFactory.getLogger(Waivers.class);
@@ -28,7 +31,17 @@ public class Waivers implements CsvFileService {
 
     static List<String[]> getWaiversInformationFromData(JsonReader reader) {
         List<String[]> data = new ArrayList<>();
-        data.add(FilenameInfo.waiversFileHeader);
+        data.add(
+                new String[] {
+                    "applicationName",
+                    "stage",
+                    "packageUrl",
+                    "policyName",
+                    "threatLevel",
+                    "comment",
+                    "createDate",
+                    "expiryTime"
+                });
 
         JsonObject obj = reader.readObject();
 
@@ -108,9 +121,24 @@ public class Waivers implements CsvFileService {
     }
 
     private static String getFieldStringFromJsonObject(JsonObject policyWaiver, String field) {
-        if (policyWaiver.get(field) == null) {
-            return "";
+        String result = "";
+        if (log.isDebugEnabled()) {
+            log.debug("getFieldStringFromJsonObject called for " + field);
         }
-        return String.valueOf(policyWaiver.getString(field));
+        if (policyWaiver.get(field) != null) {
+            JsonValue value = policyWaiver.get(field);
+            if (value instanceof JsonString) {
+                result = ((JsonString) value).getString();
+            } else if (value instanceof JsonStructure) {
+                // this happens when override key is present without a value
+                result = "";
+            } else {
+                result = value.toString();
+            }
+        }
+        if (result.equals("{}")) {
+            result = "";
+        }
+        return result;
     }
 }

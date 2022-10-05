@@ -28,7 +28,7 @@ public class AutoReleasedFromQuarantineSummary implements CsvFileService {
 
     static List<String[]> getQuarantinedSummaryFromData(JsonReader reader) {
         List<String[]> data = new ArrayList<>();
-        data.add(FilenameInfo.autoReleasedFromQuarantineSummaryFileHeader);
+        data.add(new String[] {"MTD", "YTD"});
 
         JsonObject dataObj = reader.readObject();
 

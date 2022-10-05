@@ -1,7 +1,7 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-	id 'org.springframework.boot' version '2.6.6'
+	id 'org.springframework.boot' version '2.6.12'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
@@ -16,7 +16,7 @@ dependencies {
 	implementation 'org.apache.tomcat:tomcat-util:9.0.16'
 	implementation 'org.glassfish:javax.json:1.1'
 
-	implementation 'org.apache.tomcat:tomcat-coyote:8.5.72'
+	implementation 'org.apache.tomcat:tomcat-coyote:9.0.67'
 
 	implementation 'org.apache.commons:commons-csv:1.5'
 	implementation 'com.opencsv:opencsv:5.2'

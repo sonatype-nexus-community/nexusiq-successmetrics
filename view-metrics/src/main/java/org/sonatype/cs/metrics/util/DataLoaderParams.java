@@ -10,15 +10,15 @@ public class DataLoaderParams {
     public static final String SMHEADER = "applicationId,applicationName,applicationPublicId,";
 
     public static final String AEDATAFILE = "application_evaluations.csv";
-    public static final String AEFILEHEADER = "applicationName,evaluationDate,stage";
+    public static final String AEFILEHEADER = "\"applicationName\",\"evaluationDate\",\"stage\"";
 
     public static final String CWDATAFILE = "waivers.csv";
     public static final String CWFILEHEADER =
-            "applicationName,stage,packageUrl,policyName,threatLevel,comment,createDate,expiryTime";
+            "\"applicationName\",\"stage\",\"packageUrl\",\"policyName\",\"threatLevel\",\"comment\",\"createDate\",\"expiryTime\"";
 
     public static final String PVDATAFILE = "policy_violations.csv";
     public static final String PVFILEHEADER =
-            "policyName,reason,applicationName,openTime,component,stage,threatLevel";
+            "\"policyName\",\"reason\",\"applicationName\",\"openTime\",\"component\",\"stage\",\"threatLevel\"";
 
     public static final String QCDATAFILE = "quarantined_components.csv";
 

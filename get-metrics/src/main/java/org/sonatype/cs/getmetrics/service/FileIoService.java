@@ -1,5 +1,7 @@
 package org.sonatype.cs.getmetrics.service;
 
+import com.opencsv.CSVWriter;
+
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -16,7 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -35,12 +36,13 @@ public class FileIoService {
         String metricsFile = metricsDir + "/" + filename;
 
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(metricsFile))) {
-            for (String[] array : data) {
-                writer.write(String.join(",", Arrays.asList(array)));
-                writer.newLine();
-            }
+            CSVWriter csvWriter = new CSVWriter(writer);
+            csvWriter.writeAll(data);
+            csvWriter.flush();
+            csvWriter.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error writing file", e);
+            System.exit(1);
         }
 
         log.info("Created file: {}", metricsFile);
@@ -66,9 +68,7 @@ public class FileIoService {
         java.nio.file.Files.copy(content, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         IOUtils.closeQuietly(content);
         log.info("Created file: {}", outputFile.toPath());
-        Stream<String> stream = null;
-        try {
-            stream = java.nio.file.Files.lines(outputFile.toPath());
+        try (Stream<String> stream = java.nio.file.Files.lines(outputFile.toPath())) {
             if (stream.count() <= 1) {
                 log.warn(
                         "The file {} contains no data, either there is no data to fetch or the user"
@@ -76,11 +76,8 @@ public class FileIoService {
                         outputFile.toPath());
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (stream != null) {
-                stream.close();
-            }
+            log.error("Error writing file", e);
+            System.exit(1);
         }
     }
 }

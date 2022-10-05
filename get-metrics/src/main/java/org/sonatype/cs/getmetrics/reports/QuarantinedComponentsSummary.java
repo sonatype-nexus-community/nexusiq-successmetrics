@@ -27,7 +27,14 @@ public class QuarantinedComponentsSummary implements CsvFileService {
 
     static List<String[]> getQuarantinedComponentsSummaryFromData(JsonReader reader) {
         List<String[]> data = new ArrayList<>();
-        data.add(FilenameInfo.quarantinedComponentsSummaryFileHeader);
+        data.add(
+                new String[] {
+                    "repositoryCount",
+                    "quarantineEnabledCount",
+                    "quarantineEnabled",
+                    "totalComponentCount",
+                    "quarantinedComponentCount"
+                });
 
         JsonObject dataObj = reader.readObject();
 

@@ -15,7 +15,7 @@ public class UtilService {
     private UtilService() {}
 
     public static String removeLastChar(String s) {
-        return (s == null || s.length() == 0) ? null : (s.substring(0, s.length() - 1));
+        return (s == null || s.length() == 0) ? null : s.substring(0, s.length() - 1);
     }
 
     public static String lastChar(String s) {
@@ -38,7 +38,7 @@ public class UtilService {
 
     public static String removeQuotesFromString(String inputString) {
         if (inputString == null) {
-            return null;
+            return "";
         }
         if (inputString.startsWith("\"") && inputString.endsWith("\"")) {
             return inputString.substring(1, inputString.length() - 1);

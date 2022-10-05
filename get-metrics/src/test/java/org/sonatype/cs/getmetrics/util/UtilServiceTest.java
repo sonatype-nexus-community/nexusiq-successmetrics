@@ -57,6 +57,6 @@ public class UtilServiceTest {
         Assertions.assertEquals("\"abc", UtilService.removeQuotesFromString("\"abc"));
         Assertions.assertEquals("abc\"", UtilService.removeQuotesFromString("abc\""));
         Assertions.assertEquals("", UtilService.removeQuotesFromString("\"\""));
-        Assertions.assertEquals(null, UtilService.removeQuotesFromString(null));
+        Assertions.assertEquals("", UtilService.removeQuotesFromString(null));
     }
 }
