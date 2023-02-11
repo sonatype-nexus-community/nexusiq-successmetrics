@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.cs.getmetrics.model.PayloadItem;
+import org.sonatype.cs.getmetrics.util.DateCheck;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +62,22 @@ public class NexusIQSuccessMetrics {
     }
 
     public void createSuccessMetricsCsvFile() throws IOException, JSONException, HttpException {
+        try {
+            DateCheck.checkDateFormat(iqSmPeriod, iqApiFirstTimePeriod);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(
+                    "Please check iq.api.sm.period and iq.api.sm.payload.timeperiod.first", e);
+        }
+
+        try {
+            if (!iqApiLastTimePeriod.equals("")) {
+                DateCheck.checkDateFormat(iqSmPeriod, iqApiLastTimePeriod);
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException(
+                    "Please check iq.api.sm.period and iq.api.sm.payload.timeperiod.last", e);
+        }
+
         String apiPayload = getPayload();
 
         String content =

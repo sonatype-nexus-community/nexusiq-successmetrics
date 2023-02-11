@@ -132,11 +132,9 @@ There are two modes to the application.
 
 The view-metrics script processes metrics stored in the `./nexusiq` directory and presents them as detailed aggregated charts in a web view or in data files in the `./datafiles` directory.
 
-&#9888; There must be a `successmetrics.csv` in the `./iqmetrics` directory.
+&#9888; In order to aggregate and process success metrics a minimum of three data points (weeks or months) are needed.
 
-&#9888; In order to aggregate and process metrics a minimum of three data points (weeks or months) are needed.
-
-&#9888; Only fully completed months (or weeks) are included in the data extract.
+&#9888; Only fully completed months (or weeks) are included in the success metrics data extract.
 
 ### View-metrics configuration
 

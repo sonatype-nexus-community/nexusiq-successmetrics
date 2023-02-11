@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @SpringBootApplication
 @EnableJpaRepositories
@@ -78,24 +79,19 @@ public class SuccessMetricsApplication implements CommandLineRunner {
 
         successMetricsFileLoaded = loaderService.loadAllMetrics(activeProfile);
 
-        if (isSuccessMetricsFileLoaded()) {
-            if (runMode.contains("SERVLET")) {
-                // web app
-                this.startUp();
-            } else {
-                // non-interactive mode
-                this.timestamp =
-                        DateTimeFormatter.ofPattern("ddMMyy_HHmm")
-                                .format(LocalDateTime.now(ZoneId.systemDefault()));
-                if ("data".equals(activeProfile)) {
-                    createDataFiles();
-                } else {
-                    log.error("unknown profile");
-                }
-            }
+        if (runMode.contains("SERVLET")) {
+            // web app
+            this.startUp();
         } else {
-            log.error("No data files found");
-            System.exit(-1);
+            // non-interactive mode
+            this.timestamp =
+                    DateTimeFormatter.ofPattern("ddMMyy_HHmm")
+                            .format(LocalDateTime.now(ZoneId.systemDefault()));
+            if (Objects.equals(activeProfile, "data")) {
+                createDataFiles();
+            } else {
+                log.error("unknown profile");
+            }
         }
     }
 
