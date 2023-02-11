@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -35,8 +36,18 @@ public class FileIoService {
 
         String metricsFile = metricsDir + "/" + filename;
 
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(metricsFile))) {
+        File f = new File(metricsFile);
+        Boolean first_time_writing_to_file = !(f.exists() && !f.isDirectory());
+
+        try (BufferedWriter writer =
+                Files.newBufferedWriter(
+                        Paths.get(metricsFile),
+                        StandardOpenOption.CREATE,
+                        StandardOpenOption.APPEND)) {
             CSVWriter csvWriter = new CSVWriter(writer);
+            if (!first_time_writing_to_file) {
+                data.remove(0);
+            }
             csvWriter.writeAll(data);
             csvWriter.flush();
             csvWriter.close();
