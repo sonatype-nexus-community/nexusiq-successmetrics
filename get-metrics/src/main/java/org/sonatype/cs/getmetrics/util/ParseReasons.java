@@ -33,11 +33,13 @@ public class ParseReasons {
         List<String> cves = new ArrayList<>();
 
         for (JsonObject reason : reasons.getValuesAs(JsonObject.class)) {
-            JsonObject reference = reason.getJsonObject("reference");
-            String cve = reference.getString("value");
+            if (!reason.isNull("reference")) {
+                JsonObject reference = reason.getJsonObject("reference");
+                String cve = reference.getString("value");
 
-            if (!cves.contains(cve)) {
-                cves.add(cve);
+                if (!cves.contains(cve)) {
+                    cves.add(cve);
+                }
             }
         }
 
