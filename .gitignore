@@ -190,3 +190,4 @@ iqmetrics
 !view-metrics/src/test/resources
 view-metrics/src/test/resources/org/sonatype/cs/metrics/*.received.txt
 application.properties
+.circleci/local-config.yml
