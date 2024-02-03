@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.sonatype.cs.getmetrics.service.NexusIQApiDataService;
 import org.sonatype.cs.getmetrics.service.PolicyIdsService;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
-
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -26,7 +24,7 @@ public class PolicyViolationsTest {
                             .readObject()
                             .getJsonArray("reasons");
             Assertions.assertEquals(
-                    "CVE-2021-43466:CVE-2016-1000027:", PolicyViolations.getCVE(reasons));
+                    "CVE-2021-43466:CVE-2016-1000027", PolicyViolations.getCVE(reasons));
         } catch (FileNotFoundException e) {
             Assertions.fail();
         }
@@ -70,7 +68,7 @@ public class PolicyViolationsTest {
                 "",
                 "WebGoat",
                 "2022-02-15T10:11:04.055+0000",
-                "\"pkg:maven/org.projectlombok/lombok@1.18.20?type=jar\"",
+                "pkg:maven/org.projectlombok/lombok@1.18.20?type=jar",
                 "build",
                 "7"
             };
@@ -79,7 +77,7 @@ public class PolicyViolationsTest {
                 "CVE-2021-21346",
                 "WebGoat",
                 "2022-02-14T15:00:33.236+0000",
-                "\"pkg:maven/com.thoughtworks.xstream/xstream@1.4.5?type=jar\"",
+                "pkg:maven/com.thoughtworks.xstream/xstream@1.4.5?type=jar",
                 "build",
                 "10"
             };
@@ -88,7 +86,7 @@ public class PolicyViolationsTest {
                 "Non-license string for testing",
                 "WebGoat",
                 "2022-02-15T10:11:04.055+0000",
-                "\"pkg:maven/org.projectlombok/lombok@1.18.20?type=jar\"",
+                "pkg:maven/org.projectlombok/lombok@1.18.20?type=jar",
                 "build",
                 "7"
             };

@@ -2,23 +2,21 @@ package org.sonatype.cs.getmetrics.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 @Service
 public class NexusIQAPIPagingService {
-    private NexusIqApiConnectionService nexusIqApiConnectionService;
-    private FileIoService fileIoService;
-    private String iqUrl;
-    private String iqUser;
-    private String iqPasswd;
-    private String iqApi;
+    private final NexusIqApiConnectionService nexusIqApiConnectionService;
+    private final FileIoService fileIoService;
+    private final String iqUrl;
+    private final String iqUser;
+    private final String iqPasswd;
+    private final String iqApi;
 
     public NexusIQAPIPagingService(
             NexusIqApiConnectionService nexusIqApiConnectionService,
@@ -36,24 +34,24 @@ public class NexusIQAPIPagingService {
     }
 
     public void makeReport(CsvFileService cfs, String endPoint) throws IOException {
-
         int page = 1;
-        int pageSize = 10;
-        int pageCount = 0;
+        int pageCount;
 
         do {
-            URLConnection urlConnection =
-                    nexusIqApiConnectionService.createAuthorizedPagedUrlConnection(
-                            iqUser, iqPasswd, iqUrl, iqApi, endPoint, page, pageSize);
-            InputStream is = urlConnection.getInputStream();
-            JsonReader reader = Json.createReader(is);
-            JsonObject obj = reader.readObject();
+            JsonObject obj = fetchPageData(endPoint, page);
             page = obj.getInt("page");
-            pageSize = obj.getInt("pageSize");
             pageCount = obj.getInt("pageCount");
             cfs.makeCsvFile(fileIoService, obj);
-            reader.close();
-            page += 1;
+            page++;
         } while (page <= pageCount);
+    }
+
+    private JsonObject fetchPageData(String endPoint, int page) throws IOException {
+        URLConnection urlConnection = nexusIqApiConnectionService.createAuthorizedPagedUrlConnection(
+                iqUser, iqPasswd, iqUrl, iqApi, endPoint, page, 10);
+        try (InputStream is = urlConnection.getInputStream();
+             JsonReader reader = Json.createReader(is)) {
+            return reader.readObject();
+        }
     }
 }

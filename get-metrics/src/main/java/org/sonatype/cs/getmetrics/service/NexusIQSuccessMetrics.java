@@ -11,7 +11,6 @@ import org.sonatype.cs.getmetrics.model.PayloadItem;
 import org.sonatype.cs.getmetrics.util.DateCheck;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
@@ -97,7 +96,7 @@ public class NexusIQSuccessMetrics {
         PayloadItem organisationName = new PayloadItem(iqApiOrganisationName);
         PayloadItem applicationName = new PayloadItem(iqApiApplicationName);
 
-        if (!firstTimePeriod.isExists()) {
+        if (!firstTimePeriod.exists()) {
             throw new IllegalArgumentException(
                     "No start period specified (iq.api.payload.timeperiod.first)");
         }
@@ -106,17 +105,17 @@ public class NexusIQSuccessMetrics {
         ajson.put("timePeriod", UtilService.removeQuotesFromString(iqSmPeriod.toUpperCase()));
         ajson.put("firstTimePeriod", firstTimePeriod.getItem());
 
-        if (lastTimePeriod.isExists()) {
+        if (lastTimePeriod.exists()) {
             ajson.put("lastTimePeriod", lastTimePeriod.getItem());
         }
 
         // organisation takes precedence
-        if (organisationName.isExists()) {
+        if (organisationName.exists()) {
 
             String[] organizationIds = getIds("organizations", organisationName.getItem());
             ajson.put("organizationIds", organizationIds);
 
-        } else if (applicationName.isExists()) {
+        } else if (applicationName.exists()) {
 
             String[] applicationIds = getIds("applications", applicationName.getItem());
             ajson.put("applicationIds", applicationIds);
@@ -158,9 +157,7 @@ public class NexusIQSuccessMetrics {
             String oId = jObject.getString("id");
 
             if (oName.equals(aoName)) {
-                StringBuilder ep = new StringBuilder(endpoint);
-                log.info(
-                        "Reporting for {}: {} [{}]", ep.deleteCharAt(ep.length() - 1), aoName, oId);
+                log.info("Reporting for {}: {} [{}]", endpoint.substring(0, endpoint.length() - 1), aoName, oId);
                 s = oId;
                 break;
             }

@@ -1,80 +1,52 @@
 package org.sonatype.cs.getmetrics.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.sonatype.cs.getmetrics.reports.Waivers;
 import org.sonatype.cs.getmetrics.service.PolicyIdsService;
-import org.sonatype.cs.getmetrics.service.UtilService;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
 public class ParseReasons {
+    private static final Logger log = LoggerFactory.getLogger(Waivers.class);
 
     private ParseReasons() {}
 
     public static String getReason(String policyName, JsonArray reasons) {
-
-        String reason = "";
-
         if (policyName.equalsIgnoreCase("Integrity-Rating")) {
-            reason = "Integrity-Rating";
+            return "Integrity-Rating";
         } else if (PolicyIdsService.isSecurityPolicy(policyName)) {
-            reason = getCVE(reasons);
+            return getCVE(reasons);
         } else if (PolicyIdsService.isLicensePolicy(policyName)) {
-            reason = getLicense(reasons);
+            return getLicense(reasons);
         }
-
-        return reason;
+        return "";
     }
 
     private static String getCVE(JsonArray reasons) {
-        String cveList = "";
-        List<String> cves = new ArrayList<>();
+        Set<String> cves = reasons.getValuesAs(JsonObject.class).stream()
+                .filter(reason -> !reason.isNull("reference"))
+                .map(reason -> reason.getJsonObject("reference").getString("value"))
+                .collect(Collectors.toSet());
 
-        for (JsonObject reason : reasons.getValuesAs(JsonObject.class)) {
-            if (!reason.isNull("reference")) {
-                JsonObject reference = reason.getJsonObject("reference");
-                String cve = reference.getString("value");
-
-                if (!cves.contains(cve)) {
-                    cves.add(cve);
-                }
-            }
-        }
-
-        for (String c : cves) {
-            cveList = c + ":" + cveList;
-        }
-
-        cveList = UtilService.removeLastChar(cveList);
-
-        return cveList;
+        return String.join(":", cves);
     }
 
-    private static String getLicense(JsonArray reasons) {
-        String licenseList = "";
-        List<String> licenses = new ArrayList<>();
+    public static String getLicense(JsonArray reasons) {
+        Set<String> licenses = reasons.getValuesAs(JsonObject.class).stream()
+                .map(reason -> reason.getString("reason"))
+                .filter(licenseFound -> !licenseFound.isEmpty())
+                .peek(licenseFound -> {
+                    if (!licenseFound.contains("(") || !licenseFound.contains(")")) {
+                        log.debug("licenseFound string does not contain brackets: " + licenseFound);
+                    }
+                })
+                .filter(licenseFound-> licenseFound.contains("(") && licenseFound.contains(")"))
+                .map(licenseFound -> licenseFound.substring(licenseFound.indexOf("(") + 1, licenseFound.indexOf(")")).replace("'", ""))
+                .collect(Collectors.toSet());
 
-        for (JsonObject reason : reasons.getValuesAs(JsonObject.class)) {
-            String licenseFound = reason.getString("reason");
-
-            String license =
-                    licenseFound.substring(
-                            licenseFound.indexOf("(") + 1, licenseFound.indexOf(")"));
-            license = license.replace("'", "");
-
-            if (!licenses.contains(license)) {
-                licenses.add(license);
-            }
-        }
-
-        for (String l : licenses) {
-            licenseList = l + ":" + licenseList;
-        }
-
-        licenseList = UtilService.removeLastChar(licenseList);
-
-        return licenseList;
+        return String.join(":", licenses);
     }
 }

@@ -3,11 +3,10 @@ package org.sonatype.cs.getmetrics.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
@@ -15,23 +14,24 @@ import javax.json.JsonObject;
 public class PolicyIdsService {
     private static final Logger log = LoggerFactory.getLogger(PolicyIdsService.class);
 
-    private NexusIQApiDataService nexusIQDataService;
+    private final NexusIQApiDataService nexusIQDataService;
+
+    private static final List<String> SECURITY_POLICIES = Arrays.asList(
+            "Security-Critical",
+            "Security-High",
+            "Security-Medium",
+            "Security-Malicious",
+            "Security-Namespace Conflict",
+            "Integrity-Rating");
+
+    private static final List<String> LICENSE_POLICIES = Arrays.asList(
+            "License-Banned",
+            "License-None",
+            "License-Copyleft");
 
     public PolicyIdsService(NexusIQApiDataService nexusIQDataService) {
         this.nexusIQDataService = nexusIQDataService;
     }
-
-    private static List<String> securityPolicies =
-            Arrays.asList(
-                    "Security-Critical",
-                    "Security-High",
-                    "Security-Medium",
-                    "Security-Malicious",
-                    "Security-Namespace Conflict",
-                    "Integrity-Rating");
-
-    private static List<String> licensePolicies =
-            Arrays.asList("License-Banned", "License-None", "License-Copyleft");
 
     public String getPolicyIdsEndpoint() throws IOException {
         JsonObject dataObj = nexusIQDataService.getData("/policies");
@@ -44,26 +44,19 @@ public class PolicyIdsService {
 
         JsonArray results = obj.getJsonArray("policies");
 
-        String policyIds = "";
+        String policyIds = results.getValuesAs(JsonObject.class).stream()
+                .filter(result -> isSecurityPolicy(result.getString("name")) || isLicensePolicy(result.getString("name")))
+                .map(result -> "p=" + result.getString("id"))
+                .collect(Collectors.joining("&"));
 
-        for (JsonObject result : results.getValuesAs(JsonObject.class)) {
-            String id = result.getString("id");
-            String pname = result.getString("name");
-
-            if (isSecurityPolicy(pname) || isLicensePolicy(pname)) {
-                policyIds = policyIds.concat("p=" + id + "&");
-            }
-        }
-
-        policyIds = UtilService.removeLastChar(policyIds);
         return policyIds;
     }
 
     public static boolean isSecurityPolicy(String policyName) {
-        return securityPolicies.contains(policyName);
+        return SECURITY_POLICIES.contains(policyName);
     }
 
     public static boolean isLicensePolicy(String policyName) {
-        return licensePolicies.contains(policyName);
+        return LICENSE_POLICIES.contains(policyName);
     }
 }

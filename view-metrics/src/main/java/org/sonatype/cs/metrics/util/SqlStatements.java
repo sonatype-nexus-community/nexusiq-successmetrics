@@ -317,8 +317,8 @@ public class SqlStatements {
 
     public static final String SCANNINGCOVERAGE =
             "SELECT TIME_PERIOD_START, SUM(CASE WHEN EVALUATION_COUNT>0 "
-                +"THEN 1 ELSE 0 END) AS pointA, COUNT(*) AS pointB FROM <?> GROUP "
-                +"BY TIME_PERIOD_START";
+                    + "THEN 1 ELSE 0 END) AS pointA, COUNT(*) AS pointB FROM <?> GROUP "
+                    + "BY TIME_PERIOD_START";
 
     public static final String RISKRATIOCOMPONENTS =
             "select time_period_start as label,"

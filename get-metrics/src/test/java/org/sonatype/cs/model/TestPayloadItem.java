@@ -8,7 +8,7 @@ public class TestPayloadItem {
     @Test
     public void create() {
         PayloadItem payload = new PayloadItem("a string");
-        Assertions.assertTrue(payload.isExists());
+        Assertions.assertTrue(payload.exists());
         Assertions.assertEquals("a string", payload.getItem());
     }
 
@@ -16,7 +16,7 @@ public class TestPayloadItem {
     public void updateItemWithContent() {
         PayloadItem payload = new PayloadItem("a string");
         payload.setItem("another string");
-        Assertions.assertTrue(payload.isExists());
+        Assertions.assertTrue(payload.exists());
         Assertions.assertEquals("another string", payload.getItem());
     }
 
@@ -24,7 +24,7 @@ public class TestPayloadItem {
     public void updateItemWithoutContent() {
         PayloadItem payload = new PayloadItem("a string");
         payload.setItem("");
-        Assertions.assertFalse(payload.isExists());
+        Assertions.assertFalse(payload.exists());
         Assertions.assertEquals("", payload.getItem());
     }
 }
