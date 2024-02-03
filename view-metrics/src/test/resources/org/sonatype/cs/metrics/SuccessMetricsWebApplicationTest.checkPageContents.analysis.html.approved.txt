@@ -212,10 +212,10 @@
 
             <tr style="font-weight:bold">
                 <td>Scanning Coverage %(apps scanned at least once/period)</td>
-                <td>71.11</td>
-                <td>27.34</td>
-                <td>-43.77</td>
-                <td>-61.55</td>
+                <td>98.28</td>
+                <td>37.06</td>
+                <td>-61.22</td>
+                <td>-62.29</td>
                 <td>0.38</td>
             </tr>
 

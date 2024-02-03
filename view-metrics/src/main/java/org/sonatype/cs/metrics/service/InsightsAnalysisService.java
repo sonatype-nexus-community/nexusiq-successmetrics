@@ -20,14 +20,17 @@ public class InsightsAnalysisService {
     private MetricsService metricsService;
     private PeriodsDataService periodsDataService;
     private FileIoService fileIoService;
+    private DbService dbService;
 
     public InsightsAnalysisService(
             MetricsService metricsService,
             PeriodsDataService periodsDataService,
-            FileIoService fileIoService) {
+            FileIoService fileIoService,
+            DbService dbService) {
         this.metricsService = metricsService;
         this.periodsDataService = periodsDataService;
         this.fileIoService = fileIoService;
+        this.dbService = dbService;
     }
 
     public void writeInsightsAnalysisData(String timestamp) throws IOException {
@@ -70,16 +73,25 @@ public class InsightsAnalysisService {
         int onboardedBefore =
                 Integer.parseInt(String.valueOf(p1metrics.get("applicationsOnboarded")));
 
-        float scanningCoverageAfter =
-                this.calculatePct(
-                        Integer.parseInt(
-                                String.valueOf(p2metrics.get("numberOfApplicationsScannedAvg"))),
-                        onboardedAfter);
-        float scanningCoverageBefore =
-                this.calculatePct(
-                        Integer.parseInt(
-                                String.valueOf(p1metrics.get("numberOfApplicationsScannedAvg"))),
-                        onboardedBefore);
+        List<DbRow> p1_scanning_coverage =
+                dbService.runSql(SqlStatements.METRICP1TABLENAME, SqlStatements.SCANNINGCOVERAGE);
+        List<DbRow> p2_scanning_coverage =
+                dbService.runSql(SqlStatements.METRICP2TABLENAME, SqlStatements.SCANNINGCOVERAGE);
+
+        double scanningCoverageBefore =
+                p1_scanning_coverage.stream()
+                                .map(elt -> Double.valueOf(elt.getPointA()) / elt.getPointB())
+                                .mapToDouble(Double::doubleValue)
+                                .average()
+                                .getAsDouble()
+                        * 100.0;
+        double scanningCoverageAfter =
+                p2_scanning_coverage.stream()
+                                .map(elt -> Double.valueOf(elt.getPointA()) / elt.getPointB())
+                                .mapToDouble(Double::doubleValue)
+                                .average()
+                                .getAsDouble()
+                        * 100.0;
 
         final String numberOfScansStr = "numberOfScans";
         float totalScansAfter = Integer.parseInt(String.valueOf(p2metrics.get(numberOfScansStr)));
@@ -147,11 +159,11 @@ public class InsightsAnalysisService {
                 "onboardingRateIncrease",
                 this.calculateChangeMultiple(onboardingRateBefore, onboardingRateAfter));
 
-        model.put("scanningCoverageBefore", this.formatFloat(scanningCoverageBefore));
-        model.put("scanningCoverageAfter", this.formatFloat(scanningCoverageAfter));
+        model.put("scanningCoverageBefore", this.formatDouble(scanningCoverageBefore));
+        model.put("scanningCoverageAfter", this.formatDouble(scanningCoverageAfter));
         model.put(
                 "scanningCoverageDiff",
-                this.formatFloat(scanningCoverageAfter - scanningCoverageBefore));
+                this.formatDouble(scanningCoverageAfter - scanningCoverageBefore));
         model.put(
                 "scanningCoverage",
                 this.calculateChangePctg(scanningCoverageBefore, scanningCoverageAfter));
@@ -265,6 +277,10 @@ public class InsightsAnalysisService {
 
     private String formatFloat(float f) {
         return String.format("%.2f", f);
+    }
+
+    private String formatDouble(Double d) {
+        return String.format("%.2f", d);
     }
 
     private String calculateChangePctg(float before, float after) {
