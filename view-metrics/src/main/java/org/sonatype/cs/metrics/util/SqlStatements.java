@@ -315,6 +315,11 @@ public class SqlStatements {
                 + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_LICENSE_CRITICAL))/count(time_period_start)"
                 + " as pointA from <?> group by time_period_start order by 1";
 
+    public static final String SCANNINGCOVERAGE =
+            "SELECT TIME_PERIOD_START, SUM(CASE WHEN EVALUATION_COUNT>0 "
+                +"THEN 1 ELSE 0 END) AS pointA, COUNT(*) AS pointB FROM <?> GROUP "
+                +"BY TIME_PERIOD_START";
+
     public static final String RISKRATIOCOMPONENTS =
             "select time_period_start as label,"
                     + " sum(OPEN_COUNT_AT_TIME_PERIOD_END_SECURITY_CRITICAL) as pointA,"

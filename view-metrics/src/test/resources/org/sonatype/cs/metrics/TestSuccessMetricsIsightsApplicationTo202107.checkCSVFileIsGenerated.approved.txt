@@ -2,7 +2,7 @@ Measure,Before (2021-01-01 - 2021-03-01),After (2021-04-01 - 2021-06-01),Delta,C
 Total Onboarded Apps (# of apps),45,128,83.00,184.44,2.84
 Onboarding Rate (apps/period),8.00,27.67,19.67,0.00,3.46
 Total Scans,711.0,445.0,-266.00,-37.41,0.63
-Scanning Coverage %(apps scanned at least once/period),71.11,27.34,-43.77,-61.55,0.38
+Scanning Coverage %(apps scanned at least once/period),98.28,37.06,-61.22,-62.29,0.38
 Scanning Rate (total scans per period),237.00,148.33,-88.67,-37.41,0.63
 Average Scans per App (scanning rate/apps),5.27,1.16,-4.11,-78.00,0.22
 Discovery Rate Criticals (# of discovered Critical violations/period & app),11.52,3.93,-7.59,-65.88,0.34
