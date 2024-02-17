@@ -3,8 +3,8 @@ import org.apache.tools.ant.filters.ReplaceTokens
 plugins {
     id 'org.sonatype.gradle.plugins.scan' version '1.2.0'
     id "base"
-    id "jacoco"
-    id "java"
+    id "jacoco" version '0.8.11'
+    id "java" 
 }
 
 repositories {
@@ -40,9 +40,9 @@ subprojects{
 
 
   jacocoTestReport {
-    reports{
-      xml.enabled true
-          csv.enabled true
+    reports {
+      xml.required = true
+      csv.required = true
     }
       dependsOn test // tests are required to run before generating the report
   }
@@ -94,8 +94,8 @@ task packageGetMetricsConfig (type: Copy) {
 task release (type: Zip) {
   dependsOn ':packageViewFiles', ':packageViewMetricsConfig', ':packageGetFiles', ':packageGetMetricsConfig'
 	from "${applicationname}"
-	archiveName "${applicationname}.zip"
-	destinationDir(file(projectDir))
+	archiveFileName = "${applicationname}.zip"
+	destinationDirectory = (file(projectDir))
 }
 
 clean.doFirst {
@@ -125,8 +125,8 @@ task codeCoverageReport (type: JacocoReport) {
 
     // enable the different report types (html, xml, csv)
     reports {
-        xml.enabled true
-        html.enabled true
-        csv.enabled true
+        xml.required = true
+        html.required = true
+        csv.required = true
     }
 }
