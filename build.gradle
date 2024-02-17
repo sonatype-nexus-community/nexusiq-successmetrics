@@ -3,7 +3,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 plugins {
     id 'org.sonatype.gradle.plugins.scan' version '1.2.0'
     id "base"
-    id "jacoco" version '0.8.11'
+    id "jacoco"
     id "java" 
 }
 
