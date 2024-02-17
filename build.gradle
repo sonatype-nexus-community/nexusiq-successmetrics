@@ -4,7 +4,7 @@ plugins {
     id 'org.sonatype.gradle.plugins.scan' version '2.7.0'
     id "base"
     id "jacoco"
-    id "java" 
+    id "java"
 }
 
 repositories {
