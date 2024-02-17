@@ -1,7 +1,7 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-	id 'org.springframework.boot' version '2.6.12'
+	id 'org.springframework.boot' version '2.7.18'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
@@ -9,24 +9,17 @@ group = 'org.sonatype.cs'
 sourceCompatibility = '1.8'
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+	implementation 'com.opencsv:opencsv:5.7.1'
+	implementation 'commons-io:commons-io:2.11.0'
 	implementation 'javax.json:javax.json-api:1.0'
+	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+	implementation 'org.apache.tomcat:tomcat-coyote:9.0.83'
 	implementation 'org.apache.tomcat:tomcat-util:9.0.16'
 	implementation 'org.glassfish:javax.json:1.1'
-
-	implementation 'org.apache.tomcat:tomcat-coyote:9.0.67'
-
-	implementation 'org.apache.commons:commons-csv:1.5'
-	implementation 'com.opencsv:opencsv:5.2'
-	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
-	implementation 'commons-codec:commons-codec:1.14'
-	implementation 'commons-io:commons-io:2.11.0'
-	implementation 'org.json:json:20210307'
-	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-
+	implementation 'org.json:json:20231013'
+	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation "org.mockito:mockito-core:4.3.1"
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
