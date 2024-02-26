@@ -52,13 +52,15 @@ public class ParseReasons {
         return cveList;
     }
 
-    private static String getLicense(JsonArray reasons) {
+    public static String getLicense(JsonArray reasons) {
         String licenseList = "";
         List<String> licenses = new ArrayList<>();
 
         for (JsonObject reason : reasons.getValuesAs(JsonObject.class)) {
             String licenseFound = reason.getString("reason");
-
+            if (licenseFound.isEmpty()) {
+                continue;
+            }
             String license =
                     licenseFound.substring(
                             licenseFound.indexOf("(") + 1, licenseFound.indexOf(")"));
@@ -69,11 +71,17 @@ public class ParseReasons {
             }
         }
 
-        for (String l : licenses) {
-            licenseList = l + ":" + licenseList;
+        if (licenses.size() == 0) {
+            return "";
         }
 
-        licenseList = UtilService.removeLastChar(licenseList);
+        for (String l : licenses) {
+            if (licenseList.isEmpty()) {
+                licenseList = l;
+            } else {
+                licenseList = licenseList + ":" + l;
+            }
+        }
 
         return licenseList;
     }
