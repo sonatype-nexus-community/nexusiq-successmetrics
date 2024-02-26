@@ -2,8 +2,10 @@ package org.sonatype.cs.getmetrics.util;
 
 import org.sonatype.cs.getmetrics.service.PolicyIdsService;
 import org.sonatype.cs.getmetrics.service.UtilService;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
@@ -56,7 +58,7 @@ public class ParseReasons {
 
         for (JsonObject reason : reasons.getValuesAs(JsonObject.class)) {
             String licenseFound = reason.getString("reason");
-            if (licenseFound.isEmpty()){
+            if (licenseFound.isEmpty()) {
                 continue;
             }
             String license =
@@ -69,16 +71,15 @@ public class ParseReasons {
             }
         }
 
-        if (licenses.size()==0){
+        if (licenses.size() == 0) {
             return "";
         }
 
         for (String l : licenses) {
-            if (licenseList.isEmpty()){
+            if (licenseList.isEmpty()) {
                 licenseList = l;
-            }
-            else{
-                licenseList = licenseList + ":" +l;
+            } else {
+                licenseList = licenseList + ":" + l;
             }
         }
 
