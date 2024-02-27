@@ -5,13 +5,16 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.cs.getmetrics.reports.Waivers;
 import org.sonatype.cs.getmetrics.service.PolicyIdsService;
 import org.sonatype.cs.getmetrics.service.UtilService;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
 public class ParseReasons {
     private static final Logger log = LoggerFactory.getLogger(Waivers.class);
+
     private ParseReasons() {}
 
     public static String getReason(String policyName, JsonArray reasons) {
@@ -62,8 +65,7 @@ public class ParseReasons {
             if (licenseFound.isEmpty()) {
                 continue;
             }
-            if (!licenseFound.contains("(") || !licenseFound.contains(")"))
-            {
+            if (!licenseFound.contains("(") || !licenseFound.contains(")")) {
                 log.debug("licenseFound string does not contain brackets: " + licenseFound);
                 continue;
             }
