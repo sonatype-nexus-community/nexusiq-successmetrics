@@ -6,20 +6,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.json.Json;
 import javax.json.JsonArray;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ParseReasonsTest {
-    private Logger logger;
     private ListAppender<ch.qos.logback.classic.spi.ILoggingEvent> listAppender;
 
     @BeforeEach
     public void setup() {
-        logger = LoggerFactory.getLogger(ParseReasons.class);
-
         // Set up Logback configuration
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
         listAppender = new ListAppender<>();
