@@ -6,10 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.cs.getmetrics.service.CsvFileService;
 import org.sonatype.cs.getmetrics.service.FileIoService;
 import org.sonatype.cs.getmetrics.util.FilenameInfo;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -21,43 +19,37 @@ public class Waivers implements CsvFileService {
     private static final Logger log = LoggerFactory.getLogger(Waivers.class);
 
     @Override
-    public void makeCsvFile(FileIoService f, JsonReader reader) {
+    public void makeCsvFile(FileIoService fileIoService, JsonReader reader) {
         log.info("Making Waivers report");
 
         List<String[]> data = getWaiversInformationFromData(reader);
 
-        f.writeCsvFile(FilenameInfo.waiversCsvFile, data);
+        fileIoService.writeCsvFile(FilenameInfo.WAIVERS_CSV_FILE, data);
     }
 
     static List<String[]> getWaiversInformationFromData(JsonReader reader) {
         List<String[]> data = new ArrayList<>();
-        data.add(
-                new String[] {
-                    "applicationName",
-                    "stage",
-                    "packageUrl",
-                    "policyName",
-                    "threatLevel",
-                    "comment",
-                    "createDate",
-                    "expiryTime"
-                });
+        data.add(new String[]{
+                "applicationName",
+                "stage",
+                "packageUrl",
+                "policyName",
+                "threatLevel",
+                "comment",
+                "createDate",
+                "expiryTime"
+        });
 
         JsonObject obj = reader.readObject();
 
-        JsonArray applicationWaivers = obj.getJsonArray("applicationWaivers");
-        List<String[]> aw = doWaivers("application", applicationWaivers);
+        data.addAll(doWaivers("application", obj.getJsonArray("applicationWaivers")));
+        data.addAll(doWaivers("repository", obj.getJsonArray("repositoryWaivers")));
 
-        JsonArray repositoryWaivers = obj.getJsonArray("repositoryWaivers");
-        List<String[]> rw = doWaivers("repository", repositoryWaivers);
-
-        data.addAll(aw);
-        data.addAll(rw);
         return data;
     }
 
     @Override
-    public void makeCsvFile(FileIoService f, JsonObject reader) {
+    public void makeCsvFile(FileIoService fileIoService, JsonObject reader) {
         throw new NotImplementedException();
     }
 
@@ -66,52 +58,38 @@ public class Waivers implements CsvFileService {
     }
 
     static List<String[]> doWaivers(String waiverType, JsonArray waivers) {
-
         List<String[]> data = new ArrayList<>();
 
         for (JsonObject result : waivers.getValuesAs(JsonObject.class)) {
-
             JsonObject waiverObj = result.getJsonObject(waiverType);
-            String applicationName = waiverObj.getString("publicId");
+            String applicationName = waiverObj.getString("publicId", "");
 
-            JsonArray stages = result.getJsonArray("stages");
+            for (JsonObject stage : result.getJsonArray("stages").getValuesAs(JsonObject.class)) {
+                String stageId = stage.getString("stageId", "");
 
-            for (JsonObject stage : stages.getValuesAs(JsonObject.class)) {
-                String stageId = stage.getString("stageId");
-
-                JsonArray componentViolations = stage.getJsonArray("componentPolicyViolations");
-
-                for (JsonObject componentViolation :
-                        componentViolations.getValuesAs(JsonObject.class)) {
+                for (JsonObject componentViolation : stage.getJsonArray("componentPolicyViolations").getValuesAs(JsonObject.class)) {
                     JsonObject component = componentViolation.getJsonObject("component");
                     String packageUrl = getFieldStringFromJsonObject(component, "packageUrl");
-                    JsonArray waivedPolicyViolations =
-                            componentViolation.getJsonArray("waivedPolicyViolations");
 
-                    for (JsonObject waivedPolicyViolation :
-                            waivedPolicyViolations.getValuesAs(JsonObject.class)) {
-                        String policyName = waivedPolicyViolation.getString("policyName");
+                    for (JsonObject waivedPolicyViolation : componentViolation.getJsonArray("waivedPolicyViolations").getValuesAs(JsonObject.class)) {
+                        String policyName = waivedPolicyViolation.getString("policyName", "");
                         int threatLevel = waivedPolicyViolation.getInt("threatLevel");
 
-                        JsonObject policyWaiver =
-                                waivedPolicyViolation.getJsonObject("policyWaiver");
+                        JsonObject policyWaiver = waivedPolicyViolation.getJsonObject("policyWaiver");
                         String comment = getFieldStringFromJsonObject(policyWaiver, "comment");
-                        String createTime =
-                                getFieldStringFromJsonObject(policyWaiver, "createTime");
-                        String expiryTime =
-                                getFieldStringFromJsonObject(policyWaiver, "expiryTime");
+                        String createTime = getFieldStringFromJsonObject(policyWaiver, "createTime");
+                        String expiryTime = getFieldStringFromJsonObject(policyWaiver, "expiryTime");
 
-                        String[] line = {
-                            applicationName,
-                            stageId,
-                            packageUrl,
-                            policyName,
-                            String.valueOf(threatLevel),
-                            comment,
-                            createTime,
-                            expiryTime
-                        };
-                        data.add(line);
+                        data.add(new String[]{
+                                applicationName,
+                                stageId,
+                                packageUrl,
+                                policyName,
+                                String.valueOf(threatLevel),
+                                comment,
+                                createTime,
+                                expiryTime
+                        });
                     }
                 }
             }
@@ -120,25 +98,23 @@ public class Waivers implements CsvFileService {
         return data;
     }
 
-    private static String getFieldStringFromJsonObject(JsonObject policyWaiver, String field) {
-        String result = "";
+    private static String getFieldStringFromJsonObject(JsonObject jsonObject, String field) {
         if (log.isDebugEnabled()) {
             log.debug("getFieldStringFromJsonObject called for " + field);
         }
-        if (policyWaiver.get(field) != null) {
-            JsonValue value = policyWaiver.get(field);
-            if (value instanceof JsonString) {
-                result = ((JsonString) value).getString();
-            } else if (value instanceof JsonStructure) {
-                // this happens when override key is present without a value
-                result = "";
-            } else {
-                result = value.toString();
-            }
+
+        JsonValue value = jsonObject.get(field);
+        if (value == null) {
+            return "";
         }
-        if (result.equals("{}")) {
-            result = "";
+
+        if (value instanceof JsonString) {
+            return ((JsonString) value).getString();
+        } else if (value instanceof JsonStructure) {
+            return "";
+        } else {
+            String result = value.toString();
+            return "{}".equals(result) ? "" : result;
         }
-        return result;
     }
 }

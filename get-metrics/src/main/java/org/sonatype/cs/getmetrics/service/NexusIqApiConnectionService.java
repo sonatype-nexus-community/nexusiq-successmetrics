@@ -3,7 +3,6 @@ package org.sonatype.cs.getmetrics.service;
 import org.apache.http.HttpException;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,9 +21,7 @@ class NexusIqApiConnectionService {
             String user, String password, String url, String api, String endPoint)
             throws IOException {
         String encodedAuthString = createEncodedAuthString(user, password);
-        if ("/".equals(UtilService.lastChar(url))) {
-            url = UtilService.removeLastChar(url);
-        }
+        url = sanitizeUrl(url);
         String urlString = url + api + endPoint;
         return createUrlConnection(urlString, encodedAuthString);
     }
@@ -58,11 +55,8 @@ class NexusIqApiConnectionService {
             int page,
             int pageSize)
             throws IOException {
-        if ("/".equals(UtilService.lastChar(url))) {
-            url = UtilService.removeLastChar(url);
-        }
-        String urlString =
-                url + api + endPoint + "?" + "page=" + page + "&pageSize=" + pageSize + "&asc=true";
+        url = sanitizeUrl(url);
+        String urlString = url + api + endPoint + "?page=" + page + "&pageSize=" + pageSize + "&asc=true";
         String encodedAuthString = createEncodedAuthString(user, password);
         return createUrlConnection(urlString, encodedAuthString);
     }
@@ -75,11 +69,8 @@ class NexusIqApiConnectionService {
             String endpoint,
             String apiPayload)
             throws IOException, HttpException {
-        if ("/".equals(UtilService.lastChar(url))) {
-            url = UtilService.removeLastChar(url);
-        }
-        HttpURLConnection urlConnection =
-                prepareHttpURLPostForCSV(user, password, url, api, endpoint);
+        url = sanitizeUrl(url);
+        HttpURLConnection urlConnection = prepareHttpURLPostForCSV(user, password, url, api, endpoint);
         return executeHttpURLPostForCSV(apiPayload, urlConnection);
     }
 
@@ -89,62 +80,30 @@ class NexusIqApiConnectionService {
             byte[] payloadBytes = apiPayload.getBytes();
             connectionOutputStream.write(payloadBytes, 0, payloadBytes.length);
         }
-        if (urlConnection.getResponseCode() != 200) {
-            throw new HttpException(
-                    "Failed with HTTP error code : "
-                            + urlConnection.getResponseCode()
-                            + " ["
-                            + urlConnection.getResponseMessage()
-                            + "]");
-        }
+        checkResponseCode(urlConnection);
 
-        BufferedReader bufferedReader =
-                new BufferedReader(
-                        new InputStreamReader(
-                                (InputStream) urlConnection.getContent(), StandardCharsets.UTF_8));
-        String response = bufferedReader.lines().collect(Collectors.joining("\n"));
-        int statusCode = urlConnection.getResponseCode();
-        urlConnection.disconnect();
-
-        if (statusCode != 200) {
-            throw new HttpException(
-                    "Failed with HTTP error code : "
-                            + statusCode
-                            + " ["
-                            + urlConnection.getResponseMessage()
-                            + "]");
+        try (BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader((InputStream) urlConnection.getContent(), StandardCharsets.UTF_8))) {
+            return bufferedReader.lines().collect(Collectors.joining("\n"));
         }
-        return response;
     }
 
     public String executeHttpURLGetForJson(HttpURLConnection urlConnection)
             throws IOException, HttpException {
-        if (urlConnection.getResponseCode() != 200) {
-            throw new HttpException(
-                    "Failed with HTTP error code : "
-                            + urlConnection.getResponseCode()
-                            + " ["
-                            + urlConnection.getResponseMessage()
-                            + "]");
+        checkResponseCode(urlConnection);
+
+        try (BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader((InputStream) urlConnection.getContent(), StandardCharsets.UTF_8))) {
+            return bufferedReader.lines().collect(Collectors.joining("\n"));
         }
+    }
 
-        BufferedReader bufferedReader =
-                new BufferedReader(
-                        new InputStreamReader(
-                                (InputStream) urlConnection.getContent(), StandardCharsets.UTF_8));
-        String response = bufferedReader.lines().collect(Collectors.joining("\n"));
+    private void checkResponseCode(HttpURLConnection urlConnection) throws IOException, HttpException {
         int statusCode = urlConnection.getResponseCode();
-        urlConnection.disconnect();
-
         if (statusCode != 200) {
             throw new HttpException(
-                    "Failed with HTTP error code : "
-                            + statusCode
-                            + " ["
-                            + urlConnection.getResponseMessage()
-                            + "]");
+                    "Failed with HTTP error code : " + statusCode + " [" + urlConnection.getResponseMessage() + "]");
         }
-        return response;
     }
 
     public HttpURLConnection prepareHttpURLPostForCSV(
@@ -167,5 +126,12 @@ class NexusIqApiConnectionService {
         urlConnection.setRequestMethod("GET");
         urlConnection.setDoOutput(true);
         return urlConnection;
+    }
+
+    private String sanitizeUrl(String url) {
+        if ("/".equals(UtilService.lastChar(url))) {
+            return UtilService.removeLastChar(url);
+        }
+        return url;
     }
 }
