@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.cs.getmetrics.service.CsvFileService;
 import org.sonatype.cs.getmetrics.service.FileIoService;
 import org.sonatype.cs.getmetrics.util.FilenameInfo;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -26,7 +28,7 @@ public class ApplicationEvaluations implements CsvFileService {
 
     static List<String[]> getApplicationInfoFromData(JsonReader jsonReader) {
         List<String[]> data = new ArrayList<>();
-        data.add(new String[]{"applicationName", "evaluationDate", "stage"});
+        data.add(new String[] {"applicationName", "evaluationDate", "stage"});
         JsonArray results = jsonReader.readArray();
 
         for (JsonObject result : results.getValuesAs(JsonObject.class)) {
@@ -34,7 +36,7 @@ public class ApplicationEvaluations implements CsvFileService {
             String evaluationDate = result.getString("evaluationDate", "");
             String reportDataUrl = result.getString("reportDataUrl", "");
             String applicationName = extractApplicationName(reportDataUrl);
-            data.add(new String[]{applicationName, evaluationDate, stage});
+            data.add(new String[] {applicationName, evaluationDate, stage});
         }
         return data;
     }

@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.cs.getmetrics.service.CsvFileService;
 import org.sonatype.cs.getmetrics.service.FileIoService;
 import org.sonatype.cs.getmetrics.util.FilenameInfo;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -29,16 +31,17 @@ public class Waivers implements CsvFileService {
 
     static List<String[]> getWaiversInformationFromData(JsonReader reader) {
         List<String[]> data = new ArrayList<>();
-        data.add(new String[]{
-                "applicationName",
-                "stage",
-                "packageUrl",
-                "policyName",
-                "threatLevel",
-                "comment",
-                "createDate",
-                "expiryTime"
-        });
+        data.add(
+                new String[] {
+                    "applicationName",
+                    "stage",
+                    "packageUrl",
+                    "policyName",
+                    "threatLevel",
+                    "comment",
+                    "createDate",
+                    "expiryTime"
+                });
 
         JsonObject obj = reader.readObject();
 
@@ -67,29 +70,38 @@ public class Waivers implements CsvFileService {
             for (JsonObject stage : result.getJsonArray("stages").getValuesAs(JsonObject.class)) {
                 String stageId = stage.getString("stageId", "");
 
-                for (JsonObject componentViolation : stage.getJsonArray("componentPolicyViolations").getValuesAs(JsonObject.class)) {
+                for (JsonObject componentViolation :
+                        stage.getJsonArray("componentPolicyViolations")
+                                .getValuesAs(JsonObject.class)) {
                     JsonObject component = componentViolation.getJsonObject("component");
                     String packageUrl = getFieldStringFromJsonObject(component, "packageUrl");
 
-                    for (JsonObject waivedPolicyViolation : componentViolation.getJsonArray("waivedPolicyViolations").getValuesAs(JsonObject.class)) {
+                    for (JsonObject waivedPolicyViolation :
+                            componentViolation
+                                    .getJsonArray("waivedPolicyViolations")
+                                    .getValuesAs(JsonObject.class)) {
                         String policyName = waivedPolicyViolation.getString("policyName", "");
                         int threatLevel = waivedPolicyViolation.getInt("threatLevel");
 
-                        JsonObject policyWaiver = waivedPolicyViolation.getJsonObject("policyWaiver");
+                        JsonObject policyWaiver =
+                                waivedPolicyViolation.getJsonObject("policyWaiver");
                         String comment = getFieldStringFromJsonObject(policyWaiver, "comment");
-                        String createTime = getFieldStringFromJsonObject(policyWaiver, "createTime");
-                        String expiryTime = getFieldStringFromJsonObject(policyWaiver, "expiryTime");
+                        String createTime =
+                                getFieldStringFromJsonObject(policyWaiver, "createTime");
+                        String expiryTime =
+                                getFieldStringFromJsonObject(policyWaiver, "expiryTime");
 
-                        data.add(new String[]{
-                                applicationName,
-                                stageId,
-                                packageUrl,
-                                policyName,
-                                String.valueOf(threatLevel),
-                                comment,
-                                createTime,
-                                expiryTime
-                        });
+                        data.add(
+                                new String[] {
+                                    applicationName,
+                                    stageId,
+                                    packageUrl,
+                                    policyName,
+                                    String.valueOf(threatLevel),
+                                    comment,
+                                    createTime,
+                                    expiryTime
+                                });
                     }
                 }
             }

@@ -3,6 +3,7 @@ package org.sonatype.cs.getmetrics.service;
 import org.apache.http.HttpException;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,7 +57,8 @@ class NexusIqApiConnectionService {
             int pageSize)
             throws IOException {
         url = sanitizeUrl(url);
-        String urlString = url + api + endPoint + "?page=" + page + "&pageSize=" + pageSize + "&asc=true";
+        String urlString =
+                url + api + endPoint + "?page=" + page + "&pageSize=" + pageSize + "&asc=true";
         String encodedAuthString = createEncodedAuthString(user, password);
         return createUrlConnection(urlString, encodedAuthString);
     }
@@ -70,7 +72,8 @@ class NexusIqApiConnectionService {
             String apiPayload)
             throws IOException, HttpException {
         url = sanitizeUrl(url);
-        HttpURLConnection urlConnection = prepareHttpURLPostForCSV(user, password, url, api, endpoint);
+        HttpURLConnection urlConnection =
+                prepareHttpURLPostForCSV(user, password, url, api, endpoint);
         return executeHttpURLPostForCSV(apiPayload, urlConnection);
     }
 
@@ -82,8 +85,11 @@ class NexusIqApiConnectionService {
         }
         checkResponseCode(urlConnection);
 
-        try (BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader((InputStream) urlConnection.getContent(), StandardCharsets.UTF_8))) {
+        try (BufferedReader bufferedReader =
+                new BufferedReader(
+                        new InputStreamReader(
+                                (InputStream) urlConnection.getContent(),
+                                StandardCharsets.UTF_8))) {
             return bufferedReader.lines().collect(Collectors.joining("\n"));
         }
     }
@@ -92,17 +98,25 @@ class NexusIqApiConnectionService {
             throws IOException, HttpException {
         checkResponseCode(urlConnection);
 
-        try (BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader((InputStream) urlConnection.getContent(), StandardCharsets.UTF_8))) {
+        try (BufferedReader bufferedReader =
+                new BufferedReader(
+                        new InputStreamReader(
+                                (InputStream) urlConnection.getContent(),
+                                StandardCharsets.UTF_8))) {
             return bufferedReader.lines().collect(Collectors.joining("\n"));
         }
     }
 
-    private void checkResponseCode(HttpURLConnection urlConnection) throws IOException, HttpException {
+    private void checkResponseCode(HttpURLConnection urlConnection)
+            throws IOException, HttpException {
         int statusCode = urlConnection.getResponseCode();
         if (statusCode != 200) {
             throw new HttpException(
-                    "Failed with HTTP error code : " + statusCode + " [" + urlConnection.getResponseMessage() + "]");
+                    "Failed with HTTP error code : "
+                            + statusCode
+                            + " ["
+                            + urlConnection.getResponseMessage()
+                            + "]");
         }
     }
 

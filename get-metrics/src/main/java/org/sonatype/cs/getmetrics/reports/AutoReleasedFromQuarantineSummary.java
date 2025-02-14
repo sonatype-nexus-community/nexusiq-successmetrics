@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.cs.getmetrics.service.CsvFileService;
 import org.sonatype.cs.getmetrics.service.FileIoService;
 import org.sonatype.cs.getmetrics.util.FilenameInfo;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 

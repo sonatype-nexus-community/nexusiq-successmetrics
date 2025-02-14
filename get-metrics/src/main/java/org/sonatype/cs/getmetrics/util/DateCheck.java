@@ -4,8 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DateCheck {
-    private static final Pattern MONTH_PATTERN = Pattern.compile("^\\d{4}-\\d{2}$", Pattern.CASE_INSENSITIVE);
-    private static final Pattern WEEK_PATTERN = Pattern.compile("^\\d{4}-W\\d{2}$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern MONTH_PATTERN =
+            Pattern.compile("^\\d{4}-\\d{2}$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern WEEK_PATTERN =
+            Pattern.compile("^\\d{4}-W\\d{2}$", Pattern.CASE_INSENSITIVE);
 
     public static boolean checkDateFormat(String period, String date) {
         if (!"MONTH".equalsIgnoreCase(period) && !"WEEK".equalsIgnoreCase(period)) {
@@ -18,7 +20,10 @@ public class DateCheck {
         if (matcher.find()) {
             return true;
         } else {
-            String errorMessage = "iq.api.sm.period is set to " + period.toUpperCase() + " but the dates provided are not in the correct format. ";
+            String errorMessage =
+                    "iq.api.sm.period is set to "
+                            + period.toUpperCase()
+                            + " but the dates provided are not in the correct format. ";
             if ("MONTH".equalsIgnoreCase(period)) {
                 errorMessage += "Expected format: 2022-01.";
             } else {

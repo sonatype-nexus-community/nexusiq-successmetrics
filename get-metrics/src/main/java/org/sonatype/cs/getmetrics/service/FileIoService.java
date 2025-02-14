@@ -1,6 +1,7 @@
 package org.sonatype.cs.getmetrics.service;
 
 import com.opencsv.CSVWriter;
+
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.cs.getmetrics.util.FilenameInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -35,8 +37,12 @@ public class FileIoService {
         File file = new File(metricsFile);
         boolean isFirstTimeWriting = !(file.exists() && !file.isDirectory());
 
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(metricsFile), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-             CSVWriter csvWriter = new CSVWriter(writer)) {
+        try (BufferedWriter writer =
+                        Files.newBufferedWriter(
+                                Paths.get(metricsFile),
+                                StandardOpenOption.CREATE,
+                                StandardOpenOption.APPEND);
+                CSVWriter csvWriter = new CSVWriter(writer)) {
             if (!isFirstTimeWriting) {
                 data.remove(0);
             }
@@ -63,14 +69,18 @@ public class FileIoService {
     }
 
     public void writeSuccessMetricsFile(InputStream content) throws IOException {
-        File outputFile = new File(metricsDir + File.separator + FilenameInfo.SUCCESS_METRICS_CSV_FILE);
+        File outputFile =
+                new File(metricsDir + File.separator + FilenameInfo.SUCCESS_METRICS_CSV_FILE);
         Files.copy(content, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         IOUtils.closeQuietly(content);
         log.info("Created file: {}", outputFile.toPath());
 
         try (Stream<String> stream = Files.lines(outputFile.toPath())) {
             if (stream.count() <= 1) {
-                log.warn("The file {} contains no data, either there is no data to fetch or the user doesn't have the appropriate permissions to fetch it.", outputFile.toPath());
+                log.warn(
+                        "The file {} contains no data, either there is no data to fetch or the user"
+                                + " doesn't have the appropriate permissions to fetch it.",
+                        outputFile.toPath());
             }
         } catch (IOException e) {
             log.error("Error writing file", e);
