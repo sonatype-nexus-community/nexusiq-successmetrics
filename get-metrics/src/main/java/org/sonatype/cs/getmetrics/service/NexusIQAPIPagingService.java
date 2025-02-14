@@ -2,9 +2,11 @@ package org.sonatype.cs.getmetrics.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -47,10 +49,11 @@ public class NexusIQAPIPagingService {
     }
 
     private JsonObject fetchPageData(String endPoint, int page) throws IOException {
-        URLConnection urlConnection = nexusIqApiConnectionService.createAuthorizedPagedUrlConnection(
-                iqUser, iqPasswd, iqUrl, iqApi, endPoint, page, 10);
+        URLConnection urlConnection =
+                nexusIqApiConnectionService.createAuthorizedPagedUrlConnection(
+                        iqUser, iqPasswd, iqUrl, iqApi, endPoint, page, 10);
         try (InputStream is = urlConnection.getInputStream();
-             JsonReader reader = Json.createReader(is)) {
+                JsonReader reader = Json.createReader(is)) {
             return reader.readObject();
         }
     }

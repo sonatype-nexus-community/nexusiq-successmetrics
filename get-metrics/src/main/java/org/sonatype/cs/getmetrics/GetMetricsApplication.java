@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import javax.net.ssl.SSLHandshakeException;
 
 @SpringBootApplication
@@ -114,8 +115,7 @@ public class GetMetricsApplication implements CommandLineRunner {
                 "/firewall/releaseQuarantine/configuration");
 
         nexusIQApiService.makeReport(
-                new AutoReleasedFromQuarantineSummary(),
-                "/firewall/releaseQuarantine/summary");
+                new AutoReleasedFromQuarantineSummary(), "/firewall/releaseQuarantine/summary");
         nexusIQApiService.makeReport(
                 new QuarantinedComponentsSummary(), "/firewall/quarantine/summary");
 

@@ -7,10 +7,12 @@ import org.sonatype.cs.getmetrics.service.CsvFileService;
 import org.sonatype.cs.getmetrics.service.FileIoService;
 import org.sonatype.cs.getmetrics.service.PolicyIdsService;
 import org.sonatype.cs.getmetrics.util.FilenameInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -35,7 +37,16 @@ public class PolicyViolations implements CsvFileService {
 
     static List<String[]> getPolicyViolationsFromData(JsonReader reader) {
         List<String[]> data = new ArrayList<>();
-        data.add(new String[]{"policyName", "reason", "applicationName", "openTime", "component", "stage", "threatLevel"});
+        data.add(
+                new String[] {
+                    "policyName",
+                    "reason",
+                    "applicationName",
+                    "openTime",
+                    "component",
+                    "stage",
+                    "threatLevel"
+                });
 
         JsonObject obj = reader.readObject();
         JsonArray results = obj.getJsonArray("applicationViolations");
@@ -55,13 +66,23 @@ public class PolicyViolations implements CsvFileService {
                 JsonObject component = policyViolation.getJsonObject("component");
                 String packageUrl = component.getString("packageUrl", "");
 
-                JsonArray constraintViolations = policyViolation.getJsonArray("constraintViolations");
-                for (JsonObject constraintViolation : constraintViolations.getValuesAs(JsonObject.class)) {
+                JsonArray constraintViolations =
+                        policyViolation.getJsonArray("constraintViolations");
+                for (JsonObject constraintViolation :
+                        constraintViolations.getValuesAs(JsonObject.class)) {
                     JsonArray reasons = constraintViolation.getJsonArray("reasons");
 
                     String reason = getReason(policyName, reasons);
 
-                    String[] line = {policyName, reason, applicationPublicId, openTime, packageUrl, stage, String.valueOf(threatLevel)};
+                    String[] line = {
+                        policyName,
+                        reason,
+                        applicationPublicId,
+                        openTime,
+                        packageUrl,
+                        stage,
+                        String.valueOf(threatLevel)
+                    };
                     data.add(line);
                 }
             }

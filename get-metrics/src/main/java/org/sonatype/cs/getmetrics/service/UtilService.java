@@ -1,6 +1,7 @@
 package org.sonatype.cs.getmetrics.service;
 
 import org.springframework.stereotype.Service;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;

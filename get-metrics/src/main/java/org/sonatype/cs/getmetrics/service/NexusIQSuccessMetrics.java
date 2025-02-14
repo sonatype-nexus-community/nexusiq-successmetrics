@@ -11,6 +11,7 @@ import org.sonatype.cs.getmetrics.model.PayloadItem;
 import org.sonatype.cs.getmetrics.util.DateCheck;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
@@ -157,7 +158,11 @@ public class NexusIQSuccessMetrics {
             String oId = jObject.getString("id");
 
             if (oName.equals(aoName)) {
-                log.info("Reporting for {}: {} [{}]", endpoint.substring(0, endpoint.length() - 1), aoName, oId);
+                log.info(
+                        "Reporting for {}: {} [{}]",
+                        endpoint.substring(0, endpoint.length() - 1),
+                        aoName,
+                        oId);
                 s = oId;
                 break;
             }

@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.sonatype.cs.getmetrics.service.NexusIQApiDataService;
 import org.sonatype.cs.getmetrics.service.PolicyIdsService;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;

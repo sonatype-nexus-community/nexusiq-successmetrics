@@ -3,9 +3,11 @@ package org.sonatype.cs.getmetrics.service;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+
 import javax.json.Json;
 import javax.json.JsonReader;
 
