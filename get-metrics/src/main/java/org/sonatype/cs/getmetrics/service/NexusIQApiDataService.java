@@ -2,22 +2,20 @@ package org.sonatype.cs.getmetrics.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 @Service
 public class NexusIQApiDataService {
-    private NexusIqApiConnectionService nexusIqApiConnectionService;
-    private String iqUrl;
-    private String iqUser;
-    private String iqPasswd;
-    private String iqApi;
+    private final NexusIqApiConnectionService nexusIqApiConnectionService;
+    private final String iqUrl;
+    private final String iqUser;
+    private final String iqPasswd;
+    private final String iqApi;
 
     public NexusIQApiDataService(
             NexusIqApiConnectionService nexusIqApiConnectionService,
@@ -42,10 +40,9 @@ public class NexusIQApiDataService {
 
     static JsonObject getJsonReaderFromURLConnection(HttpURLConnection urlConnection)
             throws IOException {
-        try (InputStream is = urlConnection.getInputStream()) {
-            try (JsonReader reader = Json.createReader(is)) {
-                return reader.readObject();
-            }
+        try (InputStream is = urlConnection.getInputStream();
+             JsonReader reader = Json.createReader(is)) {
+            return reader.readObject();
         }
     }
 }

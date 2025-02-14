@@ -1,18 +1,15 @@
 package org.sonatype.cs.getmetrics.util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.read.ListAppender;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
-
 import javax.json.Json;
 import javax.json.JsonArray;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ParseReasonsTest {
     private ListAppender<ch.qos.logback.classic.spi.ILoggingEvent> listAppender;
