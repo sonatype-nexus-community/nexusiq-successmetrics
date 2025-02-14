@@ -79,7 +79,7 @@ public class FileIoService {
             if (stream.count() <= 1) {
                 log.warn(
                         "The file {} contains no data, either there is no data to fetch or the user"
-                            + " doesn't have the appropriate permissions to fetch it.",
+                                + " doesn't have the appropriate permissions to fetch it.",
                         outputFile.toPath());
             }
         } catch (IOException e) {
