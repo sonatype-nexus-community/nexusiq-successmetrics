@@ -1,0 +1,85 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  enforce-commit-standards:
+    docker:
+      - image: cimg/base:2022.09
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "55:47:0b:af:ad:97:89:06:19:4e:5c:34:06:50:f8:16"
+      - checkout
+      - run:
+          name: "Install Python and Java"
+          command: |
+            sudo apt update
+            sudo apt install software-properties-common
+            sudo add-apt-repository -y ppa:deadsnakes/ppa
+            sudo apt install python3.9 python3-pip openjdk-8-jdk
+      - run:
+          name: "Print Python and Java versions"
+          command: |
+            python3 -V
+            pip3 --version
+            java -version
+      - run:
+          name: Install pre-commit-checks
+          command: pip3 install pre-commit==2.16.0
+      - run:
+          name: Run pre-commit on all files
+          command: pre-commit run --all-files || true
+      - run:
+          name: Commit changes back to GitHub
+          command: |
+            if git status; then
+              git config --global user.email "rpanman@sonatype.com"
+              git config --global user.name "CircleCI"
+              git add *
+              git commit -m "Updated after pre-commit checks by CircleCI [skip ci]"
+              git push
+            fi
+
+  test-with-gradle:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: cimg/openjdk:11.0
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+      - run:
+          name: "Run tests"
+          command: |
+            java --version
+            ./gradlew codeCoverageReport
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+      - store_artifacts: # Upload test results for display in Artifacts: https://circleci.com/docs/artifacts/
+          path: build/reports/jacoco/codeCoverageReport/html
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  develop-branch-workflow:
+    jobs:
+      - enforce-commit-standards:
+          filters:
+            branches:
+              only:
+                - develop
+      - test-with-gradle:
+          filters:
+            branches:
+              only:
+                - develop
